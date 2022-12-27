@@ -7,12 +7,13 @@
 
 import SwiftUI
 
+// MARK: Cell별 카테고리를 관리하기 위한 구조체
 struct Item: Identifiable{
     let id = UUID()
     let categoryTitles: String
     let categoryImages: String
-    
 }
+
 struct HomeMenuView: View {
     @State private var searchText = ""
     let items = [
@@ -25,13 +26,11 @@ struct HomeMenuView: View {
         ]
    
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.fixed(170)),
+        GridItem(.fixed(170))
     ]
     
     var body: some View{
-        
-        
         NavigationStack {
             VStack{
             }
@@ -43,8 +42,6 @@ struct HomeMenuView: View {
                             NavigationLink {
                                 NotebookView()
                             } label:{
-                            
-                        
                             ItemView(item: item)
                         }
                     }
@@ -54,13 +51,14 @@ struct HomeMenuView: View {
             .background(.white)
             }
         }
+    // MARK: 홈 메뉴에 그려질 Cell View
     struct ItemView: View{
         let item: Item
         var body: some View{
           
                 VStack(spacing: 0){
                     Text(item.categoryTitles)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(.title3 , weight: .bold))
                         .foregroundColor(Color.black.opacity(0.8))
                     
                     Image(item.categoryImages)
@@ -71,16 +69,10 @@ struct HomeMenuView: View {
                 .frame(width:160 , height: 160)
                 .background(Color.white)
                 .cornerRadius(20)
-                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 10)
+                .shadow(color: Color.black.opacity(0.2), radius: 5, y: 5)
             }
-         
-            
-            
-       
     }
     }
-
-
 //struct HomeView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        HomeView()
