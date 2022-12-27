@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		22021FEF295AAEB800EFD5CF /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22021FEE295AAEB800EFD5CF /* ProductDetailView.swift */; };
 		0456F63A295AD7EE002389F6 /* HomeMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456F639295AD7EE002389F6 /* HomeMenuView.swift */; };
 		0456F63C295AD7F7002389F6 /* NotebookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456F63B295AD7F7002389F6 /* NotebookView.swift */; };
 		18ECD478295AB68700670B6F /* ShoppingBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECD477295AB68700670B6F /* ShoppingBackView.swift */; };
@@ -42,6 +44,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+
+		22021FEE295AAEB800EFD5CF /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		0456F639295AD7EE002389F6 /* HomeMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuView.swift; sourceTree = "<group>"; };
 		0456F63B295AD7F7002389F6 /* NotebookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookView.swift; sourceTree = "<group>"; };
 		18ECD477295AB68700670B6F /* ShoppingBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingBackView.swift; sourceTree = "<group>"; };
@@ -88,6 +92,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+
+		22021FED295AAE9C00EFD5CF /* FolderProductDetail */ = {
+			isa = PBXGroup;
+			children = (
+				22021FEE295AAEB800EFD5CF /* ProductDetailView.swift */,
+			);
+			path = FolderProductDetail;
 		0456F638295AD7C9002389F6 /* FolderHomeMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +177,7 @@
 		A77EE65F295A9A5100B6AA64 /* big-project-a-customer-ios */ = {
 			isa = PBXGroup;
 			children = (
+				22021FED295AAE9C00EFD5CF /* FolderProductDetail */,
 				A77EE660295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift */,
 				A77EE662295A9A5100B6AA64 /* ContentView.swift */,
 				18ECD477295AB68700670B6F /* ShoppingBackView.swift */,
@@ -335,8 +347,11 @@
 				9556A45C295AC31F00FD8E1F /* MyPageInfoEditChecking.swift in Sources */,
 				A7421064295B117A005AEC9C /* MyReview.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
+				22021FEF295AAEB800EFD5CF /* ProductDetailView.swift in Sources */,
+
 				0456F63A295AD7EE002389F6 /* HomeMenuView.swift in Sources */,
 				9556A45E295AC31F00FD8E1F /* MyPageInfoDetailView.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
