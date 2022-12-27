@@ -18,7 +18,7 @@ struct ContentView: View {
                 Image(systemName: "person.circle")
                 Text("마이페이지")
             }.tag(2)
-            Text("뷰가 들어갈 자리3").tabItem {
+            ShoppingBackView().tabItem {
                 Image(systemName: "cart.badge.plus")
                 Text("장바구니")
             }.tag(3)
