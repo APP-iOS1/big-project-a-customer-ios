@@ -23,6 +23,8 @@ class ShoppingCartViewModel: ObservableObject {
         ShoppingCartItems(itemIsChecked: false, itemName: "MacBook Air", itemPrice: 1690000, itemListCount: 0, image: "macbookair"),
         ShoppingCartItems(itemIsChecked: false, itemName: "Iphone 14", itemPrice: 1550000, itemListCount: 0, image: "iphone14")
     ]
+    @Published var totalItemsPrice: Int = 0
+    @Published var totalItemsCount: Int = 0
 }
 
 struct ShoppingBackView: View {
@@ -32,7 +34,7 @@ struct ShoppingBackView: View {
 //    @State private var price: Int = 1000
 //    @State private var count: Int = 0
 //    @State private var image = "macbook.and.iphone"
-//    @State private var shippingCost = 3000
+    @State private var shippingCost = 3000
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     
@@ -72,106 +74,66 @@ struct ShoppingBackView: View {
             
             // MARK: body
             ScrollView {
-//                VStack(alignment: .trailing) {
-//
-//                    HStack(alignment: .top) {
-//                        Button {
-//                            isChecked.toggle()
-//                        } label: {
-//                            Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-//                                .foregroundColor(isChecked ? .green : .gray)
-//                        }
-//
-//                        Image("macbookpro")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 100, height: 100)
-//
-//                        VStack(alignment: .trailing) {
-//                            HStack {
-//                                Text("Macbook Pro")
-//                                    .font(.title3)
-//
-//                                Spacer()
-//
-//                                Button {
-//
-//                                } label: {
-//                                    Image(systemName: "x.circle.fill")
-//                                        .font(.title3)
-//                                        .foregroundColor(.secondary)
-//                                }
-//                            }
-//
-//                            VStack(alignment: .trailing) {
-//                                Text("가격: \(price)원")
-//
-//                                Picker("count", selection: $count) {
-//                                    ForEach(1..<10) { num in
-//                                        Text("\(num)")
-//                                    }
-//                                }
-//                            }
-//                            .padding(.top, 5)
-//                        }
-//
-//                    }
-//                }
-//                .padding(.vertical)
                 
-                ForEach(vm.sCItems) { item in
-                    ShoppingBackDetailView(item: )
+                ForEach($vm.sCItems) { item in
+                    ShoppingBackDetailView(item: item)
                     .padding(.vertical)
+                    
+                    Divider()
                 }
             }
             
             // MARK: tail
-//            Section {
-//                VStack {
-//                    HStack {
-//                        Text("총 상품금액")
-//                        Spacer()
-//                        Text("\(price)원")
-//                    }
-//                    HStack {
-//                        Text("총 배송비")
-//                        Spacer()
-//                        Text("+ \(shippingCost)원")
-//                    }
-//                    HStack {
-//                        Text("결제금액")
-//                        Spacer()
-//                        Text("\(price+shippingCost)원")
-//                    }
-//                    .font(.title.bold())
-//                    .padding(.top, 5)
-//
-//                    HStack {
-//                        Text("\(count+1)개  \(price*(count+1))원")
-//                        Spacer()
-//                        Button {
-//
-//                        } label: {
-//                            ZStack {
-//                                RoundedRectangle(cornerRadius: 10)
-//                                    .frame(maxWidth: 200, maxHeight: 50)
-//                                Text("바로구매")
-//                                    .foregroundColor(.white)
-//                            }
-//                        }
-//
-//                    }
-//                }
-//            }
+            Section {
+                VStack {
+                    HStack {
+                        Text("총 상품금액")
+                        Spacer()
+                        Text("\(price)원")
+                    }
+                    HStack {
+                        Text("총 배송비")
+                        Spacer()
+                        Text("+ \(shippingCost)원")
+                    }
+                    HStack {
+                        Text("결제금액")
+                        Spacer()
+                        Text("\(price+shippingCost)원")
+                    }
+                    .font(.title.bold())
+                    .padding(.top, 5)
+
+                    HStack {
+                        Text("\(count+1)개")
+                        Spacer()
+                        Button {
+
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .frame(maxWidth: 200, maxHeight: 50)
+                                Text("바로구매")
+                                    .foregroundColor(.white)
+                            }
+                        }
+
+                    }
+                }
+            }
         }
         .padding(.horizontal)
     }
     
     func checkBoxAll() {
 //        if isCheckedAll {
-//            isChecked = true
+//            for i in vm.sCItems {
+//                i.itemIsChecked = true
+//            }
 //        } else {
-//            isChecked = false
+//            for i in vm.sCItems {
+//                i.itemIsChecked = false
+//            }
 //        }
     }
 }

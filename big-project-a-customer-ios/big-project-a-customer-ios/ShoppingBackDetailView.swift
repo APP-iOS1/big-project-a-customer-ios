@@ -21,14 +21,14 @@ struct ShoppingBackDetailView: View {
                         .foregroundColor(item.itemIsChecked ? .green : .gray)
                 }
 
-                Image("macbookpro")
+                Image(item.image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
 
                 VStack(alignment: .trailing) {
                     HStack {
-                        Text("Macbook Pro")
+                        Text(item.itemName)
                             .font(.title3)
 
                         Spacer()
