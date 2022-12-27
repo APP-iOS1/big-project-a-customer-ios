@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: 전체 coupon 목록
 struct CouponView: View {
     var body: some View {
         ScrollView {
@@ -18,8 +19,8 @@ struct CouponView: View {
     }
 }
 
+// MARK: 재사용하기 위한 coupon cell
 struct CouponListCell: View{
-    // TODO: 쿠폰도 데이터모델까지 할 건지 질문하기
     @State var couponTitle = "기본 할인"
     @State var discountPercentage = 30
     @State var discountMaximumAmount = 99990
@@ -55,11 +56,9 @@ struct CouponListCell: View{
                     Text("\(couponDescription)")
                         .padding(.vertical, 1)
                     Text("\(minimumPurchase)원 이상 구매시")
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                        .modifier(TextCaptionGrayModifier())
                     Text("\(startDate) - \(expiryDate)")
-                        .font(.caption)
-                        .foregroundColor(.gray)
+                        .modifier(TextCaptionGrayModifier())
                 }
                 Spacer()
                 Text("\(amountOfCoupons)장")

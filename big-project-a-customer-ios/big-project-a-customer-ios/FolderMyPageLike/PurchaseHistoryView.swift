@@ -7,26 +7,43 @@
 
 import SwiftUI
 
+// MARK: 전체 구매목록
 struct PurchaseHistoryView: View {
     var body: some View {
-        ScrollView {
-            ForEach(0..<10){ _ in
-                PurchaseListCell()
-                    .padding(.horizontal, 10)
+        VStack {
+            ScrollView {
+                ForEach(0..<10){ _ in
+                    VStack {
+                        HStack {
+                            Text("2022.12.3")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .bold()
+                            Button {
+                                // 주문 상세보기
+                            } label: {
+                                Text("주문 상세보기")
+                                Image(systemName: "chevron.right")
+                            }
+                            
+                        }
+                        
+                        PurchaseListCell()
+                    }
+                    .padding(10)
+                }
             }
         }
     }
 }
 
-struct PurchaseListCell: View{
+// MARK: 재사용하기 위한 구매목록 cell
+struct PurchaseListCell: View {
     @State var orderDate = "2022. 12. 21"
     @State var itemAmount = 1
     @State var price = 29400
-    @State var deliveryStatus = "배송완료"
+    @State var deliveryStatus = "배송중"
     @State var itemName = "ipTIME 외장케이스 WHITE HDD 3135 Plus"
     @State var itemImage = "itemImage" // image
-    
-    var strokeColor = Color.gray
     
     var body: some View{
         VStack(alignment: .leading){
@@ -36,9 +53,8 @@ struct PurchaseListCell: View{
             }
             HStack(alignment: .top){
                 Image(itemImage)
-                    .resizable()
-                    .frame(width: 80,height: 80)
-                VStack(spacing: 20){
+                    .ImageResizeModifier()
+                VStack(spacing: 10){
                     Text("\(itemName)")
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
@@ -56,8 +72,11 @@ struct PurchaseListCell: View{
                             Text("장바구니 담기")
                                 .font(.caption)
                         }
-
+                        .modifier(PurchaseHistoryButtonModifier())
+                        .frame(maxWidth: 80)
+                        
                     }
+                    .padding(.bottom, 10)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -67,33 +86,23 @@ struct PurchaseListCell: View{
                 } label: {
                     Text("교환, 반품 신청")
                 }
-                .padding(.vertical, 8)
-                .frame(maxWidth: .infinity)
-                .overlay(
-                       RoundedRectangle(cornerRadius: 10)
-                           .stroke(strokeColor, lineWidth: 1)
-                )
+                .modifier(PurchaseHistoryButtonModifier())
+                
+                // TODO: - Delivery State에 따라서 버튼 바뀌어야 함 (배송조회/구매확정/리뷰작성)
                 Button {
                     // 배송 조회
                 } label: {
                     Text("배송 조회")
                 }
-                .padding(.vertical, 8)
-                .frame(maxWidth: .infinity)
-                .overlay(
-                       RoundedRectangle(cornerRadius: 10)
-                           .stroke(strokeColor, lineWidth: 1)
-                )
+                .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
+                
             }
             .font(.callout)
             .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .overlay(
-               RoundedRectangle(cornerRadius: 10)
-                   .stroke(strokeColor, lineWidth: 1)
-        )
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+        .modifier(PurchaseHistoryButtonModifier())
     }
 }
 

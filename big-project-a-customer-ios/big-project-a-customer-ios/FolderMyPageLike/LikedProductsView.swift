@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: 좋아요한 전체 item 목록
 struct LikedProductsView: View {
     let columns = [
         //추가 하면 할수록 화면에 보여지는 개수가 변함
@@ -25,18 +26,15 @@ struct LikedProductsView: View {
     }
 }
 
+// MARK: 재사용 위한 item cell
 struct ItemListCell: View {
     @State var price = 29400
     @State var itemName = "ipTIME 외장케이스 WHITE HDD 3135 Plus"
     @State var itemImage = "itemImage" // image
     var body: some View{
         VStack(alignment: .leading){
-            // TODO: 생각해보니까 여기는 메인페이지에서 코드 가져오면 됨 킥킥
             Image(itemImage)
-                .resizable()
-                .cornerRadius(20)
-                .frame(width: 150, height: 150)
-                .aspectRatio(contentMode: .fill)
+                .ImageResizeModifier(width: 150, height: 150, cornerRadius: 20)
             Text("\(itemName)")
                 .font(.footnote)
             Text("\(price)")
