@@ -15,6 +15,7 @@ struct MyPageInfoEdit: View {
     
     @State var newAddress = ""
     
+    @State var showingAlert = false
     
     var body: some View{
         VStack{
@@ -37,6 +38,8 @@ struct MyPageInfoEdit: View {
                     if newPassword == checkPassword {
                         vm.users.userPassward = newPassword
                         print("변경 완료: \(vm.users.userPassward)")
+                    } else {
+                        showingAlert = true
                     }
                 }
                 
@@ -66,6 +69,15 @@ struct MyPageInfoEdit: View {
                     .modifier(ConfirmModifier())
             }
         }
+        .alert("비밀번호 불일치", isPresented: $showingAlert) {
+            Button("Ok") {
+                newPassword = ""
+                checkPassword = ""
+            }
+        } message: {
+            Text("비밀번호를 다시 입력해주세요")
+        }
+        
     }
 }
 
