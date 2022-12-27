@@ -20,6 +20,7 @@
 		C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */; };
 		C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */; };
 		EAA1A145295ACFE400E84C36 /* CouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A144295ACFE400E84C36 /* CouponView.swift */; };
+		EAA1A147295AD14400E84C36 /* LikedProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A146295AD14400E84C36 /* LikedProductsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep3View.swift; sourceTree = "<group>"; };
 		EAA1A144295ACFE400E84C36 /* CouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponView.swift; sourceTree = "<group>"; };
+		EAA1A146295AD14400E84C36 /* LikedProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedProductsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA1A144295ACFE400E84C36 /* CouponView.swift */,
+				EAA1A146295AD14400E84C36 /* LikedProductsView.swift */,
 			);
 			path = FolderMyPageLike;
 			sourceTree = "<group>";
@@ -201,8 +204,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9556A45F295AC31F00FD8E1F /* MyPageInfoEdit.swift in Sources */,
-				9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */,
 				EAA1A145295ACFE400E84C36 /* CouponView.swift in Sources */,
 				C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */,
 				C4961A61295AAF25009CB1EC /* SignUpView.swift in Sources */,
@@ -210,6 +211,7 @@
 				C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */,
 				C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */,
 				A77EE663295A9A5100B6AA64 /* ContentView.swift in Sources */,
+				EAA1A147295AD14400E84C36 /* LikedProductsView.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,6 +348,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -374,6 +377,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
