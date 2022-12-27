@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		18ECD478295AB68700670B6F /* ShoppingBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECD477295AB68700670B6F /* ShoppingBackView.swift */; };
+		18ECD47C295AC41F00670B6F /* ShoppingBackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */; };
 		0456F63A295AD7EE002389F6 /* HomeMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456F639295AD7EE002389F6 /* HomeMenuView.swift */; };
 		0456F63C295AD7F7002389F6 /* NotebookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456F63B295AD7F7002389F6 /* NotebookView.swift */; };
 		9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */; };
@@ -36,6 +39,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+
+		18ECD477295AB68700670B6F /* ShoppingBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingBackView.swift; sourceTree = "<group>"; };
+		18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingBackDetailView.swift; sourceTree = "<group>"; };
 		0456F639295AD7EE002389F6 /* HomeMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuView.swift; sourceTree = "<group>"; };
 		0456F63B295AD7F7002389F6 /* NotebookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookView.swift; sourceTree = "<group>"; };
 		9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyPageInfo+ViewModifiers.swift"; sourceTree = "<group>"; };
@@ -118,6 +124,10 @@
 			children = (
 				A77EE660295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift */,
 				A77EE662295A9A5100B6AA64 /* ContentView.swift */,
+
+				18ECD477295AB68700670B6F /* ShoppingBackView.swift */,
+				18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */,
+
 				0456F638295AD7C9002389F6 /* FolderHomeMenu */,
 				9556A44F295AB9A800FD8E1F /* FolderMyPageEditInfo */,
 				C4961A5B295AAE86009CB1EC /* FolderLoginSignUp */,
@@ -295,6 +305,8 @@
 				9556A45D295AC31F00FD8E1F /* MyPageInfoView.swift in Sources */,
 				C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */,
 				A77EE663295A9A5100B6AA64 /* ContentView.swift in Sources */,
+				18ECD478295AB68700670B6F /* ShoppingBackView.swift in Sources */,
+				18ECD47C295AC41F00670B6F /* ShoppingBackDetailView.swift in Sources */,
 				9556A45C295AC31F00FD8E1F /* MyPageInfoEditChecking.swift in Sources */,
 				EB41C43E295AD8AC00748208 /* RecentDetailView.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
