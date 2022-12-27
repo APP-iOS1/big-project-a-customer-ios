@@ -53,88 +53,98 @@ struct ShoppingBackView: View {
     
     var body: some View {
         // MARK: head
-        VStack {
-            Text("장바구니")
-                .font(.title2.bold())
-            
-            Section {
-                HStack {
-                    Button {
-                        isCheckedAll.toggle()
-                        checkBoxAll()
-                    } label: {
-                        Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                            .foregroundColor(isCheckedAll ? .green : .gray)
-                    }
-                    
-                    Text("모두선택")
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Text("선택삭제")
-                        .font(.headline)
-                }
-            }
-            .padding(.top, 5)
-            
-            Divider()
-                .frame(minHeight: 3)
-                .overlay(Color.gray.brightness(0.3))
-            
-            Spacer()
-            
-            // MARK: body
-            ScrollView {
-                ForEach($vm.sCItems) { item in
-                    ShoppingBackDetailView(item: item, vm: vm)
-                    .padding(.vertical)
-                    
-                    Divider()
-                }
-            }
-            
-            // MARK: tail
-            Section {
-                VStack {
+        NavigationStack {
+            VStack {
+                Text("장바구니")
+                    .font(.title2.bold())
+                
+                Section {
                     HStack {
-                        Text("총 상품금액")
-                        Spacer()
-                        Text("\(totalPrice)원")
-                    }
-                    HStack {
-                        Text("총 배송비")
-                        Spacer()
-                        Text("+ \(shippingCost)원")
-                    }
-                    HStack {
-                        Text("결제금액")
-                        Spacer()
-                        Text("\(totalPrice+shippingCost)원")
-                    }
-                    .font(.title.bold())
-                    .padding(.top, 5)
-
-                    HStack {
-                        Text("총 수량 : \(totalCount)개")
-                            .font(.subheadline)
-                        Spacer()
                         Button {
-                            // item.itemIsChecked true인 인스턴스만 넘겨준다
+                            isCheckedAll.toggle()
+                            checkBoxAll()
                         } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(maxWidth: 200, maxHeight: 50)
-                                Text("바로구매")
-                                    .foregroundColor(.white)
-                            }
+                            Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
+                                .foregroundColor(isCheckedAll ? .green : .gray)
                         }
-                        .disabled(totalCount == 0 ? true : false)
+                        
+                        Text("모두선택")
+                            .font(.headline)
+                        
+                        Spacer()
+                        
+                        // 선택된 item들 한번에 삭제
+                        Button {
+                            vm.sCItems.removeAll(where: { $0.itemIsChecked})
+                        } label: {
+                            Text("선택삭제")
+                                .font(.headline)
+                        }
+                    }
+                }
+                .padding(.top, 5)
+                
+                Divider()
+                    .frame(minHeight: 3)
+                    .overlay(Color.gray.brightness(0.3))
+                
+                Spacer()
+                
+                // MARK: body
+                ScrollView {
+                    ForEach($vm.sCItems) { item in
+                        ShoppingBackDetailView(item: item, vm: vm)
+                        .padding(.vertical)
+                        
+                        Divider()
+                    }
+                }
+                
+                // MARK: tail
+                Section {
+                    VStack {
+                        HStack {
+                            Text("총 상품금액")
+                            Spacer()
+                            Text("\(totalPrice)원")
+                        }
+                        HStack {
+                            Text("총 배송비")
+                            Spacer()
+                            Text("+ \(shippingCost)원")
+                        }
+                        HStack {
+                            Text("결제금액")
+                            Spacer()
+                            Text("\(totalPrice+shippingCost)원")
+                        }
+                        .font(.title.bold())
+                        .padding(.top, 5)
+
+                        HStack {
+                            Text("총 수량 : \(totalCount)개")
+                                .font(.subheadline)
+                            Spacer()
+                            
+                            // 무통장 구매 view로 이동
+                            NavigationLink(destination: {
+                                Text("구매")
+                            }, label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .frame(maxWidth: 200, maxHeight: 50)
+                                    Text("바로구매")
+                                        .foregroundColor(.white)
+                                }
+                            })
+                            .disabled(totalCount == 0 ? true : false)
+                            
+                        }
                     }
                 }
             }
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
     }
     
     func checkBoxAll() {
