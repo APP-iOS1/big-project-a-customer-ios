@@ -129,6 +129,7 @@ struct ShoppingBackView: View {
                                     .foregroundColor(.white)
                             }
                         }
+                        .disabled(totalCount == 0 ? true : false)
                     }
                 }
             }
