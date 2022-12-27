@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 임시 장바구니 데이터 모델
 struct ShoppingCartItems: Identifiable {
     var id = UUID().uuidString
     var itemIsChecked: Bool
@@ -16,28 +17,39 @@ struct ShoppingCartItems: Identifiable {
     var image: String
 }
 
+// MARK: - 임시 장바구니 뷰 모델
+/// 장바구니에 담긴 item들을 가지고 있음
 class ShoppingCartViewModel: ObservableObject {
     // ShoppingCartItems 약자
     @Published var sCItems: [ShoppingCartItems] = [
-        ShoppingCartItems(itemIsChecked: false, itemName: "MacBook Pro", itemPrice: 2060000, itemListCount: 0, image: "macbookpro"),
-        ShoppingCartItems(itemIsChecked: false, itemName: "MacBook Air", itemPrice: 1690000, itemListCount: 0, image: "macbookair"),
-        ShoppingCartItems(itemIsChecked: false, itemName: "Iphone 14", itemPrice: 1550000, itemListCount: 0, image: "iphone14")
+        ShoppingCartItems(itemIsChecked: true, itemName: "MacBook Pro", itemPrice: 2060000, itemListCount: 0, image: "macbookpro"),
+        ShoppingCartItems(itemIsChecked: true, itemName: "MacBook Air", itemPrice: 1690000, itemListCount: 0, image: "macbookair"),
+        ShoppingCartItems(itemIsChecked: true, itemName: "Iphone 14", itemPrice: 1550000, itemListCount: 0, image: "iphone14")
     ]
-    @Published var totalItemsPrice: Int = 0
-    @Published var totalItemsCount: Int = 0
 }
 
 struct ShoppingBackView: View {
-    @State private var isCheckedAll = false
-//    @State private var isChecked = false
-//    @State private var itemName = "macbookpro"
-//    @State private var price: Int = 1000
-//    @State private var count: Int = 0
-//    @State private var image = "macbook.and.iphone"
+    // 전체 선택 체크박스 State 변수
+    @State private var isCheckedAll = true
+    // 총 배송비
     @State private var shippingCost = 3000
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     
+    // 결제할 총 금액
+    var totalPrice: Int {
+        return vm.sCItems
+            .filter{ $0.itemIsChecked }
+            .map{$0.itemPrice * ($0.itemListCount + 1)}
+            .reduce(0, +)
+    }
+    // 결제할 총 수량
+    var totalCount: Int {
+        return vm.sCItems
+            .filter{ $0.itemIsChecked }
+            .map{$0.itemListCount + 1}
+            .reduce(0, +)
+    }
     
     var body: some View {
         // MARK: head
@@ -74,7 +86,6 @@ struct ShoppingBackView: View {
             
             // MARK: body
             ScrollView {
-                
                 ForEach($vm.sCItems) { item in
                     ShoppingBackDetailView(item: item)
                     .padding(.vertical)
@@ -89,7 +100,7 @@ struct ShoppingBackView: View {
                     HStack {
                         Text("총 상품금액")
                         Spacer()
-                        Text("\(price)원")
+                        Text("\(totalPrice)원")
                     }
                     HStack {
                         Text("총 배송비")
@@ -99,16 +110,17 @@ struct ShoppingBackView: View {
                     HStack {
                         Text("결제금액")
                         Spacer()
-                        Text("\(price+shippingCost)원")
+                        Text("\(totalPrice+shippingCost)원")
                     }
                     .font(.title.bold())
                     .padding(.top, 5)
 
                     HStack {
-                        Text("\(count+1)개")
+                        Text("총 수량 : \(totalCount)개")
+                            .font(.subheadline)
                         Spacer()
                         Button {
-
+                            // item.itemIsChecked true인 인스턴스만 넘겨준다
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 10)
@@ -117,7 +129,6 @@ struct ShoppingBackView: View {
                                     .foregroundColor(.white)
                             }
                         }
-
                     }
                 }
             }
@@ -126,15 +137,15 @@ struct ShoppingBackView: View {
     }
     
     func checkBoxAll() {
-//        if isCheckedAll {
-//            for i in vm.sCItems {
-//                i.itemIsChecked = true
-//            }
-//        } else {
-//            for i in vm.sCItems {
-//                i.itemIsChecked = false
-//            }
-//        }
+        if isCheckedAll {
+            for index in vm.sCItems.indices {
+                vm.sCItems[index].itemIsChecked = true
+            }
+        } else {
+            for index in vm.sCItems.indices {
+                vm.sCItems[index].itemIsChecked = false
+            }
+        }
     }
 }
 
