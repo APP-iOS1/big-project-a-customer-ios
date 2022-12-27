@@ -23,6 +23,7 @@ struct HomeMenuView: View {
         Item(categoryTitles: "모니터", categoryImages: "Monitor"),
         Item(categoryTitles: "태블릿", categoryImages: "Tablet"),
         Item(categoryTitles: "스마트워치", categoryImages: "Watch"),
+
         ]
    
     let columns = [
