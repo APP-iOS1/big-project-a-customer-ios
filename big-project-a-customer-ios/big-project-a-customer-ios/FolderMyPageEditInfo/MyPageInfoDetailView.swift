@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct MyPageInfoDetailView: View {
+    @StateObject var vm = MyPageViewModel()
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "person")
                     .modifier(ProfileModifier())
               
-                Text("홍길동")
+                Text(vm.users.name)
                     .modifier(NameModifier())
                 
                 Spacer()
@@ -36,7 +37,6 @@ struct MyPageInfoDetailView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("고객명")
-                    Text("비밀번호")
                     Text("이메일")
                     Text("연락처")
                     Text("주소")
@@ -45,7 +45,7 @@ struct MyPageInfoDetailView: View {
                 //.foregroundColor(.secondary)
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("홍길동")
+                        Text(vm.users.name)
                         Spacer()
                         NavigationLink {
                             MyPageInfoEditChecking()
@@ -53,10 +53,10 @@ struct MyPageInfoDetailView: View {
                             Text("회원정보 수정")
                         }
                     }
-                    Text("-")
-                    Text("-")
-                    Text("-")
-                    Text("-")
+                    
+                    Text(vm.users.userEmail)
+                    Text(vm.users.phoneNumber)
+                    Text(vm.users.userAddress)
 
                 }
             }
@@ -70,7 +70,9 @@ struct MyPageInfoDetailView: View {
 
 struct MyPageInfoDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageInfoDetailView()
+        NavigationStack {
+            MyPageInfoDetailView()
+        }
     }
 }
 

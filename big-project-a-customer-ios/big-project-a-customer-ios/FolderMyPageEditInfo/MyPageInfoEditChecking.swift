@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MyPageInfoEditChecking: View {
     
-    
+    @StateObject var vm = MyPageViewModel()
+
+    @State var showingAlert = false
     @State var password = ""
     
     
@@ -24,7 +26,7 @@ struct MyPageInfoEditChecking: View {
                 
             HStack{
                 Image(systemName: "mail")
-                Text("testEmail@gmail.com")
+                Text(vm.users.userEmail)
             }
             
             HStack{
@@ -34,19 +36,45 @@ struct MyPageInfoEditChecking: View {
 
             
         }
-        
-        NavigationLink {
-            MyPageInfoEdit()
-        } label: {
-            Text("확인")
-                .modifier(ConfirmModifier())
+        .padding()
+        .alert("비밀번호 불일치", isPresented: $showingAlert) {
+                    Button("Ok") {
+                        password = ""
+                    }
+                } message: {
+                    Text("비밀번호를 다시 입력해주세요")
+                }
+        if password == String(vm.users.userPassward) {
+            NavigationLink {
+                
+                MyPageInfoEdit()
+                
+            } label: {
+                Text("확인")
+                    .modifier(ConfirmModifier())
+                
+            }
+            //        .disabled(showingAlert)
+            .simultaneousGesture(TapGesture().onEnded({
+                password = ""
+            }))
+        } else {
+
+            Button {
+                showingAlert = true
+            } label: {
+                Text("확인")
+                    .modifier(ConfirmModifier())
+            }
+
         }
-    
     }
 }
 
 struct MyPageInfoEditChecking_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageInfoEditChecking()
+        NavigationStack {
+            MyPageInfoEditChecking()
+        }
     }
 }
