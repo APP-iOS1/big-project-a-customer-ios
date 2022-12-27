@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyPageInfoEdit: View {
+struct MyPageInfoEditView: View {
     @StateObject var vm = MyPageViewModel()
     
     @State var newPassword = ""
@@ -81,8 +81,8 @@ struct MyPageInfoEdit: View {
     }
 }
 
-struct MyPageInfoEdit_Previews: PreviewProvider {
+struct MyPageInfoEditView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageInfoEdit()
+        MyPageInfoEditView()
     }
 }

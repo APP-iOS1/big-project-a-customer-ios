@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyPageInfoEditChecking: View {
+struct MyPageInfoEditCheckingView: View {
     
     @StateObject var vm = MyPageViewModel()
 
@@ -47,7 +47,7 @@ struct MyPageInfoEditChecking: View {
         if password == String(vm.users.userPassward) {
             NavigationLink {
                 
-                MyPageInfoEdit()
+                MyPageInfoEditView()
                 
             } label: {
                 Text("확인")
@@ -71,10 +71,10 @@ struct MyPageInfoEditChecking: View {
     }
 }
 
-struct MyPageInfoEditChecking_Previews: PreviewProvider {
+struct MyPageInfoEditCheckingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            MyPageInfoEditChecking()
+            MyPageInfoEditCheckingView()
         }
     }
 }
