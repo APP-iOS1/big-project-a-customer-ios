@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ShoppingBackDetailView: View {
     @Binding var item: ShoppingCartItems
+    @ObservedObject var vm: ShoppingCartViewModel
+    
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -34,7 +36,11 @@ struct ShoppingBackDetailView: View {
                         Spacer()
 
                         Button {
-
+                            let index = vm.sCItems.firstIndex {
+                                $0.id == item.id
+                            }
+                            
+                            vm.sCItems.remove(at: index!)
                         } label: {
                             Image(systemName: "x.circle.fill")
                                 .font(.title3)
@@ -62,8 +68,9 @@ struct ShoppingBackDetailView: View {
 
 struct ShoppingBackDetailView_Previews: PreviewProvider {
     @State static var items = ShoppingCartItems(itemIsChecked: false, itemName: "MacBook Pro", itemPrice: 2060000, itemListCount: 0, image: "macbookpro")
+    @StateObject static var vm = ShoppingCartViewModel()
     
     static var previews: some View {
-        ShoppingBackDetailView(item: $items)
+        ShoppingBackDetailView(item: $items, vm: vm)
     }
 }

@@ -40,7 +40,7 @@ struct ShoppingBackView: View {
     var totalPrice: Int {
         return vm.sCItems
             .filter{ $0.itemIsChecked }
-            .map{$0.itemPrice * ($0.itemListCount + 1)}
+            .map{$0.itemPrice * ($0.itemListCount + 1)} 
             .reduce(0, +)
     }
     // 결제할 총 수량
@@ -87,7 +87,7 @@ struct ShoppingBackView: View {
             // MARK: body
             ScrollView {
                 ForEach($vm.sCItems) { item in
-                    ShoppingBackDetailView(item: item)
+                    ShoppingBackDetailView(item: item, vm: vm)
                     .padding(.vertical)
                     
                     Divider()
