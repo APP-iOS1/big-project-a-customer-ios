@@ -11,6 +11,7 @@
 		0456F63C295AD7F7002389F6 /* NotebookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456F63B295AD7F7002389F6 /* NotebookView.swift */; };
 		18ECD478295AB68700670B6F /* ShoppingBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECD477295AB68700670B6F /* ShoppingBackView.swift */; };
 		18ECD47C295AC41F00670B6F /* ShoppingBackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */; };
+		3C2B1D0E295B1B8B00B012E6 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B1D0D295B1B8B00B012E6 /* CreateReviewView.swift */; };
 		9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */; };
 		9556A45C295AC31F00FD8E1F /* MyPageInfoEditChecking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A457295AC31E00FD8E1F /* MyPageInfoEditChecking.swift */; };
 		9556A45D295AC31F00FD8E1F /* MyPageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A458295AC31E00FD8E1F /* MyPageInfoView.swift */; };
@@ -46,6 +47,7 @@
 		0456F63B295AD7F7002389F6 /* NotebookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebookView.swift; sourceTree = "<group>"; };
 		18ECD477295AB68700670B6F /* ShoppingBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingBackView.swift; sourceTree = "<group>"; };
 		18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingBackDetailView.swift; sourceTree = "<group>"; };
+		3C2B1D0D295B1B8B00B012E6 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
 		9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyPageInfo+ViewModifiers.swift"; sourceTree = "<group>"; };
 		9556A457295AC31E00FD8E1F /* MyPageInfoEditChecking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoEditChecking.swift; sourceTree = "<group>"; };
 		9556A458295AC31E00FD8E1F /* MyPageInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				A742105B295B117A005AEC9C /* MyReview.swift */,
 				A742105C295B117A005AEC9C /* CardView.swift */,
+				3C2B1D0D295B1B8B00B012E6 /* CreateReviewView.swift */,
 			);
 			path = ReviewView;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */,
 				A7421069295B117A005AEC9C /* MyQuestionView.swift in Sources */,
 				A742106A295B117A005AEC9C /* QuestionDetailView.swift in Sources */,
+				3C2B1D0E295B1B8B00B012E6 /* CreateReviewView.swift in Sources */,
 				9556A45D295AC31F00FD8E1F /* MyPageInfoView.swift in Sources */,
 				C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */,
 				A7421068295B117A005AEC9C /* DurationSettingView.swift in Sources */,
