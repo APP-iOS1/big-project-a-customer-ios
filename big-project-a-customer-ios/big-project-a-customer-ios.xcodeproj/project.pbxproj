@@ -26,6 +26,13 @@
 		C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */; };
 		C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */; };
 		C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */; };
+		EB41C435295AD83D00748208 /* MyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C42F295AD83D00748208 /* MyReview.swift */; };
+		EB41C436295AD83D00748208 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C430295AD83D00748208 /* CardView.swift */; };
+		EB41C437295AD83D00748208 /* DurationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C431295AD83D00748208 /* DurationSettingView.swift */; };
+		EB41C438295AD83D00748208 /* MyQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C433295AD83D00748208 /* MyQuestionView.swift */; };
+		EB41C439295AD83D00748208 /* QuestionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C434295AD83D00748208 /* QuestionDetailView.swift */; };
+		EB41C43C295AD89500748208 /* MyRecentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C43B295AD89500748208 /* MyRecentView.swift */; };
+		EB41C43E295AD8AC00748208 /* RecentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41C43D295AD8AC00748208 /* RecentDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +53,13 @@
 		C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep1View.swift; sourceTree = "<group>"; };
 		C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep3View.swift; sourceTree = "<group>"; };
+		EB41C42F295AD83D00748208 /* MyReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyReview.swift; sourceTree = "<group>"; };
+		EB41C430295AD83D00748208 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		EB41C431295AD83D00748208 /* DurationSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationSettingView.swift; sourceTree = "<group>"; };
+		EB41C433295AD83D00748208 /* MyQuestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyQuestionView.swift; sourceTree = "<group>"; };
+		EB41C434295AD83D00748208 /* QuestionDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionDetailView.swift; sourceTree = "<group>"; };
+		EB41C43B295AD89500748208 /* MyRecentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecentView.swift; sourceTree = "<group>"; };
+		EB41C43D295AD8AC00748208 /* RecentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +163,44 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
+		EB41C42D295AD83D00748208 /* MyPageReview */ = {
+			isa = PBXGroup;
+			children = (
+				EB41C431295AD83D00748208 /* DurationSettingView.swift */,
+				EB41C43A295AD86100748208 /* RecentView */,
+				EB41C42E295AD83D00748208 /* ReviewView */,
+				EB41C432295AD83D00748208 /* QuestionView */,
+			);
+			path = MyPageReview;
+			sourceTree = "<group>";
+		};
+		EB41C42E295AD83D00748208 /* ReviewView */ = {
+			isa = PBXGroup;
+			children = (
+				EB41C42F295AD83D00748208 /* MyReview.swift */,
+				EB41C430295AD83D00748208 /* CardView.swift */,
+			);
+			path = ReviewView;
+			sourceTree = "<group>";
+		};
+		EB41C432295AD83D00748208 /* QuestionView */ = {
+			isa = PBXGroup;
+			children = (
+				EB41C433295AD83D00748208 /* MyQuestionView.swift */,
+				EB41C434295AD83D00748208 /* QuestionDetailView.swift */,
+			);
+			path = QuestionView;
+			sourceTree = "<group>";
+		};
+		EB41C43A295AD86100748208 /* RecentView */ = {
+			isa = PBXGroup;
+			children = (
+				EB41C43B295AD89500748208 /* MyRecentView.swift */,
+				EB41C43D295AD8AC00748208 /* RecentDetailView.swift */,
+			);
+			path = RecentView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -227,17 +279,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB41C436295AD83D00748208 /* CardView.swift in Sources */,
 				9556A45F295AC31F00FD8E1F /* MyPageInfoEdit.swift in Sources */,
 				0456F63C295AD7F7002389F6 /* NotebookView.swift in Sources */,
 				9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */,
 				C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */,
+				EB41C437295AD83D00748208 /* DurationSettingView.swift in Sources */,
+				EB41C439295AD83D00748208 /* QuestionDetailView.swift in Sources */,
+				EB41C435295AD83D00748208 /* MyReview.swift in Sources */,
+				EB41C43C295AD89500748208 /* MyRecentView.swift in Sources */,
 				C4961A61295AAF25009CB1EC /* SignUpView.swift in Sources */,
 				C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */,
+				EB41C438295AD83D00748208 /* MyQuestionView.swift in Sources */,
 				C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */,
 				9556A45D295AC31F00FD8E1F /* MyPageInfoView.swift in Sources */,
 				C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */,
 				A77EE663295A9A5100B6AA64 /* ContentView.swift in Sources */,
 				9556A45C295AC31F00FD8E1F /* MyPageInfoEditChecking.swift in Sources */,
+				EB41C43E295AD8AC00748208 /* RecentDetailView.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
 				0456F63A295AD7EE002389F6 /* HomeMenuView.swift in Sources */,
 				9556A45E295AC31F00FD8E1F /* MyPageInfoDetailView.swift in Sources */,
