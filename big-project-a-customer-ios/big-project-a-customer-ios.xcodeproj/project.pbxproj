@@ -19,6 +19,7 @@
 		C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */; };
 		C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */; };
 		C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */; };
+		EAA1A145295ACFE400E84C36 /* CouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A144295ACFE400E84C36 /* CouponView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep1View.swift; sourceTree = "<group>"; };
 		C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
 		C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep3View.swift; sourceTree = "<group>"; };
+		EAA1A144295ACFE400E84C36 /* CouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				A77EE660295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift */,
 				A77EE662295A9A5100B6AA64 /* ContentView.swift */,
 				C4961A5B295AAE86009CB1EC /* FolderLoginSignUp */,
+				EAA1A143295ACFBA00E84C36 /* FolderMyPageLike */,
 				A77EE664295A9A5200B6AA64 /* Assets.xcassets */,
 				A77EE666295A9A5200B6AA64 /* Preview Content */,
 			);
@@ -110,6 +113,14 @@
 				C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		EAA1A143295ACFBA00E84C36 /* FolderMyPageLike */ = {
+			isa = PBXGroup;
+			children = (
+				EAA1A144295ACFE400E84C36 /* CouponView.swift */,
+			);
+			path = FolderMyPageLike;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +201,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9556A45F295AC31F00FD8E1F /* MyPageInfoEdit.swift in Sources */,
+				9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */,
+				EAA1A145295ACFE400E84C36 /* CouponView.swift in Sources */,
 				C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */,
 				C4961A61295AAF25009CB1EC /* SignUpView.swift in Sources */,
 				C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */,
