@@ -9,8 +9,20 @@ import SwiftUI
 
 // MARK: 전체 구매목록
 struct PurchaseHistoryView: View {
+    @State private var searchItem = ""
+    
     var body: some View {
         VStack {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField(text: $searchItem) {
+                    Text("주문한 상품을 검색할 수 있어요!")
+                }
+            }
+            .padding(.horizontal, 10)
+            .modifier(PurchaseHistoryButtonModifier())
+            .padding(.horizontal, 10)
+
             ScrollView {
                 ForEach(0..<10){ _ in
                     VStack {
