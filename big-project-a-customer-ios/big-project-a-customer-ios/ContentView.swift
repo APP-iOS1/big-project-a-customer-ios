@@ -10,15 +10,15 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Text("뷰가 들어갈 자리1").tabItem {
+            HomeMenuView().tabItem {
                 Image(systemName: "house")
                 Text("홈")
             }.tag(1)
-            Text("뷰가 들어갈 자리2").tabItem {
+            MyPageInfoView().tabItem {
                 Image(systemName: "person.circle")
                 Text("마이페이지")
             }.tag(2)
-            Text("뷰가 들어갈 자리3").tabItem {
+            ShoppingBackView().tabItem {
                 Image(systemName: "cart.badge.plus")
                 Text("장바구니")
             }.tag(3)
