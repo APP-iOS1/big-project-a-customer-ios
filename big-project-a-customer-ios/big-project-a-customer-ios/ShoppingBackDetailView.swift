@@ -56,6 +56,7 @@ struct ShoppingBackDetailView: View {
                                 Text("\(num)")
                             }
                         }
+                        .colorMultiply(.black)
                         
                     }
                     .padding(.top, 5)
