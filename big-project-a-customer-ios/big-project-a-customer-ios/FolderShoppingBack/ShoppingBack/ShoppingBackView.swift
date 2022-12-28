@@ -87,7 +87,7 @@ struct ShoppingBackView: View {
                         }
                     }
                 }
-                .padding(.top, 5)
+                .padding(.top, 1)
                 
                 Divider()
                     .frame(minHeight: 3)
