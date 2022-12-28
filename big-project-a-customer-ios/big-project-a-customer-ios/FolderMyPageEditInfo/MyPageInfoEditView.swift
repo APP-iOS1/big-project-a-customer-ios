@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// 비밀번호 체크 후 나오는 정보를 수정할 수 있는 뷰
+
 struct MyPageInfoEditView: View {
     @StateObject var vm = MyPageViewModel()
     
