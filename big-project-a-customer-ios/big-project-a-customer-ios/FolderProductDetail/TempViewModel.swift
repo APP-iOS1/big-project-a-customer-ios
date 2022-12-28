@@ -11,7 +11,7 @@ class TempViewModel: ObservableObject {
     @Published var options: [String: [(String, Int)]] = [:]
     
     init() {
-        self.fetchPostDetail()
+//        self.fetchPostDetail()
     }
     
     func fetchPostDetail() {
@@ -34,5 +34,6 @@ class TempViewModel: ObservableObject {
                 options[key]!.append((newValue[0], Int(newValue[1])!))
             }
         }
+        print(options)
     }
 }

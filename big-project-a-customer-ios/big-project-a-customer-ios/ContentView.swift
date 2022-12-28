@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var options: [String: [String]] = [
+        "사이즈": ["S_0", "M_0", "L_0"],
+        "컬러": ["레드_2000", "블루_3000", "블랙_1000"]
+    ]
     var body: some View {
         TabView {
-            ProductDetailModalView().tabItem {
+            ProductDetailModalView(options: $options).tabItem {
                 Image(systemName: "house")
                 Text("홈")
             }.tag(1)

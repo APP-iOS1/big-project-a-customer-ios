@@ -9,12 +9,11 @@ import SwiftUI
 
 struct ProductDetailView: View {
 
-    @State private var imageHeight: CGFloat = 0
+//    @State private var imageHeight: CGFloat = 0
     @State private var options: [String: [String]] = [
         "사이즈": ["S", "M", "L"],
         "컬러": ["레드", "블루", "블랙"]
     ]
-
 
     var body: some View {
         // FIXME: - 외부에서 NavigationStack으로 감싸주기
@@ -55,23 +54,28 @@ struct ProductDetailView: View {
                         }
                             .padding(.leading, 15)
 
-                        Image("productInformation")
-                            .resizable()
-                            .scaledToFit()
+//                        Image("productInformation")
+//                            .resizable()
+//                            .scaledToFit()
 
-                        Button {
-                            // 버튼을 눌렀을때 image의 height를 최대로 늘려준다.
-                            imageHeight = CGFloat.infinity
-                        } label: {
-                            HStack {
-                                Spacer()
-                                Text("상품정보 더보기")
-                                Spacer()
-                            }
-                        }
+//                        Button {
+//                            // 버튼을 눌렀을때 image의 height를 최대로 늘려준다.
+//                            imageHeight = CGFloat.infinity
+//                        } label: {
+//                            HStack {
+//                                Spacer()
+//                                Text("상품정보 더보기")
+//                                Spacer()
+//                            }
+//                        }
 
                         Image("productDetail")
-                            .productDetailImageModifier(height: imageHeight)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: height)
+//                            .productDetailImageModifier(height: imageHeight)
+                        // TODO: - 문의 Section
+                        // TODO: - 리뷰 Section
                     }
                 }//scroll vstack
 
@@ -100,15 +104,15 @@ struct ProductDetailView: View {
                         .tint(.white)
                 }
             }
-
+            
+            // TODO: - navibar (safe area)
                 .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { }) {
-                        Image(systemName: "magnifyingglass")
-                    }
-                        .foregroundColor(.black)
-                }
-
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: { }) {
+//                        Image(systemName: "magnifyingglass")
+//                    }
+//                        .foregroundColor(.black)
+//                }
             }
         }
         // navigationView
