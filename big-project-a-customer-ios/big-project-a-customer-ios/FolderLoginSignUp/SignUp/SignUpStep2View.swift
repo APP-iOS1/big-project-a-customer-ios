@@ -39,34 +39,7 @@ struct SignUpStep2View: View {
         }
     }
     
-    func createTopToastMessage() -> some View{
-            HStack(alignment: .top, spacing:10){
-                Image(systemName: "gift.fill")
-                    .font(.system(size: 40))
-                    .foregroundColor(.white)
-                    .padding(.leading, 5)
-                
-                VStack(alignment:.center, spacing: 2){
-                    Text("보리에게 선물해주세요")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Text("보리는 관절껌을 제일 좋아해요")
-                        .font(.system(size: 14))
-                        .foregroundColor(.white)
-                        .lineLimit(1)
-                }
-                .padding(.trailing, 15)
-            }
-            .padding(.vertical, 5)
-            .padding(.horizontal, 10)
-            .background(Color.red)
-            .cornerRadius(25)
-            .padding(.top, UIApplication.shared.windows.first? .safeAreaInsets.bottom == 0 ? 0 : 30)
-            
-        }
-    
-    
+
     // MARK: - Body SignUpStep2View
     /// SignUpStep2View의 body 입니다.
     var body: some View {

@@ -144,6 +144,7 @@ struct LoginTextFieldModifier: ViewModifier {
         content
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
+            .font(.subheadline)
             .padding(.horizontal, 20)
     }
 }
