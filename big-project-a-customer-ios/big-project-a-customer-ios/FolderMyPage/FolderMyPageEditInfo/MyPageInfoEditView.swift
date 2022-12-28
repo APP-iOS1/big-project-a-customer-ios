@@ -21,26 +21,31 @@ struct MyPageInfoEditView: View {
     
     var body: some View{
         VStack{
+            
+            //MARK: - 비밀번호를 변경하는 부분
+
             Text("비밀 번호 수정")
                 .font(.title)
-            
+            // 수정할 비밀번호를 입력하는 텍스트필드
             SecureField("Input new password.", text: $newPassword)
                 .modifier(InputModifier())
-            
+            // 수정할 비밀번호를 한 번 더 확인하는 텍스트필드
             SecureField("One more time.", text: $checkPassword)
                 .modifier(InputModifier())
             
             
             Button {
-                print("변경버튼 클릭")
                 
-                /// 패스워드가 공백이거나, 엔터가 눌린 상태에서 변경 버튼이 눌리지 않게끔하는 조건을 걸고
-                /// 그 안에 두 번 입력한 패스워드가 같을 경우 비밀번호 변경을 시행 가능하게 함
+                /// 비밀번호가 공백이거나, 엔터가 눌린 상태에서 변경 버튼이 눌리지 않게끔하는 조건을 걸고
+                /// 그 안에 두 번 입력한 비밀번호가 같을 경우 비밀번호 변경을 시행 가능하게 함
                 if newPassword.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
+                    // 비밀번호가 같을 때 비밀번호 변경할 수 있는 조건
                     if newPassword == checkPassword {
+                        // 새로 입력한 비밀번호를 저장
                         vm.users.userPassward = newPassword
-                        print("변경 완료: \(vm.users.userPassward)")
                     } else {
+                        // 입력한 두 비밀번호가 다를 때 alert를 띄워서
+                        // 일치하지 않다는 것을 알림
                         showingAlert = true
                     }
                 }
@@ -50,36 +55,29 @@ struct MyPageInfoEditView: View {
                     .modifier(ConfirmModifier())
             }
             .padding(.bottom,20)
-            
-            
+            // alert: 입력한 두 비밀번호가 일치하지 않을 때 알림
+            // ok버튼을 누르면 텍스트필드 초기화
+            .modifier(PasswordAlertModifier(showingAlert: $showingAlert, password: $newPassword, password_2: $checkPassword))
+
+            //MARK: - 주소를 변경하는 부분
             Text("주소 변경하기")
                 .font(.title)
             
             TextField("New Address", text: $newAddress)
                 .modifier(InputModifier())
             
+            // 주소 변경 버튼
             Button {
-                print("변경")
-                
+                // 입력한 텍스트가 띄어쓰기나, 엔터 버튼이 눌렸을 때 버튼이 작동되지 않는 조건
                 if newAddress.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
+                    // 새로 입력한 주소를 저장
                     vm.users.userAddress = newAddress
-                    print("변경완료: \(vm.users.userAddress)")
-                    
                 }
             } label: {
                 Text("주소 변경")
                     .modifier(ConfirmModifier())
             }
         }
-        .alert("비밀번호 불일치", isPresented: $showingAlert) {
-            Button("Ok") {
-                newPassword = ""
-                checkPassword = ""
-            }
-        } message: {
-            Text("비밀번호를 다시 입력해주세요")
-        }
-        
     }
 }
 
