@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CardView: View {
+    
+    @EnvironmentObject var myReviewViewModel : MyReviewViewModel
+    var card : MyReviewItems
 
     var body: some View {
         ZStack {
@@ -19,22 +22,22 @@ struct CardView: View {
                             .foregroundColor(Color(.label))
                         
                         VStack(alignment: .leading) {
-                            Text("제품 이름")
+                            Text("\(card.itemName)")
                                 .font(.body)
                                 .fontWeight(.medium)
                             
-                            Text("옵션")
+                            Text("\(card.itemOption)")
                                 .font(.caption2)
                                 .fontWeight(.light)
                                 .foregroundColor(.gray)
                             
                             HStack{
-                                Text("카테고리")
+                                Text("\(card.itemCategory)")
                                     .font(.caption2)
                                     .fontWeight(.light)
                                     .foregroundColor(.gray)
                                 Spacer()
-                                Text("구매 날짜")
+                                Text("\(card.purchaseDate)")
                                     .font(.caption2)
                                     .fontWeight(.light)
                                     .foregroundColor(.gray)
@@ -50,6 +53,11 @@ struct CardView: View {
                 
                 VStack(alignment: .leading) {
                     HStack (spacing: -1){
+//                        Foreach(0..< card.stars){ i in
+//                            Image(systemName: "star.fill")
+//                                .foregroundColor(.yellow)
+//                                .padding(0)
+//                        }
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
                             .padding(0)
@@ -67,7 +75,7 @@ struct CardView: View {
                             .padding(0)
                     }
                     .padding(.bottom, 5)
-                    Text("상세리뷰...")
+                    Text("\(card.itemReview)")
                         .frame(width: 350, alignment: .leading)
                     //TO DO : 글자가 길어질 시 '더보기' 하면 전문이 보이도록 하는 기능 구현
                 }
@@ -88,8 +96,9 @@ struct CardView: View {
     }
 }
 
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        CardView()
-    }
-}
+//struct CardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CardView()
+//            .environmentObject(MyReviewViewModel())
+//    }
+//}
