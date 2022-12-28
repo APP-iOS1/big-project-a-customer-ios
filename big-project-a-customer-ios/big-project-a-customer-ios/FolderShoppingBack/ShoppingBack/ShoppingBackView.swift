@@ -19,11 +19,6 @@ struct ShoppingCartItems: Identifiable {
     var options: [String: (String, Int)]
 }
 
-struct Option {
-    var color: String
-    var amount: Int
-}
-
 // MARK: - 임시 장바구니 뷰 모델
 /// 장바구니에 담긴 item들을 가지고 있음
 class ShoppingCartViewModel: ObservableObject {
@@ -139,6 +134,7 @@ struct ShoppingBackView: View {
                             
                             // 무통장 구매 view로 이동
                             NavigationLink(destination: {
+                                // 무통장 구매뷰 생성
                                 Text("구매")
                             }, label: {
                                 ZStack {
