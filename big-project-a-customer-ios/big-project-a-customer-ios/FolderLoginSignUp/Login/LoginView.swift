@@ -7,17 +7,21 @@
 
 import SwiftUI
 
+var userID : String = "" // 이메일
+var userPassword : String = "" // 패스워드
 
 // MARK: - LoginView
 /// 로그인을 하는 View 입니다.
 struct LoginView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
-	@Binding var isLoginSheet: Bool
+//	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
+    
+    @State var isActive : Bool = false
     
     // MARK: - Properties
     
@@ -25,7 +29,7 @@ struct LoginView: View {
     // MARK: - Body LoginView
     /// LoginView의 body 입니다.
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 HStack {
                     Text("로그인")
@@ -79,9 +83,9 @@ struct LoginView: View {
                 HStack {
                     Text("아직 계정이 없으신가요?")
                         .font(.footnote)
-                    NavigationLink {
+                    NavigationLink(isActive: $isActive) {
                         // Going to SignupView
-						SignUpView(isLoginSheet: $isLoginSheet)
+                        SignUpView(isActive : $isActive)
                     } label: {
                         Text("회원가입")
                             .font(.footnote)
@@ -111,6 +115,7 @@ struct LoginView: View {
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
                 endEditing()
             } // onTapGesture
+            /*
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -126,6 +131,7 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
+             */
         } // NavigationStack - 임시
     } // Body
 }
@@ -133,7 +139,7 @@ struct LoginView: View {
 // MARK: - LoginView Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-		LoginView(isLoginSheet: .constant(false))
+		LoginView()
     }
 }
 

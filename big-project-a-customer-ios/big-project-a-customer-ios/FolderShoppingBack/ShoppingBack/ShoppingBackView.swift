@@ -58,6 +58,8 @@ struct ShoppingBackView: View {
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     @State var totalPriceForBinding = 0
+    
+    
     // 결제할 총 금액
     var totalPrice: Int {
         return vm.sCItems
@@ -154,7 +156,9 @@ struct ShoppingBackView: View {
                             // 무통장 구매 view로 이동
                             NavigationLink(destination: {
                                 // 무통장 구매뷰 생성
-                                OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+//                                OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                // 로그인 뷰 연결
+                                LoginView()
                                 
                             }, label: {
                                 ZStack {

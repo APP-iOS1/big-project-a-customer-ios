@@ -8,16 +8,17 @@ import SwiftUI
 
 struct SignUpView: View {
     //MARK: Property wrapper
-	@Binding var isLoginSheet: Bool
+//	@Binding var isLoginSheet: Bool
     @State private var isTermsClick: [Bool] = [Bool](repeating: false, count: 4)
     @State private var isNecessaryClick: [Bool] = [Bool](repeating: false, count: 2)
-
+    @Binding var isActive : Bool
+    
     //MARK: Property
     let totalTerm = TermType.total
     let terms: [TermType] = [.total, .privacy, .service, .emailAndAd]
     
     var body: some View {
-        NavigationStack {
+        
             VStack {
                 Spacer()
                 
@@ -55,8 +56,8 @@ struct SignUpView: View {
                 Spacer()
                 Divider().frame(width: UIScreen.main.bounds.width)
 
-                NavigationLink {
-					SignUpStep1View(isLoginSheet: $isLoginSheet)
+                NavigationLink(isActive: $isActive) {
+                    SignUpStep1View(isActive : $isActive)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -74,7 +75,7 @@ struct SignUpView: View {
             .sheet(isPresented: $isNecessaryClick[1], onDismiss: nil) {
                 SafariView(url: URL(string:"https://glacier-bucket-5c2.notion.site/b32cbc95de6d41328bfa47a7ba7b3aa8")!)
             }
-        } // NavigationStack
+         // NavigationStack
     } // Body
 }
 
@@ -168,6 +169,6 @@ struct CustomProgressView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(isLoginSheet: .constant(false))
+        SignUpView(isActive: .constant(false))
     }
 }

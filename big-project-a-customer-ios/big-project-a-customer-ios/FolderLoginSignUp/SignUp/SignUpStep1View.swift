@@ -19,7 +19,7 @@ extension View {
 ///이메일과 비밀번호를 설정하는 View 입니다.
 struct SignUpStep1View: View {
     // MARK: - Property Wrappers
-	@Binding var isLoginSheet: Bool
+//	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
     @State var passwordCheck = ""
@@ -28,7 +28,8 @@ struct SignUpStep1View: View {
     @FocusState var isInFocusPasswordCheck: Bool
     @State private var isSecuredPassword = true
     @State private var isSecuredPasswordCheck = true
-
+    @Binding var isActive : Bool
+    
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
     
@@ -49,7 +50,7 @@ struct SignUpStep1View: View {
     // MARK: - Body SignUpStep1View
     /// SignUpStep1View의 body 입니다.
     var body: some View {
-        NavigationStack {
+        
             VStack {
                 HStack {
                     Text("이메일과 비밀번호를\n입력해 주세요.")
@@ -162,14 +163,14 @@ struct SignUpStep1View: View {
                 Divider() // 로그인 버튼 구분선
 
                 // 회원가입 성공 시에 다음 버튼을 띄운다. ( Step3: 닉네임 설정 뷰으로 넘어가기 )
-                NavigationLink {
-					SignUpStep2View(isLoginSheet: $isLoginSheet, email: $email, password: $password)
+                NavigationLink(isActive: $isActive) {
+                    SignUpStep2View(email: $email, password: $password, isActive: $isActive)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
                 } // NavigationLink - 다음
                 // TextField가 비어있거나 비밀번호 2개가 다를 경우에는 "다음" 버튼 비활성화
-                .disabled(email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck || !checkEmailRule(string: email) ? true : false)
+                .disabled(email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck || !checkEmailRule(string: email) || !checkPasswordRule(password: password) ? true : false)
             } // VStack
             .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
@@ -180,7 +181,7 @@ struct SignUpStep1View: View {
                     CustomProgressView(nowStep: 2)
                 } // toolbarItem
             } // toolbar
-        } // NavigationStack - 임시
+         // NavigationStack - 임시
     } // Body
 }
 
@@ -188,7 +189,7 @@ struct SignUpStep1View: View {
 // MARK: - SignUpStep1View Previews
 struct SignUpStep1View_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpStep1View(isLoginSheet: .constant(false))
+        SignUpStep1View(isActive : .constant(false))
     }
 }
 
