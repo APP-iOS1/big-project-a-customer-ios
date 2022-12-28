@@ -75,17 +75,14 @@ struct NotebookView: View {
                     .frame(width:85, height: 85)
                 
                 Text(item.NotebookTitles)
-                    .font(.system(.title3 , weight: .bold))
+                    .font(.system(.body, weight: .thin))
                     .foregroundColor(Color.black.opacity(0.8))
                 
                 Text(item.NotebookPrices)
                     .font(.system(.footnote , weight: .bold))
                     .foregroundColor(Color.blue.opacity(0.8))
             }
-            .frame(width:160 , height: 160)
-            .background(Color.white)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 5, y: 5)
+            .modifier(ContentButtonModifier(color: .white))
         }
     }
 }
