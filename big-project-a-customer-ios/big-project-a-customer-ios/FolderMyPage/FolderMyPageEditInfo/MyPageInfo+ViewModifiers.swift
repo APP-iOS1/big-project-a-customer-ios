@@ -14,7 +14,6 @@ struct NameModifier : ViewModifier {
         content
             .font(.title)
             .fontWeight(.bold)
-            
     }
 }
 
@@ -46,9 +45,6 @@ struct ProfileModifier : ViewModifier {
     }
 }
 
-
-
-
 struct ConfirmModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -60,12 +56,28 @@ struct ConfirmModifier : ViewModifier {
     }
 }
 
-
 struct InputModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: 300,height: 40)
             .padding()
             .border(.black)
+    }
+}
+
+struct PasswordAlertModifier: ViewModifier {
+    @Binding var showingAlert: Bool
+    @Binding var password: String
+    @Binding var password_2: String
+    func body(content: Content) -> some View {
+        content
+            .alert("비밀번호 불일치", isPresented: $showingAlert) {
+                Button("Ok") {
+                    password = ""
+                    password_2 = ""
+                }
+            } message: {
+                Text("비밀번호를 다시 입력해주세요")
+            }
     }
 }
