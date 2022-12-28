@@ -17,6 +17,11 @@
 		A77EE674295A9A9400B6AA64 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A77EE673295A9A9400B6AA64 /* FirebaseFirestoreSwift */; };
 		C0D4BDCA295ABCB5002A0083 /* ProductDetailModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D4BDC9295ABCB5002A0083 /* ProductDetailModalView.swift */; };
 		C0D4BDCD295AD459002A0083 /* ProductDetailModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D4BDCC295AD459002A0083 /* ProductDetailModifiers.swift */; };
+		C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A5E295AAEF4009CB1EC /* LoginView.swift */; };
+		C4961A61295AAF25009CB1EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A60295AAF25009CB1EC /* SignUpView.swift */; };
+		C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */; };
+		C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */; };
+		C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +33,11 @@
 		A77EE667295A9A5200B6AA64 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C0D4BDC9295ABCB5002A0083 /* ProductDetailModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailModalView.swift; sourceTree = "<group>"; };
 		C0D4BDCC295AD459002A0083 /* ProductDetailModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailModifiers.swift; sourceTree = "<group>"; };
+		C4961A5E295AAEF4009CB1EC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C4961A60295AAF25009CB1EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep1View.swift; sourceTree = "<group>"; };
+		C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep2View.swift; sourceTree = "<group>"; };
+		C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep3View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +86,7 @@
 				22021FED295AAE9C00EFD5CF /* FolderProductDetail */,
 				A77EE660295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift */,
 				A77EE662295A9A5100B6AA64 /* ContentView.swift */,
+				C4961A5B295AAE86009CB1EC /* FolderLoginSignUp */,
 				A77EE664295A9A5200B6AA64 /* Assets.xcassets */,
 				A77EE666295A9A5200B6AA64 /* Preview Content */,
 			);
@@ -96,6 +107,32 @@
 				C0D4BDCC295AD459002A0083 /* ProductDetailModifiers.swift */,
 			);
 			path = Modifiers;
+		C4961A5B295AAE86009CB1EC /* FolderLoginSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				C4961A5C295AAED1009CB1EC /* Login */,
+				C4961A5D295AAED8009CB1EC /* SignUp */,
+			);
+			path = FolderLoginSignUp;
+			sourceTree = "<group>";
+		};
+		C4961A5C295AAED1009CB1EC /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C4961A5E295AAEF4009CB1EC /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		C4961A5D295AAED8009CB1EC /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				C4961A60295AAF25009CB1EC /* SignUpView.swift */,
+				C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */,
+				C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */,
+				C4961A66295AAFE6009CB1EC /* SignUpStep3View.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +213,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4961A67295AAFE6009CB1EC /* SignUpStep3View.swift in Sources */,
+				C4961A61295AAF25009CB1EC /* SignUpView.swift in Sources */,
+				C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */,
+				C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */,
+				C4961A65295AAFC8009CB1EC /* SignUpStep2View.swift in Sources */,
 				A77EE663295A9A5100B6AA64 /* ContentView.swift in Sources */,
 				C0D4BDCD295AD459002A0083 /* ProductDetailModifiers.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
