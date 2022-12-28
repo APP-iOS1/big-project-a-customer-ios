@@ -23,7 +23,7 @@ struct ShoppingBackDetailView: View {
                         .foregroundColor(item.itemIsChecked ? .green : .gray)
                 }
 
-                Image(item.image)
+                Image(item.image)                                              
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
