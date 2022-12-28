@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 // MARK: - LoginView
 /// 로그인을 하는 View 입니다.
 struct LoginView: View {
@@ -53,8 +54,7 @@ struct LoginView: View {
                     Spacer()
                 } // HStack - 안내문구 Vstack
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 80, trailing: 20))
-                
-                
+            
                 VStack {
                     VStack(spacing: 5) {
                         TextField("이메일", text: $email)
@@ -81,7 +81,7 @@ struct LoginView: View {
                         .font(.footnote)
                     NavigationLink {
                         // Going to SignupView
-                        SignUpView()
+                        SignUpStep1View()
                     } label: {
                         Text("회원가입")
                             .font(.footnote)
@@ -101,12 +101,14 @@ struct LoginView: View {
                     // Login action with firebase...
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
-                        .modifier(LoginButtonModifier())
+                        .modifier(LoginButtonModifier(label: "로그인하기"))
                 }
-                
-                
-                
+   
             } // VStack - body 바로 아래
+            .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
+            .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
+                endEditing()
+            } // onTapGesture
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -122,8 +124,8 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
-        } // VStack
-    } // NavigationStack - 임시
+        } // NavigationStack - 임시
+    } // Body
 }
 
 // MARK: - LoginView Previews
@@ -157,17 +159,18 @@ struct LoginTextFieldRectangleModifier: ViewModifier {
 
 // MARK: - Modifier : LoginView Login Button 속성
 struct LoginButtonModifier: ViewModifier {
+    let label: String
     func body(content: Content) -> some View {
         content
             .foregroundColor(.accentColor)
             .frame(height: 40)
             .overlay {
-                Text("로그인하기")
+                Text(label)
                     .font(.subheadline)
                     .foregroundColor(.white)
                     .bold()
             }
-            .padding(EdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20))
+            .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
     }
 }
 
