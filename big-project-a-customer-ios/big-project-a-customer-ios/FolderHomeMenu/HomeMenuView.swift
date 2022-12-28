@@ -72,10 +72,7 @@ struct HomeMenuView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width:85, height: 85)
             }
-            .frame(width:160 , height: 160)
-            .background(Color.white)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 5, y: 5)
+            .modifier(CategoryButtonModifier(color: .white))
         }
     }
 }
