@@ -51,6 +51,8 @@
 		EAA1A149295AD1CB00E84C36 /* PurchaseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A148295AD1CB00E84C36 /* PurchaseHistoryView.swift */; };
 		EAA1A14B295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A14A295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift */; };
 		EAA1A14D295BD0C400E84C36 /* PurchaseHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A14C295BD0C400E84C36 /* PurchaseHistoryDetailView.swift */; };
+		EAA1A155295C3F3B00E84C36 /* OrderSheetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A154295C3F3B00E84C36 /* OrderSheetAddress.swift */; };
+		EAA1A157295C3F5E00E84C36 /* AddAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A156295C3F5E00E84C36 /* AddAddressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +97,8 @@
 		EAA1A148295AD1CB00E84C36 /* PurchaseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryView.swift; sourceTree = "<group>"; };
 		EAA1A14A295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyPageLike+ViewModifiers.swift"; sourceTree = "<group>"; };
 		EAA1A14C295BD0C400E84C36 /* PurchaseHistoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryDetailView.swift; sourceTree = "<group>"; };
+		EAA1A154295C3F3B00E84C36 /* OrderSheetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSheetAddress.swift; sourceTree = "<group>"; };
+		EAA1A156295C3F5E00E84C36 /* AddAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAddressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +136,10 @@
 		28E0CC87295BC52F008306C3 /* ShoppingBack */ = {
 			isa = PBXGroup;
 			children = (
-				A78DA175295C1CC80047C5AE /* ShoppingBackDetailView.swift */,
 				A78DA176295C1CC80047C5AE /* ShoppingBackView.swift */,
+				A78DA175295C1CC80047C5AE /* ShoppingBackDetailView.swift */,
+				EAA1A154295C3F3B00E84C36 /* OrderSheetAddress.swift */,
+				EAA1A156295C3F5E00E84C36 /* AddAddressView.swift */,
 			);
 			path = ShoppingBack;
 			sourceTree = "<group>";
@@ -413,6 +419,8 @@
 				A78DA18B295C1E590047C5AE /* MyQuestionView.swift in Sources */,
 				A78DA18A295C1E590047C5AE /* DurationSettingView.swift in Sources */,
 				C0D4BDD8295BD0BA002A0083 /* ProductDetailModalView.swift in Sources */,
+				9556A45C295AC31F00FD8E1F /* MyPageInfoEditCheckingView.swift in Sources */,
+				EAA1A157295C3F5E00E84C36 /* AddAddressView.swift in Sources */,
 				EAA1A147295AD14400E84C36 /* LikedProductsView.swift in Sources */,
 				A78DA1F5295C44FF0047C5AE /* MyPageShoppingListView.swift in Sources */,
 				A742106E295B40A0005AEC9C /* TermType.swift in Sources */,
@@ -420,6 +428,8 @@
 				047525AC295C0FAF004B0F37 /* ButtonModifier.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
 				0456F63A295AD7EE002389F6 /* HomeMenuView.swift in Sources */,
+				9556A45E295AC31F00FD8E1F /* MyPageInfoDetailView.swift in Sources */,
+				EAA1A155295C3F3B00E84C36 /* OrderSheetAddress.swift in Sources */,
 				A78DA1F9295C44FF0047C5AE /* MyPageUserModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

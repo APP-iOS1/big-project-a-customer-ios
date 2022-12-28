@@ -12,6 +12,9 @@ struct PurchaseHistoryButtonModifier: ViewModifier {
     var textColor = Color.black
     // FIXME: gray 색상 좀 연하게 해야함
     var borderColor = Color.gray
+    var backgroundColor = Color.white
+    var lineWidth: CGFloat = 1
+    
     func body(content: Content) -> some View {
         content
             .foregroundColor(textColor)
@@ -19,8 +22,9 @@ struct PurchaseHistoryButtonModifier: ViewModifier {
             .frame(maxWidth: .infinity)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(borderColor, lineWidth: 1)
+                    .stroke(borderColor, lineWidth: lineWidth)
             )
+            .background(backgroundColor)
     }
 }
 
@@ -29,6 +33,22 @@ struct TextCaptionGrayModifier: ViewModifier {
         content
             .font(.caption)
             .foregroundColor(.gray)
+    }
+}
+
+struct Halign: ViewModifier {
+    let alignment: Alignment
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity, alignment: alignment)
+    }
+}
+
+struct Valign: ViewModifier {
+    let alignment: Alignment
+    func body(content: Content) -> some View {
+        content
+            .frame(maxHeight: .infinity, alignment: alignment)
     }
 }
 
