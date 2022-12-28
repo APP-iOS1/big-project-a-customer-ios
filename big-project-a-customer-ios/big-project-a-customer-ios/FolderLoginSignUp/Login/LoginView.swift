@@ -81,7 +81,7 @@ struct LoginView: View {
                         .font(.footnote)
                     NavigationLink {
                         // Going to SignupView
-                        SignUpStep1View()
+                        SignUpView()
                     } label: {
                         Text("회원가입")
                             .font(.footnote)
@@ -99,6 +99,8 @@ struct LoginView: View {
                 
                 Button {
                     // Login action with firebase...
+                    // ** 임시 **
+                    dismiss()
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "로그인하기"))
@@ -163,7 +165,7 @@ struct LoginButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.accentColor)
-            .frame(height: 40)
+            .frame(height: 50)
             .overlay {
                 Text(label)
                     .font(.subheadline)
