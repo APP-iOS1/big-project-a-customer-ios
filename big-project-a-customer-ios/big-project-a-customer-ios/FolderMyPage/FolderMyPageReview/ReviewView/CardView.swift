@@ -60,7 +60,7 @@ struct CardView: View {
                             Image(systemName: "star.fill")
                                 .resizable()
                                 .frame(width: 15, height: 13)
-                                .foregroundColor(card.stars >= i ? .yellow : .gray)
+                                .foregroundColor(card.stars > i ? .yellow : .gray)
 
                         }
 
