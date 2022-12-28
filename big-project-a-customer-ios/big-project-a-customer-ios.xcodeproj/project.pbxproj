@@ -23,7 +23,7 @@
 		9556A45E295AC31F00FD8E1F /* MyPageInfoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A459295AC31E00FD8E1F /* MyPageInfoDetailView.swift */; };
 		9556A45F295AC31F00FD8E1F /* MyPageInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A45A295AC31E00FD8E1F /* MyPageInfoEditView.swift */; };
 		A7421064295B117A005AEC9C /* MyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A742105B295B117A005AEC9C /* MyReview.swift */; };
-		A7421065295B117A005AEC9C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A742105C295B117A005AEC9C /* CardView.swift */; };
+		A7421065295B117A005AEC9C /* ReviewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A742105C295B117A005AEC9C /* ReviewDetailView.swift */; };
 		A7421066295B117A005AEC9C /* MyRecentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A742105E295B117A005AEC9C /* MyRecentView.swift */; };
 		A7421067295B117A005AEC9C /* RecentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A742105F295B117A005AEC9C /* RecentDetailView.swift */; };
 		A7421068295B117A005AEC9C /* DurationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7421060295B117A005AEC9C /* DurationSettingView.swift */; };
@@ -67,7 +67,7 @@
 		9556A459295AC31E00FD8E1F /* MyPageInfoDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoDetailView.swift; sourceTree = "<group>"; };
 		9556A45A295AC31E00FD8E1F /* MyPageInfoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoEditView.swift; sourceTree = "<group>"; };
 		A742105B295B117A005AEC9C /* MyReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyReview.swift; sourceTree = "<group>"; };
-		A742105C295B117A005AEC9C /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		A742105C295B117A005AEC9C /* ReviewDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewDetailView.swift; sourceTree = "<group>"; };
 		A742105E295B117A005AEC9C /* MyRecentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRecentView.swift; sourceTree = "<group>"; };
 		A742105F295B117A005AEC9C /* RecentDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentDetailView.swift; sourceTree = "<group>"; };
 		A7421060295B117A005AEC9C /* DurationSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationSettingView.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				A742105B295B117A005AEC9C /* MyReview.swift */,
-				A742105C295B117A005AEC9C /* CardView.swift */,
+				A742105C295B117A005AEC9C /* ReviewDetailView.swift */,
 				3C2B1D0D295B1B8B00B012E6 /* CreateReviewView.swift */,
 			);
 			path = ReviewView;
@@ -387,7 +387,7 @@
 				9556A45C295AC31F00FD8E1F /* MyPageInfoEditCheckingView.swift in Sources */,
 				EAA1A147295AD14400E84C36 /* LikedProductsView.swift in Sources */,
 				A742106E295B40A0005AEC9C /* TermType.swift in Sources */,
-				A7421065295B117A005AEC9C /* CardView.swift in Sources */,
+				A7421065295B117A005AEC9C /* ReviewDetailView.swift in Sources */,
 				A7421066295B117A005AEC9C /* MyRecentView.swift in Sources */,
 				67C798B7295C0F8000E13A16 /* SafariView.swift in Sources */,
 				18ECD478295AB68700670B6F /* ShoppingBackView.swift in Sources */,
