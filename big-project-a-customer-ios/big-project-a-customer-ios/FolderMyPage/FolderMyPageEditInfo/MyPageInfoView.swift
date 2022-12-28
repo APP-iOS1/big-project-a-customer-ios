@@ -44,8 +44,23 @@ struct MyPageInfoView: View {
                     //뷰들과 연결되면 ForEach문은 없앨 예정
                     ForEach(sampleActions, id: \.self) { action in
                         // 더미 데이터들
-                            NavigationLink {
-                                Text(action)
+                        NavigationLink {
+                            switch action {
+                            case "좋아요":
+                                LikedProductsView()
+                            case "구매내역":
+                                PurchaseHistoryView()
+                            case "쿠폰함":
+                                CouponView()
+                            case "작성한 리뷰":
+                                MyReview()
+                            case "작성한 문의 글":
+                                MyQuestionReview()
+                            case "최근 본 상품":
+                                MyReview()
+                            default :
+                                Text("default")
+                            }
                             } label: {
                                 ZStack {
                                     Color(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1))

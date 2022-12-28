@@ -116,7 +116,7 @@ struct PurchaseListCell: View {
                 switch deliveryStatus {
                 case .pending:
                     Button {
-                        // 배송 조회
+                        PurchaseHistoryDetailView()
                     } label: {
                         Text("배송조회")
                     }
