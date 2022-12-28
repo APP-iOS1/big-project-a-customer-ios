@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//회원정보 수정을 누르면 보이는 -> 비밀번호 체크 뷰
+
 struct MyPageInfoEditCheckingView: View {
     
     @StateObject var vm = MyPageViewModel()
@@ -26,6 +28,7 @@ struct MyPageInfoEditCheckingView: View {
                 
             HStack{
                 Image(systemName: "mail")
+                // 유저 이메일
                 Text(vm.users.userEmail)
             }
             
@@ -37,6 +40,7 @@ struct MyPageInfoEditCheckingView: View {
             
         }
         .padding()
+        // 비밀번호 체크 후 일치하지 않을 시 나오는 alert
         .alert("비밀번호 불일치", isPresented: $showingAlert) {
                     Button("Ok") {
                         password = ""
@@ -44,6 +48,9 @@ struct MyPageInfoEditCheckingView: View {
                 } message: {
                     Text("비밀번호를 다시 입력해주세요")
                 }
+        
+        // 입력한 비밀번호가 일치할 시 네비게이션 링크를 보여주고,
+        // 불일치할 시 버튼을 보여주고, alert를 띄운다
         if password == String(vm.users.userPassward) {
             NavigationLink {
                 
@@ -54,7 +61,6 @@ struct MyPageInfoEditCheckingView: View {
                     .modifier(ConfirmModifier())
                 
             }
-            //        .disabled(showingAlert)
             .simultaneousGesture(TapGesture().onEnded({
                 password = ""
             }))
