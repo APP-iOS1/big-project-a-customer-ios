@@ -7,18 +7,27 @@
 
 import SwiftUI
 
+
+// 마이페이지 -> 설정버튼 누르면 보이는 내 정보 뷰
+
 struct MyPageInfoDetailView: View {
+    
+    @StateObject var vm = MyPageViewModel()
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
+                // 프로필 사진 기능 추가 예정
                 Image(systemName: "person")
                     .modifier(ProfileModifier())
               
-                Text("홍길동")
+                // 유저 이름
+                Text(vm.users.name)
                     .modifier(NameModifier())
                 
                 Spacer()
                 
+                //데이터 연결 후 로그아웃 로직 연결될 버튼
                 Button {
                     print("로그아웃")
                 } label: {
@@ -36,7 +45,6 @@ struct MyPageInfoDetailView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("고객명")
-                    Text("비밀번호")
                     Text("이메일")
                     Text("연락처")
                     Text("주소")
@@ -45,18 +53,24 @@ struct MyPageInfoDetailView: View {
                 //.foregroundColor(.secondary)
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("홍길동")
+                        // 유저 이름
+                        Text(vm.users.name)
                         Spacer()
+                        
+                        // 회원정보 수정 링크
+                        // 비밀번호, 주소를 수정할 수 있음
                         NavigationLink {
-                            MyPageInfoEditChecking()
+                            MyPageInfoEditCheckingView()
                         } label: {
                             Text("회원정보 수정")
                         }
                     }
-                    Text("-")
-                    Text("-")
-                    Text("-")
-                    Text("-")
+                    // 유저 이메일
+                    Text(vm.users.userEmail)
+                    // 유저 전화번호
+                    Text(vm.users.phoneNumber)
+                    // 유저 주소
+                    Text(vm.users.userAddress)
 
                 }
             }
@@ -70,7 +84,9 @@ struct MyPageInfoDetailView: View {
 
 struct MyPageInfoDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageInfoDetailView()
+        NavigationStack {
+            MyPageInfoDetailView()
+        }
     }
 }
 
