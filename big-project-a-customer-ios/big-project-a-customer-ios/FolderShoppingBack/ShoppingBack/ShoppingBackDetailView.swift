@@ -40,11 +40,7 @@ struct ShoppingBackDetailView: View {
                         Spacer()
 
                         Button {
-                            let index = vm.sCItems.firstIndex {
-                                $0.id == item.id
-                            }
-                            
-                            vm.sCItems.remove(at: index!)
+                            vm.deleteItem(item)
                         } label: {
                             Image(systemName: "x.circle.fill")
                                 .font(.title3)

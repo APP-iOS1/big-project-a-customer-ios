@@ -28,6 +28,26 @@ class ShoppingCartViewModel: ObservableObject {
         ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", amount: 0 ,isChecked: true, options: ["색상" : ("실버", 0), "저장용량" : ("1024GB", 300000), "RAM" : ("16GB", 200000)]),
         ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", amount: 0, isChecked: true, options: ["색상" : ("딥 퍼플", 0), "저장용량" : ("128GB", 0)])
     ]
+    
+    // MARK: - 장바구니에 아이템을 추가하는 메소드
+    /// 파라미터로 ShoppingCartItems 인스턴스를 전달하면 됩니다
+    /// ex) ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0, isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)])
+    func addItemToShoppingCart(_ item: ShoppingCartItems) {
+        sCItems.append(item)
+    }
+    
+    // 장바구니에 아이템을 삭제하는 메소드
+    func deleteItem(_ item: ShoppingCartItems) {
+        let index = sCItems.firstIndex {
+            $0.id == item.id
+        }
+        sCItems.remove(at: index!)
+    }
+    
+    // 장바구니에서 선택된 아이템을 삭제하는 메소드
+    func clearSelectedShoppingCart() {
+        sCItems.removeAll(where: { $0.isChecked})
+    }
 }
 
 
@@ -79,7 +99,8 @@ struct ShoppingBackView: View {
                         
                         // 선택된 item들 한번에 삭제
                         Button {
-                            vm.sCItems.removeAll(where: { $0.isChecked})
+                            vm.clearSelectedShoppingCart()
+                            //vm.sCItems.removeAll(where: { $0.isChecked})
                         } label: {
                             Text("선택삭제")
                                 .font(.headline)
