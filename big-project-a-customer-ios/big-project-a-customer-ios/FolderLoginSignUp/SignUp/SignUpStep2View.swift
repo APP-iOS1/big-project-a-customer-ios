@@ -127,7 +127,7 @@ struct SignUpStep2View: View {
                         .font(.footnote)
                 } // toolbarItem 
             } // toolbar
-            .popup(isPresented: $isShowSucceedToast, type: .floater(useSafeAreaInset: false), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
+            .popup(isPresented: $isShowSucceedToast, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
                 HStack {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.white)
