@@ -52,7 +52,9 @@ struct HomeMenuView: View {
                     }
                 }//.onChange
             }//ScrollView
+            .navigationTitle("쇼핑하기")
         }//NavigationStack
+      
         .background(.white)
     }
     // MARK: 홈 메뉴에 그려질 Cell View
