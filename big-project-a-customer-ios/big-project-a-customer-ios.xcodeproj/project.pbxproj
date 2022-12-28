@@ -116,6 +116,7 @@
 		76E85444295BDE56000FE8A9 /* FolderMyPage */ = {
 			isa = PBXGroup;
 			children = (
+				9556A458295AC31E00FD8E1F /* MyPageInfoView.swift */,
 				9556A44F295AB9A800FD8E1F /* FolderMyPageEditInfo */,
 				A7421059295B117A005AEC9C /* FolderMyPageReview */,
 				EAA1A143295ACFBA00E84C36 /* FolderMyPageLike */,
@@ -126,7 +127,6 @@
 		9556A44F295AB9A800FD8E1F /* FolderMyPageEditInfo */ = {
 			isa = PBXGroup;
 			children = (
-				9556A458295AC31E00FD8E1F /* MyPageInfoView.swift */,
 				9556A459295AC31E00FD8E1F /* MyPageInfoDetailView.swift */,
 				9556A457295AC31E00FD8E1F /* MyPageInfoEditCheckingView.swift */,
 				9556A45A295AC31E00FD8E1F /* MyPageInfoEditView.swift */,

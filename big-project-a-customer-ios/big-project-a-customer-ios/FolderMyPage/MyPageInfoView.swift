@@ -35,7 +35,10 @@ struct MyPageInfoView: View {
                     }
                 }
                 .padding(30)
-                Text("혜택")
+                
+                Image("event")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .modifier(GiftModifier())
                
                     

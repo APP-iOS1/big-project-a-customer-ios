@@ -41,13 +41,6 @@ struct MyPageInfoEditCheckingView: View {
         }
         .padding()
         // 비밀번호 체크 후 일치하지 않을 시 나오는 alert
-//        .alert("비밀번호 불일치", isPresented: $showingAlert) {
-//            Button("Ok") {
-//                password = ""
-//            }
-//        } message: {
-//            Text("비밀번호를 다시 입력해주세요")
-//        }
         .modifier(PasswordAlertModifier(showingAlert: $showingAlert, password: $password, password_2: $password))
         
         // 입력한 비밀번호가 일치할 시 네비게이션 링크를 보여주고,

@@ -91,15 +91,3 @@ struct MyPageInfoDetailView_Previews: PreviewProvider {
 }
 
 
-
-
-
-//            .padding(.horizontal, 30)
-            //            List {
-            //                Label("와우 멤버쉽", systemImage: "star")
-            //                Label("브랜드 멤버쉽 관리", systemImage: "star")
-            //                Label("푸시설정", systemImage: "star")
-            //            }
-            //            .listStyle(.plain)
-            //
-          

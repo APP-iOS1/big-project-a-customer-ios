@@ -28,8 +28,6 @@ struct GiftModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: 400, height: 100)
-            .border(.black)
-            .background(.white)
     }
 }
 
