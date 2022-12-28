@@ -12,6 +12,8 @@ struct big_project_a_customer_iosApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(MyReviewViewModel())
+
         }
     }
 }

@@ -7,13 +7,38 @@
 
 import SwiftUI
 
+// MARK: - 최근 본 상품 데이터 모델 (목업)
+// FIXME: 데이터 변경 필요함!
+struct RecentViewedItems: Identifiable {
+    var id = UUID().uuidString
+    var itemName: String
+    var itemPrice: Int
+    var itemCategory: String
+    var image: String
+}
+
+// MARK: - 최근 본 상품 뷰 모델
+// FIXME: 데이터 변경 필요함!
+/// 최근 본 상품  item들을 가지고 있음
+class RecentViewedViewModel: ObservableObject {
+    @Published var recentViewedItems: [RecentViewedItems] = [
+        RecentViewedItems(itemName: "MacBook Pro", itemPrice: 2060000, itemCategory: "노트북", image: "macbookpro"),
+        RecentViewedItems(itemName: "MacBook Air", itemPrice: 1690000, itemCategory: "노트북", image: "macbookair"),
+        RecentViewedItems(itemName: "Iphone 14", itemPrice: 1550000, itemCategory: "스마트폰", image: "iphone14")
+    ]
+}
+
 struct MyRecentView: View {
+    @ObservedObject var recentViewedViewModel: RecentViewedViewModel = RecentViewedViewModel()
+    
     var body: some View {
         ScrollView(showsIndicators: false, content: {
-            RecentDetailView()
-            RecentDetailView()
-            RecentDetailView()
-            RecentDetailView()
+            ForEach($recentViewedViewModel.recentViewedItems) { item in
+                RecentDetailView(item: item, vm: recentViewedViewModel)
+                .padding(.vertical)
+                
+                Divider()
+            }
         })
         .navigationTitle("최근 본 상품")
     }
