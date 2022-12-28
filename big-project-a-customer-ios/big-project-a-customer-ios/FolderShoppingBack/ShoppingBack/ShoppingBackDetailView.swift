@@ -30,9 +30,13 @@ struct ShoppingBackDetailView: View {
 
                 VStack(alignment: .trailing) {
                     HStack {
-                        Text(item.name)
-                            .font(.title3)
-
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.title3)
+                            Text("(\(item.price)원)")
+                                .font(.subheadline)
+                        }
+                        
                         Spacer()
 
                         Button {
@@ -47,33 +51,47 @@ struct ShoppingBackDetailView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
+                    
+                    VStack(alignment: .leading) {
+                        ForEach(item.options.sorted(by: { lhs, rhs in lhs.key > rhs.key }), id: \.key) { key, value in
+                            HStack {
+                                Text("\(key) : \(value.0)")
+                                    .font(.subheadline)
+                                if value.1 > 0 {
+                                    Text("(+\(value.1)원)")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                }
+                                
+                                Spacer()
+                            }
+                        }
+                    }
+                    .padding(.top, 1)
+                    
 
-                    VStack(alignment: .trailing) {
-                        Text("가격 : \(item.price)원")
+                    VStack(alignment: .leading) {
+                        Text("옵션 포함 가격 : \(item.price + (item.options).values.map{$0.1}.reduce(0,+))원")
 
                         HStack {
-                            Text("색상 : \(item.option.color)")
-                                .padding(.leading)
-                                .font(.subheadline)
-                                
-                            
                             Spacer()
                             
-                            Picker("count", selection: $item.option.amount) {
+                            Picker("count", selection: $item.amount) {
                                 ForEach(1..<10) { num in
                                     Text("\(num)개")
                                 }
                             }
                             .colorMultiply(.black)
+                            .background {
+                                Color.gray.brightness(0.35)
+                            }
+                            .cornerRadius(10)
                         }
-                        .background {
-                            Color.gray.brightness(0.35)
-                        }
-                        .cornerRadius(10)
                         
                     }
                     .padding(.top, 5)
                 }
+                .padding(.leading, 5)
 
             }
         }
@@ -81,7 +99,7 @@ struct ShoppingBackDetailView: View {
 }
 
 struct ShoppingBackDetailView_Previews: PreviewProvider {
-    @State static var items = ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro",isChecked: true, option: Option(color: "spacegray", amount: 0))
+    @State static var items = ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0,isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)])
     @StateObject static var vm = ShoppingCartViewModel()
     
     static var previews: some View {
