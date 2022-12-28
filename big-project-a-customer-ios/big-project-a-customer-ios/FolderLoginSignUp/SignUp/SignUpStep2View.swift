@@ -96,8 +96,7 @@ struct SignUpStep2View: View {
             } // onTapGesture
             .toolbar {
                 ToolbarItem(placement: .principal) { // 회원가입 진행 현황 툴바
-                    Text("Step3 진행 중...")
-                        .font(.footnote)
+                    CustomProgressView(nowStep: 3)
                 } // toolbarItem 
             } // toolbar
             .popup(isPresented: $isShowSucceedToast, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {

@@ -176,8 +176,7 @@ struct SignUpStep1View: View {
             } // onTapGesture
             .toolbar {
                 ToolbarItem(placement: .principal) { // 회원가입 진행 현황 툴바
-                    Text("Step2 진행 중...")
-                        .font(.footnote)
+                    CustomProgressView(nowStep: 2)
                 } // toolbarItem
             } // toolbar
         } // NavigationStack - 임시

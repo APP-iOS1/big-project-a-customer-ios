@@ -14,6 +14,7 @@
 		3C2B1D0E295B1B8B00B012E6 /* CreateReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2B1D0D295B1B8B00B012E6 /* CreateReviewView.swift */; };
 		6713F70F295B2386009ABA8C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6713F70E295B2386009ABA8C /* SignUpViewModel.swift */; };
 		67C798B5295BD09100E13A16 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 67C798B4295BD09100E13A16 /* PopupView */; };
+		67C798B7295C0F8000E13A16 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C798B6295C0F8000E13A16 /* SafariView.swift */; };
 		7605A193295AD0BA00F24D7E /* MyPageUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7605A192295AD0BA00F24D7E /* MyPageUserModel.swift */; };
 		9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */; };
 		9556A45C295AC31F00FD8E1F /* MyPageInfoEditCheckingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A457295AC31E00FD8E1F /* MyPageInfoEditCheckingView.swift */; };
@@ -56,6 +57,7 @@
 		18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingBackDetailView.swift; sourceTree = "<group>"; };
 		3C2B1D0D295B1B8B00B012E6 /* CreateReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReviewView.swift; sourceTree = "<group>"; };
 		6713F70E295B2386009ABA8C /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		67C798B6295C0F8000E13A16 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		7605A192295AD0BA00F24D7E /* MyPageUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserModel.swift; sourceTree = "<group>"; };
 		9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyPageInfo+ViewModifiers.swift"; sourceTree = "<group>"; };
 		9556A457295AC31E00FD8E1F /* MyPageInfoEditCheckingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoEditCheckingView.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				C4961A64295AAFC8009CB1EC /* SignUpStep2View.swift */,
 				6713F70E295B2386009ABA8C /* SignUpViewModel.swift */,
 				A742106D295B40A0005AEC9C /* TermType.swift */,
+				67C798B6295C0F8000E13A16 /* SafariView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				A742106E295B40A0005AEC9C /* TermType.swift in Sources */,
 				A7421065295B117A005AEC9C /* CardView.swift in Sources */,
 				A7421066295B117A005AEC9C /* MyRecentView.swift in Sources */,
+				67C798B7295C0F8000E13A16 /* SafariView.swift in Sources */,
 				18ECD478295AB68700670B6F /* ShoppingBackView.swift in Sources */,
 				18ECD47C295AC41F00670B6F /* ShoppingBackDetailView.swift in Sources */,
 				9556A45C295AC31F00FD8E1F /* MyPageInfoEditCheckingView.swift in Sources */,
