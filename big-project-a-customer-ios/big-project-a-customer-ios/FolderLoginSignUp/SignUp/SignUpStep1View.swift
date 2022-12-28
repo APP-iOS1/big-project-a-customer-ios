@@ -20,14 +20,17 @@ extension View {
 struct SignUpStep1View: View {
     // MARK: - Property Wrappers
 //	@Binding var isLoginSheet: Bool
+	@Environment(\.dismiss) private var dismiss
+	
     @State var email = ""
     @State var password = ""
-    @State var passwordCheck = ""
+    @State var passwordCheck = "123123@"
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
     @FocusState var isInFocusPasswordCheck: Bool
     @State private var isSecuredPassword = true
     @State private var isSecuredPasswordCheck = true
+	@Binding var isSignUpCompleted: Bool
     @Binding var isActive : Bool
     
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
@@ -164,7 +167,7 @@ struct SignUpStep1View: View {
 
                 // 회원가입 성공 시에 다음 버튼을 띄운다. ( Step3: 닉네임 설정 뷰으로 넘어가기 )
                 NavigationLink(isActive: $isActive) {
-                    SignUpStep2View(email: $email, password: $password, isActive: $isActive)
+					SignUpStep2View(email: $email, password: $password, isActive: $isActive, isSignUpCompleted: $isSignUpCompleted)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -176,6 +179,11 @@ struct SignUpStep1View: View {
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
                 endEditing()
             } // onTapGesture
+			.onAppear {
+				if isSignUpCompleted {
+					dismiss()
+				}
+			}
             .toolbar {
                 ToolbarItem(placement: .principal) { // 회원가입 진행 현황 툴바
                     CustomProgressView(nowStep: 2)
@@ -186,10 +194,10 @@ struct SignUpStep1View: View {
 }
 
 
-// MARK: - SignUpStep1View Previews
-struct SignUpStep1View_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpStep1View(isActive : .constant(false))
-    }
-}
+//// MARK: - SignUpStep1View Previews
+//struct SignUpStep1View_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignUpStep1View(isActive : .constant(false))
+//    }
+//}
 

@@ -9,8 +9,12 @@ import SwiftUI
 struct SignUpView: View {
     //MARK: Property wrapper
 //	@Binding var isLoginSheet: Bool
+	@Environment(\.dismiss) private var dismiss
+	
     @State private var isTermsClick: [Bool] = [Bool](repeating: false, count: 4)
     @State private var isNecessaryClick: [Bool] = [Bool](repeating: false, count: 2)
+	@State private var isSignUpCompleted = false
+	
     @Binding var isActive : Bool
     
     //MARK: Property
@@ -57,7 +61,7 @@ struct SignUpView: View {
                 Divider().frame(width: UIScreen.main.bounds.width)
 
                 NavigationLink(isActive: $isActive) {
-                    SignUpStep1View(isActive : $isActive)
+                    SignUpStep1View(isSignUpCompleted: $isSignUpCompleted, isActive : $isActive)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -69,6 +73,11 @@ struct SignUpView: View {
                     CustomProgressView(nowStep: 1)
                 } // toolbarItem
             } // toolbar
+			.onAppear {
+				if isSignUpCompleted {
+					dismiss()
+				}
+			}
             .sheet(isPresented: $isNecessaryClick[0], onDismiss: nil) {
                 SafariView(url: URL(string:"https://glacier-bucket-5c2.notion.site/8ef1818eade54304a51d0563397d80b9")!)
             }
