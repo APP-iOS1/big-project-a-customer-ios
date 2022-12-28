@@ -14,7 +14,9 @@ struct ShoppingCartItems: Identifiable {
     var price: Int
     var image: String
     var isChecked: Bool
-    var option: Option
+//    var option: Option
+            // [옵션 이름: (옵션 값, 추가 가격)]
+    var options: [String: (String, Int)]
 }
 
 struct Option {
@@ -27,9 +29,9 @@ struct Option {
 class ShoppingCartViewModel: ObservableObject {
     // ShoppingCartItems 약자
     @Published var sCItems: [ShoppingCartItems] = [
-        ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro",isChecked: true, option: Option(color: "spacegray", amount: 0)),
-        ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", isChecked: true, option: Option(color: "spacegray", amount: 0)),
-        ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", isChecked: true, option: Option(color: "spacegray", amount: 0))
+        ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)]),
+        ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", isChecked: true, options: ["색상" : ("실버", 0), "저장용량" : ("1024GB", 300000), "RAM" : ("16GB", 200000)]),
+        ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", isChecked: true, options: ["색상" : ("딥 퍼플", 0), "저장용량" : ("128GB", 0)])
     ]
 }
 
