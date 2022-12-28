@@ -30,7 +30,7 @@ struct MyReviewItems: Identifiable {
     var itemCategory: String
     var purchaseDate: String
     var itemReview: String
-    var itemImg: String
+    var itemImgs: [String]
     var stars: Int
 }
 
@@ -40,9 +40,9 @@ struct MyReviewItems: Identifiable {
 class MyReviewViewModel: ObservableObject {
     // MyReviewItems 약자
     @Published var mRItems: [MyReviewItems] = [
-        MyReviewItems(date: "2022-12-07", itemName: "MacBook Air M1", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-11-30", itemReview: "가벼워서 카페에 들고다니기 좋아요!", itemImg: "",stars: 4),
-        MyReviewItems(date: "2022-12-02", itemName: "iPad Pro 12.9", itemOption: "Space Black", itemCategory: "태블릿", purchaseDate: "2022-11-26", itemReview: "화면이 커서 시원시원합니다, 조금 무거운게 단점이에요", itemImg: "",stars: 3),
-        MyReviewItems(date: "2022-11-17", itemName: "iPhone14 Pro", itemOption: "256gb", itemCategory: "핸드폰", purchaseDate: "2022-10-29", itemReview: "카메라 성능이 너무 좋습니다, 다이나믹 아일랜드 영롱해요", itemImg: "",stars: 5)
+        MyReviewItems(date: "2022-12-07", itemName: "MacBook Air M1", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-11-30", itemReview: "가벼워서 카페에 들고다니기 좋아요!", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
+        MyReviewItems(date: "2022-12-02", itemName: "MacBook Pro 16", itemOption: "Space Black", itemCategory: "노트북", purchaseDate: "2022-11-26", itemReview: "화면이 커서 시원시원합니다, 조금 무거운게 단점이에요", itemImgs: ["macbookpro1", "macbookpro2"], stars: 4),
+        MyReviewItems(date: "2022-11-17", itemName: "iPhone14 Pro", itemOption: "256gb", itemCategory: "핸드폰", purchaseDate: "2022-10-29", itemReview: "카메라 성능이 너무 좋습니다, 다이나믹 아일랜드 영롱해요", itemImgs: ["iphone14pro1", "iphone14pro2"], stars: 5)
     ]
 }
 
@@ -79,17 +79,17 @@ struct MyReview: View {
                     ForEach(myReviewViewModel.mRItems) { mRItem in
                         CardView(card: mRItem)
                     }
+                    
+                    
+                    // 스크롤 아래 빈공간 네모
+                    Rectangle()
+                        .frame(height: 300)
+                        .foregroundColor(.clear)
+                    
                 })
                 .navigationTitle("작성한 리뷰")
-                //.opacity(isShowingDuration ? 0.2 : 1)
-                //        .toolbar {
-                //            Button {
-                //
-                //            } label: {
-                //                Image(systemName: "house")
-                //            }
-                //
-                //        }
+
+                
             }
         }
         .ignoresSafeArea(.all, edges: .bottom)

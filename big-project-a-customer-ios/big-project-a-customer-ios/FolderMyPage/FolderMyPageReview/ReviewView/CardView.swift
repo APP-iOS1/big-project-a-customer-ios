@@ -9,74 +9,65 @@ import SwiftUI
 
 struct CardView: View {
     
+    
     @EnvironmentObject var myReviewViewModel : MyReviewViewModel
+    
+    // MARK: - 상위 뷰에서 리뷰 관련 데이터를 받아오는 프로퍼티
     var card : MyReviewItems
+    
 
     var body: some View {
         ZStack {
             VStack {
                 VStack {
                     HStack {
-                        Image(systemName: "iphone.gen1")
-                            .font(.system(size: 50))
-                            .foregroundColor(Color(.label))
-                        
                         VStack(alignment: .leading) {
                             Text("\(card.itemName)")
-                                .font(.body)
+                                .font(.title3)
                                 .fontWeight(.medium)
                             
                             Text("\(card.itemOption)")
-                                .font(.caption2)
+                                .font(.caption)
                                 .fontWeight(.light)
                                 .foregroundColor(.gray)
                             
                             HStack{
                                 Text("\(card.itemCategory)")
-                                    .font(.caption2)
+                                    .font(.caption)
                                     .fontWeight(.light)
                                     .foregroundColor(.gray)
                                 Spacer()
                                 Text("\(card.purchaseDate)")
-                                    .font(.caption2)
+                                    .font(.caption)
                                     .fontWeight(.light)
                                     .foregroundColor(.gray)
                             }
+                            .padding(.trailing, 10)
                         }
+                        .padding(.leading, 15)
                         
                         Spacer()
                         
 
                     }
-                    .padding(10)
+                    .padding(.leading, 10)
                 }
+                .padding(.top, 5)
                 
                 VStack(alignment: .leading) {
-                    HStack (spacing: -1){
-//                        Foreach(0..< card.stars){ i in
-//                            Image(systemName: "star.fill")
-//                                .foregroundColor(.yellow)
-//                                .padding(0)
-//                        }
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .padding(0)
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .padding(0)
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .padding(0)
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .padding(0)
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .padding(0)
+                    HStack (spacing: 2){
+                        ForEach(0..<5){ i in
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .frame(width: 15, height: 13)
+                                .foregroundColor(card.stars >= i ? .yellow : .gray)
+
+                        }
+
                     }
                     .padding(.bottom, 5)
                     Text("\(card.itemReview)")
-                        .frame(width: 350, alignment: .leading)
+                        .frame(width: 380, alignment: .leading)
                     //TO DO : 글자가 길어질 시 '더보기' 하면 전문이 보이도록 하는 기능 구현
                 }
                 .frame(width: 360, alignment: .leading)
@@ -84,6 +75,12 @@ struct CardView: View {
                 .padding(.trailing, 10)
                 .padding(.bottom, 10)
                 
+                VStack{
+
+                    ImageSlider(images: card.itemImgs)
+                        .frame(height: 300)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
                 //Divider()
                 Rectangle()
                     .frame(width: 400)
@@ -91,8 +88,27 @@ struct CardView: View {
                     .opacity(0.20)
                     
             }
+
         }
-        //.padding()
+    }
+}
+
+// MARK: - 이미지 슬라이더 뷰
+struct ImageSlider: View {
+    // 1. 이미지 배열 프로퍼티
+    var images : [String]
+    
+    var body: some View {
+        // 2 탭 뷰를 통한 이미지 여러 장 보여주기
+        TabView {
+            ForEach(images, id: \.self) { item in
+                 //3
+                 Image(item)
+                    .resizable()
+                    .scaledToFill()
+            }
+        }
+        .tabViewStyle(PageTabViewStyle())
     }
 }
 
