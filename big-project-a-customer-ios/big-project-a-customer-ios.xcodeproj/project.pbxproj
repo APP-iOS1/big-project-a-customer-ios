@@ -117,6 +117,23 @@
 			path = FolderHomeMenu;
 			sourceTree = "<group>";
 		};
+		28E0CC86295BC470008306C3 /* FolderShoppingBack */ = {
+			isa = PBXGroup;
+			children = (
+				28E0CC87295BC52F008306C3 /* ShoppingBack */,
+			);
+			path = FolderShoppingBack;
+			sourceTree = "<group>";
+		};
+		28E0CC87295BC52F008306C3 /* ShoppingBack */ = {
+			isa = PBXGroup;
+			children = (
+				18ECD477295AB68700670B6F /* ShoppingBackView.swift */,
+				18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */,
+			);
+			path = ShoppingBack;
+			sourceTree = "<group>";
+		};
 		76E85444295BDE56000FE8A9 /* FolderMyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,8 +215,10 @@
 		A77EE65F295A9A5100B6AA64 /* big-project-a-customer-ios */ = {
 			isa = PBXGroup;
 			children = (
+				28E0CC86295BC470008306C3 /* FolderShoppingBack */,
 				A77EE660295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift */,
 				A77EE662295A9A5100B6AA64 /* ContentView.swift */,
+				A7421059295B117A005AEC9C /* FolderMyPageReview */,
 				18ECD477295AB68700670B6F /* ShoppingBackView.swift */,
 				18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */,
 				76E85444295BDE56000FE8A9 /* FolderMyPage */,
