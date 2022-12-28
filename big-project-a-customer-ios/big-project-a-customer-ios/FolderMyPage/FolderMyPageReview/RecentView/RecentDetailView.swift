@@ -27,7 +27,7 @@ struct RecentDetailView: View {
                                     .font(.title3)
 
                                 
-                                Text("카테고리")
+                                Text(item.itemCategory)
                                     .font(.caption2)
                                     .fontWeight(.light)
                                     .foregroundColor(.gray)
@@ -81,7 +81,7 @@ struct RecentDetailView: View {
 }
 
 struct RecentDetailView_Previews: PreviewProvider {
-    @State static var items = RecentViewedItems(itemName: "MacBook Pro", itemPrice: 2060000, image: "macbookpro")
+    @State static var items = RecentViewedItems(itemName: "MacBook Pro", itemPrice: 2060000, itemCategory: "노트북", image: "macbookpro")
     @StateObject static var vm = RecentViewedViewModel()
     
     static var previews: some View {
