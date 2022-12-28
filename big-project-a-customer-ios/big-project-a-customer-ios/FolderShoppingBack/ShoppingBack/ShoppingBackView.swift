@@ -13,9 +13,9 @@ struct ShoppingCartItems: Identifiable {
     var name: String
     var price: Int
     var image: String
+    var amount: Int
     var isChecked: Bool
-//    var option: Option
-            // [옵션 이름: (옵션 값, 추가 가격)]
+    // [옵션 이름: (옵션 값, 추가 가격)]
     var options: [String: (String, Int)]
 }
 
@@ -29,11 +29,12 @@ struct Option {
 class ShoppingCartViewModel: ObservableObject {
     // ShoppingCartItems 약자
     @Published var sCItems: [ShoppingCartItems] = [
-        ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)]),
-        ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", isChecked: true, options: ["색상" : ("실버", 0), "저장용량" : ("1024GB", 300000), "RAM" : ("16GB", 200000)]),
-        ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", isChecked: true, options: ["색상" : ("딥 퍼플", 0), "저장용량" : ("128GB", 0)])
+        ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0,isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)]),
+        ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", amount: 0 ,isChecked: true, options: ["색상" : ("실버", 0), "저장용량" : ("1024GB", 300000), "RAM" : ("16GB", 200000)]),
+        ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", amount: 0, isChecked: true, options: ["색상" : ("딥 퍼플", 0), "저장용량" : ("128GB", 0)])
     ]
 }
+
 
 struct ShoppingBackView: View {
     // 전체 선택 체크박스 State 변수
@@ -47,14 +48,15 @@ struct ShoppingBackView: View {
     var totalPrice: Int {
         return vm.sCItems
             .filter{ $0.isChecked }
-            .map{$0.price * ($0.option.amount + 1)}
+            .map{$0.price * ($0.amount + 1) + ($0.options).values.map{$0.1}.reduce(0,+) }
             .reduce(0, +)
     }
+    
     // 결제할 총 수량
     var totalCount: Int {
         return vm.sCItems
             .filter{ $0.isChecked }
-            .map{$0.option.amount + 1}
+            .map{$0.amount + 1}
             .reduce(0, +)
     }
     
@@ -89,6 +91,7 @@ struct ShoppingBackView: View {
                         }
                     }
                 }
+                .padding(.horizontal)
                 .padding(.top, 1)
                 
                 Divider()
@@ -106,6 +109,7 @@ struct ShoppingBackView: View {
                         Divider()
                     }
                 }
+                .padding(.horizontal)
                 
                 // MARK: tail
                 Section {
@@ -149,8 +153,11 @@ struct ShoppingBackView: View {
                         }
                     }
                 }
+                .padding()
+                .background {
+                    Color.gray.brightness(0.4)
+                }
             }
-            .padding(.horizontal)
         }
     }
     
