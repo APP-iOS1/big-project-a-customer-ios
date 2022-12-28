@@ -28,6 +28,25 @@ class ShoppingCartViewModel: ObservableObject {
         ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", amount: 0 ,isChecked: true, options: ["색상" : ("실버", 0), "저장용량" : ("1024GB", 300000), "RAM" : ("16GB", 200000)]),
         ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", amount: 0, isChecked: true, options: ["색상" : ("딥 퍼플", 0), "저장용량" : ("128GB", 0)])
     ]
+    // MARK: - 장바구니에 아이템을 추가하는 메소드
+    /// 파라미터로 ShoppingCartItems 인스턴스를 전달하면 됩니다
+    /// ex) ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0, isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)])
+    func addItemToShoppingCart(_ item: ShoppingCartItems) {
+        sCItems.append(item)
+    }
+    
+    // 장바구니에 아이템을 삭제하는 메소드
+    func deleteItem(_ item: ShoppingCartItems) {
+        let index = sCItems.firstIndex {
+            $0.id == item.id
+        }
+        sCItems.remove(at: index!)
+    }
+    
+    // 장바구니에서 선택된 아이템을 삭제하는 메소드
+    func clearSelectedShoppingCart() {
+        sCItems.removeAll(where: { $0.isChecked})
+    }
 }
 
 
@@ -38,7 +57,7 @@ struct ShoppingBackView: View {
     @State private var shippingCost = 3000
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
-    
+    @State var totalPriceForBinding = 0
     // 결제할 총 금액
     var totalPrice: Int {
         return vm.sCItems
@@ -99,7 +118,7 @@ struct ShoppingBackView: View {
                 ScrollView(showsIndicators: false) {
                     ForEach($vm.sCItems) { item in
                         ShoppingBackDetailView(item: item, vm: vm)
-                        .padding(.vertical)
+                            .padding(.vertical)
                         
                         Divider()
                     }
@@ -126,7 +145,7 @@ struct ShoppingBackView: View {
                         }
                         .font(.title.bold())
                         .padding(.top, 5)
-
+                        
                         HStack {
                             Text("총 수량 : \(totalCount)개")
                                 .font(.subheadline)
@@ -135,7 +154,8 @@ struct ShoppingBackView: View {
                             // 무통장 구매 view로 이동
                             NavigationLink(destination: {
                                 // 무통장 구매뷰 생성
-                                Text("구매")
+                                OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                
                             }, label: {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
@@ -145,6 +165,9 @@ struct ShoppingBackView: View {
                                 }
                             })
                             .disabled(totalCount == 0 ? true : false)
+                            .simultaneousGesture(TapGesture().onEnded{
+                                totalPriceForBinding = totalPrice
+                            })
                             
                         }
                     }

@@ -14,7 +14,7 @@ struct ShoppingBackDetailView: View {
     
     var body: some View {
         VStack(alignment: .trailing) {
-
+            
             HStack(alignment: .top) {
                 Button {
                     item.isChecked.toggle()
@@ -22,12 +22,12 @@ struct ShoppingBackDetailView: View {
                     Image(systemName: item.isChecked ? "checkmark.square.fill" : "square")
                         .foregroundColor(item.isChecked ? .green : .gray)
                 }
-
+                
                 Image(item.image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
-
+                
                 VStack(alignment: .trailing) {
                     HStack {
                         VStack(alignment: .leading) {
@@ -38,13 +38,9 @@ struct ShoppingBackDetailView: View {
                         }
                         
                         Spacer()
-
+                        
                         Button {
-                            let index = vm.sCItems.firstIndex {
-                                $0.id == item.id
-                            }
-                            
-                            vm.sCItems.remove(at: index!)
+                            vm.deleteItem(item)
                         } label: {
                             Image(systemName: "x.circle.fill")
                                 .font(.title3)
@@ -69,10 +65,10 @@ struct ShoppingBackDetailView: View {
                     }
                     .padding(.top, 1)
                     
-
+                    
                     VStack(alignment: .leading) {
                         Text("옵션 포함 가격 : \(item.price + (item.options).values.map{$0.1}.reduce(0,+))원")
-
+                        
                         HStack {
                             Spacer()
                             
@@ -92,7 +88,7 @@ struct ShoppingBackDetailView: View {
                     .padding(.top, 5)
                 }
                 .padding(.leading, 5)
-
+                
             }
         }
     }

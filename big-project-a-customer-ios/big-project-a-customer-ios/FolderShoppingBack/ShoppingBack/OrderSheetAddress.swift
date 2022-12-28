@@ -20,7 +20,7 @@ struct Address: Identifiable {
 extension Address {
     static let addresses: [Address] = [
         Address(recipient: "이알콩", recipientAddress: "경기도 광명시 어쩌구동 235 저쩌구아파트, 182동 306호", recipientNumber: "010-1234-5678", isDefaultAddress: true),
-        Address(recipient: "김달콩", recipientAddress: "경기도 부천시 저쩌구동 153 어쩌구아파트, 592동 118호", recipientNumber: "010-9876-5432", isDefaultAddress: false),
+        Address(recipient: "김딱콩", recipientAddress: "경기도 부천시 저쩌구동 153 어쩌구아파트, 592동 118호", recipientNumber: "010-9876-5432", isDefaultAddress: false),
         Address(recipient: "김달콩", recipientAddress: "경기도 부천시 저쩌구동 153 어쩌구아파트, 592동 118호", recipientNumber: "010-9876-5432", isDefaultAddress: false)
     ]
 }
