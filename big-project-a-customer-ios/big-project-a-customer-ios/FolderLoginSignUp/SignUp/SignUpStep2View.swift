@@ -121,7 +121,7 @@ struct SignUpStep2View: View {
 							  .bold()
 					  }
 					  .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-					  .background(Color.green)
+					  .background(Color.accentColor)
 					  .cornerRadius(100)
 				  }) // Toast
 
