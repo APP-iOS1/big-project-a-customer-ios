@@ -15,12 +15,14 @@ struct SignUpStep2View: View {
     
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
-	@Binding var isLoginSheet: Bool
+//	@Binding var isLoginSheet: Bool
     @Binding var email: String
     @Binding var password: String
     @State var nickNmae = ""
     @FocusState var isInFocusNickName: Bool
     @State private var isShowSucceedToast = false
+    @Binding var isActive: Bool
+	@Binding var isSignUpCompleted: Bool
     
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
     
@@ -45,7 +47,7 @@ struct SignUpStep2View: View {
     /// SignUpStep2View의 body 입니다.
     var body: some View {
 		ZStack {
-			NavigationStack {
+			
 				VStack {
 					HStack {
 						Text("닉네임을\n입력해 주세요.")
@@ -73,10 +75,17 @@ struct SignUpStep2View: View {
 						// ** 임시 **
 						// Login Sheet를 띄울 때 사용되었던 Bool변수(얘: isShowingSheet)를 toggle 시켜야 함.
 						isShowSucceedToast.toggle()
+						userID = email
+						userPassword = password
 						
-						DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-							isLoginSheet = false
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+							isSignUpCompleted.toggle()
 						}
+						
+						DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+							dismiss()
+						}
+						
 					} label: {
 						// ** 임시 **
 						RoundedRectangle(cornerRadius: 15)
@@ -104,7 +113,7 @@ struct SignUpStep2View: View {
 						CustomProgressView(nowStep: 3)
 					} // toolbarItem
 				} // toolbar
-			} // NavigationStack
+			 // NavigationStack
 			
 			if isShowSucceedToast {
 				Color.black
@@ -124,17 +133,35 @@ struct SignUpStep2View: View {
 					  .background(Color.accentColor)
 					  .cornerRadius(100)
 				  }) // Toast
-
-				ProgressView()
-					.progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
-					.scaleEffect(3)
+				
+				if !isSignUpCompleted {
+					ProgressView()
+						.progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
+						.scaleEffect(3)
+				} else {
+					VStack {
+						Image(systemName: "checkmark.square")
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.foregroundColor(.green)
+							.frame(maxWidth: 100, maxHeight: 100)
+						
+						Text("가입이 완료되었습니다!")
+							.font(.title2)
+							.bold()
+							.foregroundColor(.white)
+					}
+					
+					
+				}
+				
 			}
 		} // ZStack
     } // Body
 }
-
-struct SignUpStep2View_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpStep2View(isLoginSheet: .constant(false), email: .constant(""), password: .constant(""))
-    }
-}
+//
+//struct SignUpStep2View_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignUpStep2View(email: .constant(""), password: .constant(""), isActive: .constant(false))
+//    }
+//}
