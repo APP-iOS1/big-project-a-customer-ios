@@ -29,6 +29,9 @@ struct OrderSheetAddress: View {
     @Binding var totalPriceForBinding: Int
     @State var selectAddressIndex = 0
     
+    // PurchseInfo 소비자 정보 선언
+    @State private var purchaseInfo: PurchaseInfo = PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")
+    
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
@@ -56,7 +59,7 @@ struct OrderSheetAddress: View {
             .padding(.horizontal, 10)
             
             NavigationLink {
-                // 결제하러 가기
+                PaymentView(purchaseInfo: $purchaseInfo)
             } label: {
                 Text("무통장 입금으로 결제하기")
             }

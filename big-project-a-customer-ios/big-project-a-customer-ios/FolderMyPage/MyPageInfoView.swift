@@ -15,7 +15,7 @@ struct MyPageInfoView: View {
     
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     //더미 데이터
-    var sampleActions = ["좋아요", "구매내역", "쿠폰함", "작성한 리뷰", "작성한 문의 글", "최근 본 상품"]
+    var sampleActions = ["좋아요", "작성한 리뷰", "작성한 문의 글", "최근 본 상품"]
     
     var sampleMenu = ["고객센터","주문목록","취소, 반품, 교환목록", "리뷰관리", "상품문의"]
     
@@ -53,10 +53,10 @@ struct MyPageInfoView: View {
                             switch action {
                             case "좋아요":
                                 LikedProductsView()
-                            case "구매내역":
-                                PurchaseHistoryView()
-                            case "쿠폰함":
-                                CouponView()
+//                            case "구매내역":
+//                                PurchaseHistoryView()
+//                            case "쿠폰함":
+//                                CouponView()
                             case "작성한 리뷰":
                                 MyReview()
                             case "작성한 문의 글":
