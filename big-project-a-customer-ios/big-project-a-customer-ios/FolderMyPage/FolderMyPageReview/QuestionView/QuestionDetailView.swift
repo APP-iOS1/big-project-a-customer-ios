@@ -71,6 +71,11 @@ struct QuestionDetailView: View {
             .frame(width: 360, alignment: .leading)
             .padding()
             
+//            Rectangle()
+//                .frame(width: 400)
+//                .foregroundColor(.gray)
+//                .opacity(0.20)
+            
         }
     }
 }
