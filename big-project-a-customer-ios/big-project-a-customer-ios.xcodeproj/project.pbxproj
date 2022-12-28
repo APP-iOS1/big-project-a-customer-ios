@@ -45,6 +45,7 @@
 		EAA1A147295AD14400E84C36 /* LikedProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A146295AD14400E84C36 /* LikedProductsView.swift */; };
 		EAA1A149295AD1CB00E84C36 /* PurchaseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A148295AD1CB00E84C36 /* PurchaseHistoryView.swift */; };
 		EAA1A14B295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A14A295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift */; };
+		EAA1A14D295BD0C400E84C36 /* PurchaseHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1A14C295BD0C400E84C36 /* PurchaseHistoryDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		EAA1A146295AD14400E84C36 /* LikedProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedProductsView.swift; sourceTree = "<group>"; };
 		EAA1A148295AD1CB00E84C36 /* PurchaseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryView.swift; sourceTree = "<group>"; };
 		EAA1A14A295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyPageLike+ViewModifiers.swift"; sourceTree = "<group>"; };
+		EAA1A14C295BD0C400E84C36 /* PurchaseHistoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +259,7 @@
 				EAA1A14A295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift */,
 				EAA1A144295ACFE400E84C36 /* CouponView.swift */,
 				EAA1A148295AD1CB00E84C36 /* PurchaseHistoryView.swift */,
+				EAA1A14C295BD0C400E84C36 /* PurchaseHistoryDetailView.swift */,
 				EAA1A146295AD14400E84C36 /* LikedProductsView.swift */,
 			);
 			path = FolderMyPageLike;
@@ -351,6 +354,7 @@
 				C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */,
 				7605A193295AD0BA00F24D7E /* MyPageUserModel.swift in Sources */,
 				EAA1A14B295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift in Sources */,
+				EAA1A14D295BD0C400E84C36 /* PurchaseHistoryDetailView.swift in Sources */,
 				EAA1A149295AD1CB00E84C36 /* PurchaseHistoryView.swift in Sources */,
 				C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */,
 				A7421069295B117A005AEC9C /* MyQuestionView.swift in Sources */,
