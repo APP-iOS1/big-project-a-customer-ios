@@ -49,14 +49,27 @@ struct ShoppingBackDetailView: View {
                     }
 
                     VStack(alignment: .trailing) {
-                        Text("가격: \(item.price)원")
+                        Text("가격 : \(item.price)원")
 
-                        Picker("count", selection: $item.option.amount) {
-                            ForEach(1..<10) { num in
-                                Text("\(num)")
+                        HStack {
+                            Text("색상 : \(item.option.color)")
+                                .padding(.leading)
+                                .font(.subheadline)
+                                
+                            
+                            Spacer()
+                            
+                            Picker("count", selection: $item.option.amount) {
+                                ForEach(1..<10) { num in
+                                    Text("\(num)개")
+                                }
                             }
+                            .colorMultiply(.black)
                         }
-                        .colorMultiply(.black)
+                        .background {
+                            Color.gray.brightness(0.35)
+                        }
+                        .cornerRadius(10)
                         
                     }
                     .padding(.top, 5)
