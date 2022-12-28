@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+enum DeliveryStatusEnum: String {
+//    배송중
+//    배송완료
+//    배송준비중
+//    리뷰작성 가능
+//    리뷰작성 완료
+    case pending
+    case deliveryCompleted
+    case createReview
+}
+
 // MARK: 전체 구매목록
 struct PurchaseHistoryView: View {
     @State private var searchItem = ""
@@ -53,14 +64,15 @@ struct PurchaseListCell: View {
     @State var orderDate = "2022. 12. 21"
     @State var itemAmount = 1
     @State var price = 29400
-    @State var deliveryStatus = "배송중"
+    @State var deliveryStatusText = "배송 중"
     @State var itemName = "ipTIME 외장케이스 WHITE HDD 3135 Plus"
     @State var itemImage = "itemImage" // image
+    @State var deliveryStatus: DeliveryStatusEnum = .deliveryCompleted
     
     var body: some View{
         VStack(alignment: .leading){
             HStack{
-                Text("\(deliveryStatus)")
+                Text("\(deliveryStatusText)")
                     .font(.headline)
             }
             HStack(alignment: .top){
@@ -101,12 +113,29 @@ struct PurchaseListCell: View {
                 .modifier(PurchaseHistoryButtonModifier())
                 
                 // TODO: - Delivery State에 따라서 버튼 바뀌어야 함 (배송조회/구매확정/리뷰작성)
-                Button {
-                    // 배송 조회
-                } label: {
-                    Text("배송 조회")
+                switch deliveryStatus {
+                case .pending:
+                    Button {
+                        // 배송 조회
+                    } label: {
+                        Text("배송조회")
+                    }
+                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
+                case .deliveryCompleted:
+                    Button {
+                        deliveryStatus = .createReview
+                    } label: {
+                        Text("구매확정")
+                    }
+                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
+                case .createReview:
+                    Button {
+                        // 리뷰 작성 view
+                    } label: {
+                        Text("리뷰작성")
+                    }
+                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
                 }
-                .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
                 
             }
             .font(.callout)
