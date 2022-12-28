@@ -6,20 +6,55 @@
 //
 
 import SwiftUI
-
+import PhotosUI
 
 // 마이페이지 -> 설정버튼 누르면 보이는 내 정보 뷰
 
 struct MyPageInfoDetailView: View {
     
     @StateObject var vm = MyPageViewModel()
+    // 이미지 피커뷰를 키고나서 클릭한 이미지
+    @State private var selectedItem: PhotosPickerItem? = nil
+    // 이미지 피커뷰를 키고나서 클릭한 이미지의 데이터
+    @State private var selectedImageData: Data? = nil
+    
+    @State private var isShowingProfile: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                // 프로필 사진 기능 추가 예정
-                Image(systemName: "person")
-                    .modifier(ProfileModifier())
+                
+                VStack{
+                    
+           
+                        
+                    if !isShowingProfile {
+                        PhotosPicker(
+                            selection: $selectedItem,
+                            matching: .images,
+                            photoLibrary: .shared()) {
+                                Text("Choose")
+                                    .modifier(ProfileModifier())
+                            }
+                            .onChange(of: selectedItem) { newItem in
+                                Task {
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                        selectedImageData = data
+                                    }
+                                    isShowingProfile.toggle()
+                                }
+                            }
+                    }
+                    
+                    if let selectedImageData,
+                       let uiImage = UIImage(data: selectedImageData) {
+                        Image(uiImage: uiImage)
+                            .modifier(ProfileModifier())
+                    }
+                    
+                        
+                    
+                }
               
                 // 유저 이름
                 Text(vm.users.name)

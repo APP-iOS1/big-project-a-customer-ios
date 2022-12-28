@@ -39,7 +39,7 @@ struct ProfileModifier : ViewModifier {
             .overlay {
                 Circle().stroke(Color(red: 0.0, green: 0.284, blue: 0.284), lineWidth: 1)
             }
-            .shadow(color: Color.blue, radius: 5)
+            .shadow(color: Color.blue, radius: 3)
     }
 }
 
