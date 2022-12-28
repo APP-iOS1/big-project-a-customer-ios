@@ -17,6 +17,8 @@ struct MyPageInfoView: View {
     //더미 데이터
     var sampleActions = ["좋아요", "구매내역", "쿠폰함", "작성한 리뷰", "작성한 문의 글", "최근 본 상품"]
     
+    var sampleMenu = ["고객센터","주문목록","취소, 반품, 교환목록", "리뷰관리", "상품문의"]
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -79,13 +81,24 @@ struct MyPageInfoView: View {
                 }
                 //목업 상태
                 List {
-                    Label("주문목록", systemImage: "star")
-                    Label("취소, 반품, 교환목록", systemImage: "star")
-                    Label("리뷰관리", systemImage: "star")
+                    ForEach(sampleMenu, id: \.self) { menu in
+                        NavigationLink {
+                            
+                            switch menu{
+                                case "고객센터":
+                                    MyPageCustomerServiceView()
+                                default:
+                                    EmptyView()
+                            }
+                    
+                        } label: {
+                            Text(menu)
+                        }
+
+                    }
                 }
                 .listStyle(.plain)
             }
-            //        .padding()
         }
     }
     
@@ -96,3 +109,4 @@ struct MyPageInfoView_Previews: PreviewProvider {
         MyPageInfoView()
     }
 }
+
