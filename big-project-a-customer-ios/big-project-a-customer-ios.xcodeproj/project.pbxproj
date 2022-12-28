@@ -113,6 +113,16 @@
 			path = FolderHomeMenu;
 			sourceTree = "<group>";
 		};
+		76E85444295BDE56000FE8A9 /* FolderMyPage */ = {
+			isa = PBXGroup;
+			children = (
+				9556A44F295AB9A800FD8E1F /* FolderMyPageEditInfo */,
+				A7421059295B117A005AEC9C /* FolderMyPageReview */,
+				EAA1A143295ACFBA00E84C36 /* FolderMyPageLike */,
+			);
+			path = FolderMyPage;
+			sourceTree = "<group>";
+		};
 		9556A44F295AB9A800FD8E1F /* FolderMyPageEditInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,12 +198,10 @@
 				A77EE662295A9A5100B6AA64 /* ContentView.swift */,
 				18ECD477295AB68700670B6F /* ShoppingBackView.swift */,
 				18ECD47B295AC41F00670B6F /* ShoppingBackDetailView.swift */,
+				76E85444295BDE56000FE8A9 /* FolderMyPage */,
 				C0D4BDD2295BD0BA002A0083 /* FolderProductDetail */,
-				A7421059295B117A005AEC9C /* FolderMyPageReview */,
 				0456F638295AD7C9002389F6 /* FolderHomeMenu */,
-				9556A44F295AB9A800FD8E1F /* FolderMyPageEditInfo */,
 				C4961A5B295AAE86009CB1EC /* FolderLoginSignUp */,
-				EAA1A143295ACFBA00E84C36 /* FolderMyPageLike */,
 				A77EE664295A9A5200B6AA64 /* Assets.xcassets */,
 				A77EE666295A9A5200B6AA64 /* Preview Content */,
 			);
