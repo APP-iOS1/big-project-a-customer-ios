@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6713F70F295B2386009ABA8C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6713F70E295B2386009ABA8C /* SignUpViewModel.swift */; };
-		6713F713295B24C8009ABA8C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6713F712295B24C8009ABA8C /* GoogleService-Info.plist */; };
 		67C798B5295BD09100E13A16 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 67C798B4295BD09100E13A16 /* PopupView */; };
 		9556A45B295AC31F00FD8E1F /* MyPageInfo+ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */; };
 		9556A45C295AC31F00FD8E1F /* MyPageInfoEditChecking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556A457295AC31E00FD8E1F /* MyPageInfoEditChecking.swift */; };
@@ -30,7 +29,6 @@
 
 /* Begin PBXFileReference section */
 		6713F70E295B2386009ABA8C /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
-		6713F712295B24C8009ABA8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9556A456295AC31E00FD8E1F /* MyPageInfo+ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyPageInfo+ViewModifiers.swift"; sourceTree = "<group>"; };
 		9556A457295AC31E00FD8E1F /* MyPageInfoEditChecking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoEditChecking.swift; sourceTree = "<group>"; };
 		9556A458295AC31E00FD8E1F /* MyPageInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageInfoView.swift; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 		A77EE654295A9A5100B6AA64 = {
 			isa = PBXGroup;
 			children = (
-				6713F712295B24C8009ABA8C /* GoogleService-Info.plist */,
 				A77EE65F295A9A5100B6AA64 /* big-project-a-customer-ios */,
 				A77EE65E295A9A5100B6AA64 /* Products */,
 			);
@@ -210,7 +207,6 @@
 			files = (
 				A77EE668295A9A5200B6AA64 /* Preview Assets.xcassets in Resources */,
 				A77EE665295A9A5200B6AA64 /* Assets.xcassets in Resources */,
-				6713F713295B24C8009ABA8C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
