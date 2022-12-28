@@ -4,9 +4,7 @@
 //
 //  Created by 이민경 on 2022/12/27.
 //
-
 import SwiftUI
-
 // MARK: 좋아요한 전체 item 목록
 struct LikedProductsView: View {
     let columns = [
@@ -23,6 +21,7 @@ struct LikedProductsView: View {
             }
             .padding(.horizontal)
         }
+        .navigationTitle("좋아요 한 상품")
     }
 }
 
@@ -31,10 +30,27 @@ struct ItemListCell: View {
     @State var price = 29400
     @State var itemName = "ipTIME 외장케이스 WHITE HDD 3135 Plus"
     @State var itemImage = "itemImage" // image
+    @State var isLike = true
+    var heartImage: Image {
+        isLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")
+    }
+
     var body: some View{
         VStack(alignment: .leading){
             Image(itemImage)
                 .ImageResizeModifier(width: 150, height: 150, cornerRadius: 20)
+                .overlay(
+                    Button(action: {
+                        // MARK: 좋아요 정보 수정
+                        isLike.toggle()
+                    }, label: {
+                        heartImage
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .frame(maxHeight: .infinity, alignment: .bottom)
+                    })
+                )
+
             Text("\(itemName)")
                 .font(.footnote)
             Text("\(price)")
@@ -46,7 +62,6 @@ struct ItemListCell: View {
         .padding()
     }
 }
-
 struct LikedProductsView_Previews: PreviewProvider {
     static var previews: some View {
         LikedProductsView()

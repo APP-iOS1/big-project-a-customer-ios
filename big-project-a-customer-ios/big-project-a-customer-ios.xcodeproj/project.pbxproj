@@ -132,10 +132,10 @@
 		28E0CC87295BC52F008306C3 /* ShoppingBack */ = {
 			isa = PBXGroup;
 			children = (
+				A78DA176295C1CC80047C5AE /* ShoppingBackView.swift */,
 				A78DA175295C1CC80047C5AE /* ShoppingBackDetailView.swift */,
 				EAA1A154295C3F3B00E84C36 /* OrderSheetAddress.swift */,
 				EAA1A156295C3F5E00E84C36 /* AddAddressView.swift */,
-				A78DA176295C1CC80047C5AE /* ShoppingBackView.swift */,
 			);
 			path = ShoppingBack;
 			sourceTree = "<group>";
