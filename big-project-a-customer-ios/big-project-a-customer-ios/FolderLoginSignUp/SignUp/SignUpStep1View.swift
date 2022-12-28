@@ -30,7 +30,7 @@ struct SignUpStep1View: View {
     
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
-
+    
     
     // MARK: Methods
     // 이메일이 aaa@aaa.aa 형식인지 검사하는 함수입니다.
@@ -65,7 +65,7 @@ struct SignUpStep1View: View {
                                 .modifier(LoginTextFieldModifier())
                                 
                             
-                            // email가 비어있지 않으면서, email 정규표현식에 일치하면 체크 아이콘 띄운다.
+                            // passwordCheck가 비어있지 않으면서, password와 같으면 체크 아이콘 띄움.
                             if !email.isEmpty && checkEmailRule(string: email) {
                                 Image(systemName: "checkmark.circle")
                                     .resizable()
@@ -104,7 +104,7 @@ struct SignUpStep1View: View {
                                     .frame(width: 20.5)
                                     .accentColor(.gray)
                             }
-                            // password가 비어있지 않으면서, 비밀번호 정규표현식에 일치하면 체크아이콘 띄운다.
+                            // password가 비어있지 않으면서, 6자리 이상일 때 체크 아이콘 띄움.
                             if !password.isEmpty && checkPasswordRule(password: password) {
                                 Image(systemName: "checkmark.circle")
                                     .resizable()
@@ -141,7 +141,7 @@ struct SignUpStep1View: View {
                                     .frame(width: 20.5)
                                     .accentColor(.gray)
                             }
-                            // passwordCheck가 비어있지 않고 password와 같으면서, 비밀번호 정규표현식에 일치하면 체크아이콘 띄운다.
+                            // passwordCheck가 비어있지 않으면서, password와 같으면 체크 아이콘 띄움.
                             if !passwordCheck.isEmpty && password == passwordCheck && checkPasswordRule(password: passwordCheck) {
                                 Image(systemName: "checkmark.circle")
                                     .resizable()
