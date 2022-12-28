@@ -19,6 +19,7 @@ extension View {
 ///이메일과 비밀번호를 설정하는 View 입니다.
 struct SignUpStep1View: View {
     // MARK: - Property Wrappers
+	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
     @State var passwordCheck = ""
@@ -27,7 +28,7 @@ struct SignUpStep1View: View {
     @FocusState var isInFocusPasswordCheck: Bool
     @State private var isSecuredPassword = true
     @State private var isSecuredPasswordCheck = true
-    
+
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
     
@@ -162,7 +163,7 @@ struct SignUpStep1View: View {
 
                 // 회원가입 성공 시에 다음 버튼을 띄운다. ( Step3: 닉네임 설정 뷰으로 넘어가기 )
                 NavigationLink {
-                    SignUpStep2View(email: $email, password: $password)
+					SignUpStep2View(isLoginSheet: $isLoginSheet, email: $email, password: $password)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -187,7 +188,7 @@ struct SignUpStep1View: View {
 // MARK: - SignUpStep1View Previews
 struct SignUpStep1View_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpStep1View()
+        SignUpStep1View(isLoginSheet: .constant(false))
     }
 }
 

@@ -13,11 +13,11 @@ import SwiftUI
 struct LoginView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
+	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
-    
     
     // MARK: - Properties
     
@@ -81,7 +81,7 @@ struct LoginView: View {
                         .font(.footnote)
                     NavigationLink {
                         // Going to SignupView
-                        SignUpView()
+						SignUpView(isLoginSheet: $isLoginSheet)
                     } label: {
                         Text("회원가입")
                             .font(.footnote)
@@ -133,7 +133,7 @@ struct LoginView: View {
 // MARK: - LoginView Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+		LoginView(isLoginSheet: .constant(false))
     }
 }
 

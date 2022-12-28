@@ -8,9 +8,10 @@ import SwiftUI
 
 struct SignUpView: View {
     //MARK: Property wrapper
+	@Binding var isLoginSheet: Bool
     @State private var isTermsClick: [Bool] = [Bool](repeating: false, count: 4)
     @State private var isNecessaryClick: [Bool] = [Bool](repeating: false, count: 2)
-    
+
     //MARK: Property
     let totalTerm = TermType.total
     let terms: [TermType] = [.total, .privacy, .service, .emailAndAd]
@@ -55,7 +56,7 @@ struct SignUpView: View {
                 Divider().frame(width: UIScreen.main.bounds.width)
 
                 NavigationLink {
-                    SignUpStep1View()
+					SignUpStep1View(isLoginSheet: $isLoginSheet)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -167,6 +168,6 @@ struct CustomProgressView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignUpView(isLoginSheet: .constant(false))
     }
 }
