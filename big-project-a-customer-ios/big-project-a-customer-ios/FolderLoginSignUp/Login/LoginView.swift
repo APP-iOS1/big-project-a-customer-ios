@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-var userID : String = "" // 이메일
-var userPassword : String = "" // 패스워드
+var userID : String = "z,mxcnv,zmxcvnlaksdfjlaksdflkasdjf" // 이메일
+var userPassword : String = "102938102938sldkfjadslkfjz,xmcvnz,xmvn" // 패스워드
+var isLoggedIn: Bool = false
 
 // MARK: - LoginView
 /// 로그인을 하는 View 입니다.
@@ -18,10 +19,13 @@ struct LoginView: View {
 //	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
+	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
     
-    @State var isActive : Bool = false
+    @State var isActive : Bool = true
+	
+	@Binding var totalPriceForBinding: Int
     
     // MARK: - Properties
     
@@ -101,14 +105,24 @@ struct LoginView: View {
                 
                 Divider() // 로그인 버튼 구분선
                 
-                Button {
+                NavigationLink {
                     // Login action with firebase...
                     // ** 임시 **
-                    dismiss()
+					if userID == email && userPassword == password {
+						let _ = dump("+++++ LOGIN SUCCESS +++++")
+//						dismiss()
+						let _ = doLoggedIn()
+						OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+					} else {
+						Text("로그인 실패")
+					}
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "로그인하기"))
                 }
+//				.alert("", isPresented: $loginFailed) {
+//					Text("님 로그인 안댐")
+//				}
    
             } // VStack - body 바로 아래
             .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
@@ -134,14 +148,18 @@ struct LoginView: View {
              */
         } // NavigationStack - 임시
     } // Body
+	
+	private func doLoggedIn() {
+		isLoggedIn = true
+	}
 }
 
 // MARK: - LoginView Previews
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-		LoginView()
-    }
-}
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//		LoginView()
+//    }
+//}
 
 
 // MARK: - Modifier : LoginView TextField 속성

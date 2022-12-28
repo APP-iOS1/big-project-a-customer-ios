@@ -153,13 +153,12 @@ struct ShoppingBackView: View {
                                 .font(.subheadline)
                             Spacer()
                             
-                            // 무통장 구매 view로 이동
                             NavigationLink(destination: {
-                                // 무통장 구매뷰 생성
-//                                OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                                // 로그인 뷰 연결
-                                LoginView()
-                                
+								if !isLoggedIn {
+									LoginView(totalPriceForBinding: $totalPriceForBinding)
+								} else {
+									OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+								}
                             }, label: {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
