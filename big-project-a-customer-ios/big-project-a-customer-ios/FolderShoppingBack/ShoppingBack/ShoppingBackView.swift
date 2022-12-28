@@ -96,7 +96,7 @@ struct ShoppingBackView: View {
                 Spacer()
                 
                 // MARK: body
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     ForEach($vm.sCItems) { item in
                         ShoppingBackDetailView(item: item, vm: vm)
                         .padding(.vertical)
