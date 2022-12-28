@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyPageInfoView: View {
     
+    @StateObject var vm = MyPageViewModel()
+    
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     
     var sampleActions = ["좋아요", "구매내역", "쿠폰함", "작성한 리뷰", "작성한 문의 글", "최근 본 상품"]
@@ -17,7 +19,7 @@ struct MyPageInfoView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    Text("홍길동님")
+                    Text(vm.users.name)
                         .modifier(NameModifier())
                     Text("반갑습니다")
                         .modifier(SayHelloModifier())
