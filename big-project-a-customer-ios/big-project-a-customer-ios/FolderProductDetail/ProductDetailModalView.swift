@@ -104,8 +104,34 @@ struct ProductDetailModalView: View {
                 Text("\(count * (basePrice + optionPrice))원")
             }
                 .padding()
-
-
+            
+            HStack {
+                Button {
+                    // FIXME: - 장바구니 ViewModel에 아이템 추가하는 로직 추가
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("장바구니 담기")
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    .modifier(ProductButtonModifier(color: .pink))
+                }
+                .tint(.white)
+                
+                Button {
+                    // FIXME: - 페이지 이동
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("구매하기")
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    .modifier(ProductButtonModifier(color: .pink))
+                }
+                .tint(.white)
+            }
         }
     }
 }
