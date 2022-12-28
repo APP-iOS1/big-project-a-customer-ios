@@ -14,7 +14,6 @@ struct NameModifier : ViewModifier {
         content
             .font(.title)
             .fontWeight(.bold)
-            
     }
 }
 
@@ -29,8 +28,6 @@ struct GiftModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: 400, height: 100)
-            .border(.black)
-            .background(.white)
     }
 }
 
@@ -42,12 +39,9 @@ struct ProfileModifier : ViewModifier {
             .overlay {
                 Circle().stroke(Color(red: 0.0, green: 0.284, blue: 0.284), lineWidth: 1)
             }
-            .shadow(color: Color.blue, radius: 5)
+            .shadow(color: Color.blue, radius: 3)
     }
 }
-
-
-
 
 struct ConfirmModifier : ViewModifier {
     func body(content: Content) -> some View {
@@ -60,12 +54,28 @@ struct ConfirmModifier : ViewModifier {
     }
 }
 
-
 struct InputModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: 300,height: 40)
             .padding()
             .border(.black)
+    }
+}
+
+struct PasswordAlertModifier: ViewModifier {
+    @Binding var showingAlert: Bool
+    @Binding var password: String
+    @Binding var password_2: String
+    func body(content: Content) -> some View {
+        content
+            .alert("비밀번호 불일치", isPresented: $showingAlert) {
+                Button("Ok") {
+                    password = ""
+                    password_2 = ""
+                }
+            } message: {
+                Text("비밀번호를 다시 입력해주세요")
+            }
     }
 }
