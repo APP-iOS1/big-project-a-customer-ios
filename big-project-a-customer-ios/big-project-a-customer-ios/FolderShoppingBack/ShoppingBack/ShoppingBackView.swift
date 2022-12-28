@@ -154,11 +154,7 @@ struct ShoppingBackView: View {
                             Spacer()
                             
                             NavigationLink(destination: {
-								if !isLoggedIn {
-									LoginView(totalPriceForBinding: $totalPriceForBinding)
-								} else {
-									OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-								}
+								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
                             }, label: {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)

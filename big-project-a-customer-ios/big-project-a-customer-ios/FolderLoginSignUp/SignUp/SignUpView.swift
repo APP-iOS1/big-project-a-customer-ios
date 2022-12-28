@@ -14,8 +14,6 @@ struct SignUpView: View {
     @State private var isTermsClick: [Bool] = [Bool](repeating: false, count: 4)
     @State private var isNecessaryClick: [Bool] = [Bool](repeating: false, count: 2)
 	@State private var isSignUpCompleted = false
-	
-    @Binding var isActive : Bool
     
     //MARK: Property
     let totalTerm = TermType.total
@@ -60,8 +58,8 @@ struct SignUpView: View {
                 Spacer()
                 Divider().frame(width: UIScreen.main.bounds.width)
 
-                NavigationLink(isActive: $isActive) {
-                    SignUpStep1View(isSignUpCompleted: $isSignUpCompleted, isActive : $isActive)
+                NavigationLink {
+                    SignUpStep1View(isSignUpCompleted: $isSignUpCompleted)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -176,8 +174,8 @@ struct CustomProgressView: View {
 }
 
 
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView(isActive: .constant(false))
-    }
-}
+//struct SignUpView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignUpView(isActive: .constant(false))
+//    }
+//}

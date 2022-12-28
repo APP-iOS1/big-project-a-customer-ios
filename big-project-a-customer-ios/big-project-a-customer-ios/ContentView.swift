@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
+	var body: some View {
         TabView {
             HomeMenuView().tabItem {
                 Image(systemName: "house")
@@ -26,6 +26,10 @@ struct ContentView: View {
                 Image(systemName: "person.circle")
                 Text("마이페이지")
             }.tag(4)
+			LoginView().tabItem {
+				Image(systemName: "house")
+				Text("로그인UX확인용")
+			}.tag(5)
         }
     }
 }

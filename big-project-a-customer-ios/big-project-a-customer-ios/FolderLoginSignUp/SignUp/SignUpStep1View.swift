@@ -24,14 +24,13 @@ struct SignUpStep1View: View {
 	
     @State var email = ""
     @State var password = ""
-    @State var passwordCheck = "123123@"
+    @State var passwordCheck = ""
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
     @FocusState var isInFocusPasswordCheck: Bool
     @State private var isSecuredPassword = true
     @State private var isSecuredPasswordCheck = true
 	@Binding var isSignUpCompleted: Bool
-    @Binding var isActive : Bool
     
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
@@ -166,8 +165,8 @@ struct SignUpStep1View: View {
                 Divider() // 로그인 버튼 구분선
 
                 // 회원가입 성공 시에 다음 버튼을 띄운다. ( Step3: 닉네임 설정 뷰으로 넘어가기 )
-                NavigationLink(isActive: $isActive) {
-					SignUpStep2View(email: $email, password: $password, isActive: $isActive, isSignUpCompleted: $isSignUpCompleted)
+                NavigationLink {
+					SignUpStep2View(email: $email, password: $password, isSignUpCompleted: $isSignUpCompleted)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))

@@ -22,10 +22,8 @@ struct LoginView: View {
 	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
-    
-    @State var isActive : Bool = true
 	
-	@Binding var totalPriceForBinding: Int
+//	@Binding var totalPriceForBinding: Int
     
     // MARK: - Properties
     
@@ -87,9 +85,9 @@ struct LoginView: View {
                 HStack {
                     Text("아직 계정이 없으신가요?")
                         .font(.footnote)
-                    NavigationLink(isActive: $isActive) {
+                    NavigationLink {
                         // Going to SignupView
-                        SignUpView(isActive : $isActive)
+                        SignUpView()
                     } label: {
                         Text("회원가입")
                             .font(.footnote)
@@ -105,14 +103,11 @@ struct LoginView: View {
                 
                 Divider() // 로그인 버튼 구분선
                 
-                NavigationLink {
+                Button {
                     // Login action with firebase...
                     // ** 임시 **
 					if userID == email && userPassword == password {
-						let _ = dump("+++++ LOGIN SUCCESS +++++")
-//						dismiss()
-						let _ = doLoggedIn()
-						OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+//						OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
 					} else {
 						Text("로그인 실패")
 					}
@@ -120,10 +115,6 @@ struct LoginView: View {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "로그인하기"))
                 }
-//				.alert("", isPresented: $loginFailed) {
-//					Text("님 로그인 안댐")
-//				}
-   
             } // VStack - body 바로 아래
             .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
@@ -148,10 +139,6 @@ struct LoginView: View {
              */
         } // NavigationStack - 임시
     } // Body
-	
-	private func doLoggedIn() {
-		isLoggedIn = true
-	}
 }
 
 // MARK: - LoginView Previews

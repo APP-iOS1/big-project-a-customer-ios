@@ -21,7 +21,6 @@ struct SignUpStep2View: View {
     @State var nickNmae = ""
     @FocusState var isInFocusNickName: Bool
     @State private var isShowSucceedToast = false
-    @Binding var isActive: Bool
 	@Binding var isSignUpCompleted: Bool
     
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
