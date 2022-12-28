@@ -9,10 +9,11 @@ import SwiftUI
 struct SignUpView: View {
     //MARK: Property wrapper
     @State private var isTermsClick: [Bool] = [Bool](repeating: false, count: 4)
+    @State private var isNecessaryClick: [Bool] = [Bool](repeating: false, count: 2)
     
     //MARK: Property
     let totalTerm = TermType.total
-    let terms: [TermType] = [.total, .service, .privacy, .emailAndAd]
+    let terms: [TermType] = [.total, .privacy, .service, .emailAndAd]
     
     var body: some View {
         NavigationStack {
@@ -41,7 +42,7 @@ struct SignUpView: View {
                 
                 VStack(spacing: 20) {
                     ForEach(Array(terms.enumerated()), id: \.offset) { i, term in
-                        TermCellView(isTermsClick: $isTermsClick, isClick: $isTermsClick[i], term: term)
+                        TermCellView(isTermsClick: $isTermsClick, isNecessaryClick: $isNecessaryClick, isClick: $isTermsClick[i], term: term)
                         
                         if term == .total {
                             Divider().frame(width: UIScreen.main.bounds.width)
@@ -52,19 +53,7 @@ struct SignUpView: View {
                 
                 Spacer()
                 Divider().frame(width: UIScreen.main.bounds.width)
-                
-                // 건형님 코드 - 통일성을 위해 임시 주석 처리
-                //            Button {
-                //
-                //            } label: {
-                //                HStack {
-                //                    Text("다음")
-                //                    Image(systemName: "arrow.right")
-                //                        .fontWeight(.none)
-                //                }
-                //                .modifier(SignUpNextButtonModifier(isDisable: !(isTermsClick[1] && isTermsClick[2])))
-                //            }
-                
+
                 NavigationLink {
                     SignUpStep1View()
                 } label: {
@@ -72,8 +61,19 @@ struct SignUpView: View {
                         .modifier(LoginButtonModifier(label: "다음"))
                 } // NavigationLink - 다음
                 .disabled(!(isTermsClick[1] && isTermsClick[2]) ? true : false)
+            } // VStack
+            .toolbar {
+                ToolbarItem(placement: .principal) { // 회원가입 진행 현황 툴바
+                    CustomProgressView(nowStep: 1)
+                } // toolbarItem
+            } // toolbar
+            .sheet(isPresented: $isNecessaryClick[0], onDismiss: nil) {
+                SafariView(url: URL(string:"https://glacier-bucket-5c2.notion.site/8ef1818eade54304a51d0563397d80b9")!)
             }
-        } // VStack
+            .sheet(isPresented: $isNecessaryClick[1], onDismiss: nil) {
+                SafariView(url: URL(string:"https://glacier-bucket-5c2.notion.site/b32cbc95de6d41328bfa47a7ba7b3aa8")!)
+            }
+        } // NavigationStack
     } // Body
 }
 
@@ -81,6 +81,7 @@ struct SignUpView: View {
 struct TermCellView: View {
     //MARK: Property wrapper
     @Binding var isTermsClick: [Bool]
+    @Binding var isNecessaryClick: [Bool]
     @Binding var isClick: Bool
     
     //MARK: Property
@@ -95,6 +96,11 @@ struct TermCellView: View {
                     isTermsClick = isTermsClick.map{ _ in isClick}
                 } else {
                     isTermsClick[0] = !isTermsClick[1...].contains(false) ? true : false
+                }
+                if term == .privacy && isTermsClick[1] {
+                    isNecessaryClick[0] = true
+                } else if term == .service && isTermsClick[2] {
+                    isNecessaryClick[1] = true
                 }
             } label: {
                 HStack {
@@ -124,9 +130,36 @@ struct TermCellView: View {
                     } // HStack
                     .lineLimit(1)
                     .foregroundColor(.black)
+                    .font(.subheadline)
                 } // HStack
+                .frame(height: 25)
             }
             Spacer()
+        }
+    }
+}
+
+struct CustomProgressView: View {
+    let nowStep: Int
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(1...3, id: \.self) { index in
+                Circle()
+                    .stroke(index == nowStep ? Color.accentColor : Color.gray, lineWidth: 1)
+                    .frame(width: 25)
+                    .background(
+                        Circle()
+                            .fill(index == nowStep ? Color.accentColor : Color.white)
+                    )
+                    .overlay {
+                        Text("\(index)")
+                            .font(.footnote)
+                            .foregroundColor(index == nowStep ? Color.white : Color.gray)
+                    }
+                Rectangle()
+                    .frame(width: index != 3 ? 15 : 0, height: 1)
+                    .foregroundColor(Color.gray)
+            }
         }
     }
 }
@@ -135,19 +168,5 @@ struct TermCellView: View {
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
-    }
-}
-
-// MARK: -Modifier : LoginView 버튼 속성
-struct SignUpNextButtonModifier : ViewModifier {
-    let isDisable: Bool
-    
-    func body(content: Content) -> some View {
-        content
-            .frame(width: UIScreen.main.bounds.width - 30, height: 50)
-            .foregroundColor(.white)
-            .bold()
-            .background(isDisable ? .gray : Color.accentColor)
-            .cornerRadius(15)
     }
 }

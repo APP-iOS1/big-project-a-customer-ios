@@ -34,9 +34,14 @@ struct SignUpStep1View: View {
     
     // MARK: Methods
     // 이메일이 aaa@aaa.aa 형식인지 검사하는 함수입니다.
-    func checkEmail(string: String) -> Bool {
+    func checkEmailRule(string: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         return  NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: string)
+    }
+    // 비밀번호 정규표현식을 검사하는 함수입니다.
+    func checkPasswordRule(password : String) -> Bool {
+        let regExp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,20}$"
+        return password.range(of: regExp, options: .regularExpression) != nil
     }
     
 
@@ -54,10 +59,24 @@ struct SignUpStep1View: View {
 
                 VStack(spacing: 40) {
                     VStack(spacing: 5) {
-                        TextField("이메일 (예: test@gmail.com)", text: $email)
-                            .focused($isInFocusEmail)
-                            .modifier(LoginTextFieldModifier())
-                            .frame(height: 30) // TextField width 고정 <- 아이콘 크기 변경 방지
+                        HStack {
+                            TextField("이메일 (예: test@gmail.com)", text: $email)
+                                .focused($isInFocusEmail)
+                                .modifier(LoginTextFieldModifier())
+                                
+                            
+                            // passwordCheck가 비어있지 않으면서, password와 같으면 체크 아이콘 띄움.
+                            if !email.isEmpty && checkEmailRule(string: email) {
+                                Image(systemName: "checkmark.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20.5)
+                                    .foregroundColor(.green)
+                            }
+                        }
+                        .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
+                        .padding(.trailing, 20)
+                        
                         Rectangle()
                             .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusEmail))
                     }
@@ -66,11 +85,11 @@ struct SignUpStep1View: View {
                         HStack {
                             // 비밀번호 숨김 아이콘일 때
                             if isSecuredPassword {
-                                SecureField("비밀번호 (6자리 이상)", text: $password)
+                                SecureField("비밀번호 (영문, 숫자, 특수문자를 포함 8~20자)", text: $password)
                                     .focused($isInFocusPassword) // 커서가 올라가있을 때 상태를 저장.
                                     .modifier(LoginTextFieldModifier())
                             } else { // 비밀번호 보임 아이콘일 때
-                                TextField("비밀번호 (6자리 이상)", text: $password)
+                                TextField("비밀번호 (영문, 숫자, 특수문자를 포함 8~20자)", text: $password)
                                     .focused($isInFocusPassword)
                                     .modifier(LoginTextFieldModifier())
                             }
@@ -86,7 +105,7 @@ struct SignUpStep1View: View {
                                     .accentColor(.gray)
                             }
                             // password가 비어있지 않으면서, 6자리 이상일 때 체크 아이콘 띄움.
-                            if !password.isEmpty && password.count >= 6 {
+                            if !password.isEmpty && checkPasswordRule(password: password) {
                                 Image(systemName: "checkmark.circle")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -94,7 +113,7 @@ struct SignUpStep1View: View {
                                     .foregroundColor(.green)
                             }
                         } // HStack - TextField, Secured Image, Check Image
-                        .frame(height: 30) // TextField가 있는 HStack의 width 고정 <- 아이콘 크기 변경 방지
+                        .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                         .padding(.trailing, 20)
                         Rectangle()
                             .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPassword))
@@ -104,11 +123,11 @@ struct SignUpStep1View: View {
                         HStack {
                             // 비밀번호 숨김 아이콘일 때
                             if isSecuredPasswordCheck {
-                                SecureField("비밀번호 (6자리 이상)", text: $passwordCheck)
+                                SecureField("비밀번호를 다시 입력해 주세요.", text: $passwordCheck)
                                     .focused($isInFocusPasswordCheck) // 커서가 올라가있을 때 상태를 저장.
                                     .modifier(LoginTextFieldModifier())
                             } else { // 비밀번호 보임 아이콘일 때
-                                TextField("비밀번호 (6자리 이상)", text: $passwordCheck)
+                                TextField("비밀번호를 다시 입력해 주세요.", text: $passwordCheck)
                                     .focused($isInFocusPasswordCheck)
                                     .modifier(LoginTextFieldModifier())
                             }
@@ -123,7 +142,7 @@ struct SignUpStep1View: View {
                                     .accentColor(.gray)
                             }
                             // passwordCheck가 비어있지 않으면서, password와 같으면 체크 아이콘 띄움.
-                            if !passwordCheck.isEmpty && password == passwordCheck {
+                            if !passwordCheck.isEmpty && password == passwordCheck && checkPasswordRule(password: passwordCheck) {
                                 Image(systemName: "checkmark.circle")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -131,7 +150,7 @@ struct SignUpStep1View: View {
                                     .foregroundColor(.green)
                             }
                         } // HStack - TextField, Secured Image, Check Image
-                        .frame(height: 30) // TextField가 있는 HStack의 width 고정 <- 아이콘 크기 변경 방지
+                        .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                         .padding(.trailing, 20)
                         Rectangle()
                             .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPasswordCheck))
@@ -149,7 +168,7 @@ struct SignUpStep1View: View {
                         .modifier(LoginButtonModifier(label: "다음"))
                 } // NavigationLink - 다음
                 // TextField가 비어있거나 비밀번호 2개가 다를 경우에는 "다음" 버튼 비활성화
-                .disabled(email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck || !checkEmail(string: email) ? true : false)
+                .disabled(email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck || !checkEmailRule(string: email) ? true : false)
             } // VStack
             .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
@@ -157,8 +176,7 @@ struct SignUpStep1View: View {
             } // onTapGesture
             .toolbar {
                 ToolbarItem(placement: .principal) { // 회원가입 진행 현황 툴바
-                    Text("Step2 진행 중...")
-                        .font(.footnote)
+                    CustomProgressView(nowStep: 2)
                 } // toolbarItem
             } // toolbar
         } // NavigationStack - 임시

@@ -9,15 +9,15 @@ import SwiftUI
 
 enum TermType: Hashable {
     case total                    // 전체
-    case service, privacy        // 필수(서비스, 개인정보) 이용약관
+    case privacy, service        // 필수(서비스, 개인정보) 이용약관
     case emailAndAd                // 선택(Email & SNS 광고)
     
     // display text
     var display: String {
         switch self {
         case .total: return "약관 전체동의"
-        case .service: return "서비스 이용약관 동의"
         case .privacy: return "개인정보 수집 및 이용동의"
+        case .service: return "전자상거래(인터넷사이버몰) 표준약관 동의"
         case .emailAndAd: return "E-mail 및 SMS 광고성 정보 수신동의"
         }
     }
@@ -34,8 +34,8 @@ enum TermType: Hashable {
     var isNecessary: Bool {
         switch self {
         case .total: return true
-        case .service: return true
         case .privacy: return true
+        case .service: return true
         case .emailAndAd: return false
         }
     }
