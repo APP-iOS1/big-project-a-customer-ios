@@ -15,6 +15,7 @@ struct SignUpStep2View: View {
     
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
+	@Binding var isLoginSheet: Bool
     @Binding var email: String
     @Binding var password: String
     @State var nickNmae = ""
@@ -53,7 +54,7 @@ struct SignUpStep2View: View {
                 .padding(EdgeInsets(top: 30, leading: 15, bottom: 40, trailing: 15))
                 
                 VStack(spacing: 5) {
-                    TextField("닉네임 (한글 6자리 이내)", text: $nickNmae)
+                    TextField("닉네임 (6자리 이내)", text: $nickNmae)
                         .focused($isInFocusNickName)
                         .modifier(LoginTextFieldModifier())
                         .frame(height: 30)
@@ -71,6 +72,10 @@ struct SignUpStep2View: View {
                     // ** 임시 **
                     // Login Sheet를 띄울 때 사용되었던 Bool변수(얘: isShowingSheet)를 toggle 시켜야 함.
                     isShowSucceedToast.toggle()
+					
+					DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+						isLoginSheet = false
+					}
                 } label: {
                     // ** 임시 **
                     RoundedRectangle(cornerRadius: 15)
@@ -120,6 +125,6 @@ struct SignUpStep2View: View {
 
 struct SignUpStep2View_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpStep2View(email: .constant(""), password: .constant(""))
+        SignUpStep2View(isLoginSheet: .constant(false), email: .constant(""), password: .constant(""))
     }
 }
