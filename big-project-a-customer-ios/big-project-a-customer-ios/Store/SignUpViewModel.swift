@@ -63,7 +63,7 @@ class SignUpViewModel: ObservableObject {
             ])
     }
     
-    // MARK: - isEmailDuplicated
+    // MARK: - 이메일 중복 검사
     /// 사용자가 입력한 이메일이 이미 사용하고 있는지 검사합니다.
     /// 입력받은 이메일이 DB에 이미 있다면 false를, 그렇지 않다면 true를 반환합니다.
     /// - Parameter currentUserEmail: 입력받은 사용자 이메일
@@ -72,6 +72,23 @@ class SignUpViewModel: ObservableObject {
         do {
             let document = try await database.collection("CustomerInfo")
                 .whereField("userEmail", isEqualTo: currentUserEmail)
+                .getDocuments()
+            return !(document.isEmpty)
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+    
+    // MARK: - 닉네임 중복 검사
+    /// 사용자가 입력한 닉네임이 이미 사용하고 있는지 검사합니다.
+    /// 입력받은 닉네임이 DB에 이미 있다면 false를, 그렇지 않다면 true를 반환합니다.
+    /// - Parameter currentUserNickname: 입력받은 사용자 닉네임
+    /// - Returns: 중복된 닉네임이 있는지에 대한 Boolean 값
+    func isNicknameDuplicated(currentUserNickname: String) async -> Bool {
+        do {
+            let document = try await database.collection("CustomerInfo")
+                .whereField("userNickname", isEqualTo: currentUserNickname)
                 .getDocuments()
             return !(document.isEmpty)
         } catch {
