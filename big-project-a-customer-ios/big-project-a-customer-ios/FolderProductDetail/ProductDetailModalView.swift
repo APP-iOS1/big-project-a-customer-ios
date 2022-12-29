@@ -10,17 +10,20 @@ import SwiftUI
 struct ProductDetailModalView: View {
     //    @ObservedObject var tempVM: TempViewModel = TempViewModel()
     @Environment(\.dismiss) private var dismiss
-    @Binding var options: [String: [String]]
-    @State var count: Int = 1
-    @State private var selection = ""
+    
+    @Binding var options: [String: [String]] // 서버에서 가져온 옵션들
+    
+    @State var count: Int = 1 // 수량
+    
+    @State private var selection: [String] = ["", ""]
     // FIXME: - 유저가 중복선택할 경우를 생각해서 Set을 적용할지 생각해보기.
     
-    @State private var selectedOptions: [(optionName: String, option: String, optionPrice: Int)] = []
+    @State private var selectedOptions: [String: (String, Int)] = [:]
     
     // 기본 가격(옵션 제외)
     var basePrice: Int = 50000
     // 옵션 추가 금액
-    var optionPrice: Int = 0
+    @State var optionPrice: Int = 0
     
     var optionsArray: [String] {
         Array(options.keys).sorted()
@@ -38,37 +41,43 @@ struct ProductDetailModalView: View {
                     Spacer()
                     
                     // FIXME: - Picker Error
-                    Picker(key, selection: $selection) {
+                    Picker(key, selection: $selection[index]) {
                         Text("선택없음").tag(Optional<String>(nil))
                         ForEach(options[key]!, id: \.self) { item in
                             let value = item.split(separator: "_").map { String($0) }
                             Text("\(value[0]) +\(value[1])원").tag(Optional(item))
                         }
                     }
-                    //                    .onChange(of: selection, perform: { value in
-                    //                        if !value.isEmpty {
-                    //                            let newValue = value.split(separator: "_").map { String($0) }
-                    //                            let newTuple = (String(key), String(newValue[0]), Int(newValue[1])!)
-                    //                            selectedOptions.append(newTuple)
-                    //                        } else {
-                    //                            print(value)
-                    //                        }
-                    //                    })
-                    .onReceive([self.selection].publisher.first()) { (value) in
-                        //                         선택 옵션을 selectedOptions 딕셔너리에 업데이트
-                        if !value.isEmpty {
-                            let newValue = value.split(separator: "_").map { String($0) }
-                            let newTuple = (String(key), String(newValue[0]), Int(newValue[1])!)
-                        }
-                        
-                    }
                     .pickerStyle(.menu)
                     .background(.white)
                     .cornerRadius(15)
+                    .onChange(of: selection[index], perform: { value in
+                        if !value.isEmpty {
+                            let newValue = value.split(separator: "_").map { String($0) }
+                            
+                            selectedOptions[key] = (newValue[0], Int(newValue[1])!)
+                            optionPrice += Int(newValue[1])!
+                        }
+                    })
                 }
-                .padding()
+            }.padding()
+            
+            HStack {
+                Text("옵션")
                 
+                Spacer()
+                
+                VStack {
+                    ForEach(Array(selectedOptions.sorted(by: { $0.1 < $1.1 })), id: \.key) { tuple in
+                        HStack {
+                            Spacer()
+                            
+                            Text("\(tuple.value.0)(+\(tuple.value.1)원)")
+                        }
+                    }
+                }
             }
+            .padding()
             
             HStack {
                 Text("수량")
@@ -76,23 +85,6 @@ struct ProductDetailModalView: View {
                 Spacer()
                 
                 CustomStepper(value: $count, textColor: .black)
-            }
-            .padding()
-            
-            HStack {
-                Text("옵션")
-                Spacer()
-            }
-            .padding()
-            
-            VStack {
-                
-                ForEach(selectedOptions, id: \.0) { tuple in
-                    HStack {
-                        Spacer()
-                        Text("\(tuple.1)(+\(tuple.2)원)")
-                    }
-                }
             }
             .padding()
             
@@ -151,7 +143,6 @@ struct ProductDetailModalView: View {
                     .modifier(ProductButtonModifier(color: .pink))
                 }
                 .tint(.white)
-                
             }
         }
     }

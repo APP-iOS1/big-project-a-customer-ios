@@ -125,7 +125,6 @@ struct ProductDetailView: View {
         .sheet(isPresented: $isShow) {
             ProductDetailModalView(options: $options)
                 .presentationDetents([.medium, .large])
-            
         }
         // navigationView
     }
