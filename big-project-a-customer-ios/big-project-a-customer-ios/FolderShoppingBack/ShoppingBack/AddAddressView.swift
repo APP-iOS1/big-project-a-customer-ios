@@ -59,12 +59,12 @@ struct AddAddressView: View {
                 }
                 Text("기본 배송지로 설정")
             }.modifier(TextCaptionGrayModifier())
-            Button {
-                // 새로운 배송지 저장
-            } label: {
-                Text("저장")
-            }
-            .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
+//            Button {
+//                // 새로운 배송지 저장
+//            } label: {
+//                Text("저장")
+//            }
+//            .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
         }
         .textFieldStyle(.plain)
         .padding(.horizontal, 20)

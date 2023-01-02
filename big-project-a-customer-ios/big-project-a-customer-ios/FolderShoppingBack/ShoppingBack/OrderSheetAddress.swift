@@ -25,69 +25,83 @@ extension Address {
 	]
 }
 
+enum AddressOption {
+    case defaultAddress
+    case otherAddress
+}
+
 struct OrderSheetAddress: View {
 	@Binding var totalPriceForBinding: Int
 	@State var selectAddressIndex = 0
+    
+    @State private var selectAddressOptions: AddressOption = .defaultAddress
 	
 	// PurchseInfo 소비자 정보 선언
 	@State private var purchaseInfo: PurchaseInfo = PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")
 	
-	var body: some View {
-		VStack {
-            Spacer()
-			ScrollView(showsIndicators: false) {
-				ForEach(Array(Address.addresses.enumerated()), id: \.offset) { (index, address) in
-                    if address.isDefaultAddress {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(address.recipient)
-                                .font(.title3)
-                                .bold()
-                            Text(address.recipientAddress)
-                            Text(address.recipientNumber)
+    var body: some View {
+        VStack {
+            Picker("주소 선택",selection: $selectAddressOptions) {
+                Text("기본 배송지")
+                    .tag(AddressOption.defaultAddress)
+                Text("다른 배송지")
+                    .tag(AddressOption.otherAddress)
+            }
+            .pickerStyle(.segmented)
+            .padding(10)
+            
+            switch selectAddressOptions {
+            case .defaultAddress:
+                VStack {
+                    ForEach(Array(Address.addresses.enumerated()), id: \.offset) { (index, address) in
+                        if address.isDefaultAddress {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(address.recipient)
+                                    .font(.title3)
+                                    .bold()
+                                Text(address.recipientAddress)
+                                Text(address.recipientNumber)
+                            }
+                            .modifier(PurchaseHistoryButtonModifier(borderColor: .gray, lineWidth: 2))
                         }
-                        .modifier(PurchaseHistoryButtonModifier(borderColor: .gray, lineWidth: 2))
                     }
-//
-//					if index == selectAddressIndex {
-//						OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
-//							.modifier(PurchaseHistoryButtonModifier(borderColor: .accentColor, lineWidth: 2))
-//					} else {
-//						OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
-//							.modifier(PurchaseHistoryButtonModifier())
-//					}
-				}
-				NavigationLink {
-					//AddAddressView()
-                    ManageAddressView()
-				} label: {
-					//Image(systemName: "plus")
-					Text("배송지 설정하기")
-				}
-				.modifier(PurchaseHistoryButtonModifier())
-				
-				Spacer()
-				
-			}
-			.padding(.horizontal, 10)
-			
-			NavigationLink {
-				PaymentView(purchaseInfo: $purchaseInfo)
-			} label: {
-				Text("무통장 입금으로 결제하기")
-			}
-			.modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
-			.padding(.bottom, 10)
-			.padding(.horizontal, 10)
-			.navigationTitle("배송지 선택")
-		}
-	}
+                    NavigationLink {
+                        ManageAddressView()
+                    } label: {
+                        //Image(systemName: "plus")
+                        Text("배송지 수정하기")
+                    }
+                    .modifier(PurchaseHistoryButtonModifier())
+                    
+                    Spacer()
+                    
+                }
+                .padding(.horizontal, 10)
+            case .otherAddress:
+                AddAddressView()
+                    .padding(.top, 30)
+            }
+            Spacer()
+            
+            NavigationLink {
+                PaymentView(purchaseInfo: $purchaseInfo)
+            } label: {
+                Text("무통장 입금으로 결제하기")
+            }
+            .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
+            .padding(.bottom, 30)
+            .padding(.horizontal, 10)
+            .navigationTitle("배송지 선택")
+
+        }
+    }
 }
 
 struct OrderSheetAddressCell: View {
 	@Binding var selectAddressIndex: Int
 	
 	let index: Int
-	let address: Address
+	var address: Address
 	
 	var body: some View {
         
@@ -98,15 +112,10 @@ struct OrderSheetAddressCell: View {
 			Text(address.recipientAddress)
 			Text(address.recipientNumber)
 			HStack {
-				// 배송지 수정 버튼
-				Button {
-					
-				} label: {
-					Text("수정")
-				}
-				.modifier(PurchaseHistoryButtonModifier(textColor: .blue))
 				// 배송지 선택 버튼
 				Button {
+                    // 서버 통신 연결시 필요
+//                  address.isDefaultAddress = true
 					selectAddressIndex = index
 				} label: {
 					Text("선택")
