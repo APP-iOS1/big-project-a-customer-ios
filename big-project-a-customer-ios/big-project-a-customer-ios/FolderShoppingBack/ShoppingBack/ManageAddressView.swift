@@ -8,43 +8,81 @@
 import SwiftUI
 
 struct ManageAddressView: View {
-    @State var selectAddressIndex = 0
+    @ObservedObject var myPageViewModel: MyPageViewModel
+    
+    @State private var name: String = ""
+    @State private var address: String = ""
+    @State private var phoneNumber: String = ""
     
     var body: some View {
         VStack {
             Spacer()
-            ScrollView(showsIndicators: false) {
-                ForEach(Array(Address.addresses.enumerated()), id: \.offset) { (index, address) in
-                    if index == selectAddressIndex {
-                        OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
-                            .modifier(PurchaseHistoryButtonModifier(borderColor: .accentColor, lineWidth: 2))
-                    } else {
-                        OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
-                            .modifier(PurchaseHistoryButtonModifier())
-                    }
-                }
-                NavigationLink {
-                    AddAddressView()
+            VStack {
+                HStack(spacing: 20) {
                     
-                } label: {
-                    Image(systemName: "plus")
-                    Text("배송지 추가하기")
+                    Text("수령인")
+                        .foregroundColor(.secondary)
+                    
+                    TextField("수령인", text: $name)
+                        .modifier(AddressEditModifier())
                 }
-                .modifier(PurchaseHistoryButtonModifier())
                 
-                Spacer()
+                HStack(spacing: 34.5) {
+                    Text("주소")
+                        .foregroundColor(.secondary)
+                    
+                    TextField("주소", text: $address)
+                        .modifier(AddressEditModifier())
+                }
+                
+                HStack(spacing: 20) {
+                    Text("연락처")
+                        .foregroundColor(.secondary)
+                    
+                    TextField("주소", text: $phoneNumber)
+                        .modifier(AddressEditModifier())
+                }
             }
-            .padding(.horizontal, 10)
+            .padding()
             
-            .padding(.bottom, 10)
-            .padding(.horizontal, 10)
-            .navigationTitle("배송지 선택")
+            Spacer()
+            Button(action: {
+                finishEdit()
+            }, label: {
+                Text("수정 완료")
+            })
+            .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
+            .padding()
+            
         }
+        .onAppear {
+            name = myPageViewModel.users.name
+            address = myPageViewModel.users.userAddress
+            phoneNumber = myPageViewModel.users.phoneNumber
+        }
+    }
+    
+    func finishEdit() {
+        myPageViewModel.users.name = name
+        myPageViewModel.users.userAddress = address
+        myPageViewModel.users.phoneNumber = phoneNumber
+    }
+}
+
+struct AddressEditModifier : ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .border(.gray)
     }
 }
 
 struct ManageAddressView_Previews: PreviewProvider {
+    @StateObject static var myPageViewModel = MyPageViewModel()
     static var previews: some View {
-        ManageAddressView()
+//        NavigationStack {
+//            MyPageInfoDetailView()
+//        }
+        ManageAddressView(myPageViewModel: myPageViewModel)
     }
 }

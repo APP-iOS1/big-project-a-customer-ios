@@ -65,13 +65,13 @@ struct OrderSheetAddress: View {
                             .modifier(PurchaseHistoryButtonModifier(borderColor: .gray, lineWidth: 2))
                         }
                     }
-                    NavigationLink {
-                        ManageAddressView()
-                    } label: {
-                        //Image(systemName: "plus")
-                        Text("배송지 수정하기")
-                    }
-                    .modifier(PurchaseHistoryButtonModifier())
+//                    NavigationLink {
+//                        ManageAddressView()
+//                    } label: {
+//                        //Image(systemName: "plus")
+//                        Text("배송지 수정하기")
+//                    }
+//                    .modifier(PurchaseHistoryButtonModifier())
                     
                     Spacer()
                     
@@ -89,10 +89,8 @@ struct OrderSheetAddress: View {
                 Text("무통장 입금으로 결제하기")
             }
             .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
-            .padding(.bottom, 30)
-            .padding(.horizontal, 10)
+            .padding()
             .navigationTitle("배송지 선택")
-
         }
     }
 }

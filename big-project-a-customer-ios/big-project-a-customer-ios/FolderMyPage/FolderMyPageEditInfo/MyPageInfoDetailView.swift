@@ -103,7 +103,7 @@ struct MyPageInfoDetailView: View {
                     Spacer()
                     
                     NavigationLink {
-                        ManageAddressView()
+                        ManageAddressView(myPageViewModel: vm)
                     } label: {
                         Text("배송지 관리")
                     }
