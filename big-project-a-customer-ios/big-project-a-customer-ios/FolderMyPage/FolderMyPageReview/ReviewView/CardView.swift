@@ -17,7 +17,7 @@ struct CardView: View {
     
 
     var body: some View {
-        ZStack {
+//        ZStack {
             VStack {
                 VStack {
                     HStack {
@@ -50,7 +50,7 @@ struct CardView: View {
                         
 
                     }
-                    .padding(.leading, 10)
+//                    .padding(.leading, 10)
                 }
                 .padding(.top, 5)
                 
@@ -69,7 +69,7 @@ struct CardView: View {
                     Text("\(card.itemReview)")
                         .frame(width: 380, alignment: .leading)
                     //TO DO : 글자가 길어질 시 '더보기' 하면 전문이 보이도록 하는 기능 구현
-                }
+                } // 별과 글 부분
                 .frame(width: 360, alignment: .leading)
                 .padding(.leading, 10)
                 .padding(.trailing, 10)
@@ -81,16 +81,9 @@ struct CardView: View {
                         .frame(height: 300)
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
-                //Divider()
-                Rectangle()
-                    .frame(width: 400)
-                    .foregroundColor(.gray)
-                    .opacity(0.20)
-                    
             }
-
         }
-    }
+//    }
 }
 
 // MARK: - 이미지 슬라이더 뷰
