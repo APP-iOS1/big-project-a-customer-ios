@@ -18,6 +18,23 @@ struct MyPageCustomerServiceView: View {
     
     
     var body: some View {
+        List {
+            NavigationLink {
+                customerservice
+            } label: {
+                Text("주문 상품 문의")
+            }
+            
+            NavigationLink {
+                MyQuestionReview()
+            } label: {
+                Text("작성한 문의 글")
+            }
+            
+        }
+    }
+    
+    var customerservice: some View {
         VStack{
 
             HStack{
@@ -76,7 +93,9 @@ struct MyPageCustomerServiceView: View {
 
 struct MyPageCustomerServiceView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageCustomerServiceView()
+        NavigationStack {
+            MyPageCustomerServiceView()
+        }
     }
 }
 
