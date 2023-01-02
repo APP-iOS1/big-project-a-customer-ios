@@ -12,6 +12,7 @@ import SwiftUI
 /// 로그인을 하는 View 입니다.
 struct LoginView: View {
     // MARK: - Property Wrappers
+    @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
 //	@Binding var isLoginSheet: Bool
     @State var email = ""
@@ -23,6 +24,7 @@ struct LoginView: View {
     @State var navStack = NavigationPath()
     
     @EnvironmentObject var signUpViewModel: SignUpViewModel
+
 //	@Binding var totalPriceForBinding: Int
     
     
@@ -120,8 +122,10 @@ struct LoginView: View {
                 Divider() // 로그인 버튼 구분선
                 
                 Button {
+
                     // Login action with firebase...
                     logInWithEmailPassword()
+
                 } label: {
                     if signUpViewModel.loginRequestState == .loggingIn {
                         ProgressView()

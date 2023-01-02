@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import PopupView
 
 enum DeliveryStatusEnum: String {
-//    배송중
-//    배송완료
-//    배송준비중
-//    리뷰작성 가능
-//    리뷰작성 완료
+    //    배송중
+    //    배송완료
+    //    배송준비중
+    //    리뷰작성 가능
+    //    리뷰작성 완료
     case pending
     case deliveryCompleted
     case createReview
@@ -44,6 +45,7 @@ class OrderInfoViewModel: ObservableObject {
 struct PurchaseHistoryView: View {
     @ObservedObject var orderStore: OrderInfoViewModel = OrderInfoViewModel()
     @State private var searchItem = ""
+    @State private var deliveryCompletedChecked = false
     
     @State var isShowingLoginSheet = false
     @EnvironmentObject var signUpViewModel: SignUpViewModel
@@ -59,7 +61,7 @@ struct PurchaseHistoryView: View {
             .padding(.horizontal, 10)
             .modifier(PurchaseHistoryButtonModifier())
             .padding(.horizontal, 10)
-
+            
             ScrollView {
                 ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
                     VStack {
@@ -76,11 +78,12 @@ struct PurchaseHistoryView: View {
                             
                         }
                         
-                        PurchaseListCell(orderStore: orderStore, order: order, index: index)
+                        PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
                     }
                     .padding(10)
                 }
             }
+
         } // VStack
         .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
             if signUpViewModel.currentUser?.userEmail == nil {
@@ -89,6 +92,7 @@ struct PurchaseHistoryView: View {
         }
         .sheet(isPresented: $isShowingLoginSheet) {
             LoginView()
+
         }
     }
 }
@@ -98,6 +102,7 @@ struct PurchaseListCell: View {
     @ObservedObject var orderStore: OrderInfoViewModel
     var order: OrderInfo
     let index: Int
+    @Binding var isDeliveryCompleted: Bool
     
     var body: some View{
         VStack(alignment: .leading){
@@ -120,20 +125,22 @@ struct PurchaseListCell: View {
                         Text("\(order.itemAmount)개")
                             .font(.caption)
                         Spacer()
-                        Button {
-                            // 장바구니로 이동
-                        } label: {
-                            Text("장바구니 담기")
-                                .font(.caption)
-                        }
-                        .modifier(PurchaseHistoryButtonModifier())
-                        .frame(maxWidth: 80)
+//                        Button {
+//                            // 장바구니로 이동
+//                        } label: {
+//                            Text("장바구니 담기")
+//                                .font(.caption)
+//                        }
+//                        .modifier(PurchaseHistoryButtonModifier())
+//                        .frame(maxWidth: 80)
                         
                     }
                     .padding(.bottom, 10)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
             }
+            
             HStack{
                 Button {
                     // 교환 반품 신청
@@ -154,10 +161,13 @@ struct PurchaseListCell: View {
                 case .deliveryCompleted:
                     Button {
                         orderStore.orders[index].deliveryStatus = .createReview
+                        isDeliveryCompleted = true
                     } label: {
                         Text("구매확정")
                     }
                     .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
+                    
+                    
                 case .createReview:
                     Button {
                         // 리뷰 작성 view

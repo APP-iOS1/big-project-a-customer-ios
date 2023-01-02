@@ -39,7 +39,7 @@ struct NotebookView: View {
     var body: some View{
         NavigationStack {
             ScrollView(.vertical){
-                LazyVGrid(columns: columns, spacing: 10){
+                LazyVGrid(columns: columns, spacing: 16){
                     ForEach(searchNotebookItem) { item in
                         NavigationLink {
                             ProductDetailView()

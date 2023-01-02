@@ -45,6 +45,7 @@ struct SignUpStep2View: View {
     // MARK: - Body SignUpStep2View
     /// SignUpStep2View의 body 입니다.
     var body: some View {
+
         VStack {
             HStack {
                 Text("닉네임을\n입력해 주세요.")
@@ -107,6 +108,7 @@ struct SignUpStep2View: View {
             .background(Color.accentColor)
             .cornerRadius(100)
         }) // Toast
+
     } // Body
 }
 
