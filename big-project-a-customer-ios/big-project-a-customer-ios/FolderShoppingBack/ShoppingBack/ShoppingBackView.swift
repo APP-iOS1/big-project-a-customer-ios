@@ -59,6 +59,8 @@ struct ShoppingBackView: View {
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     @State var totalPriceForBinding = 0
     
+    @State var isShowingLoginSheet = false
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
     
     // 결제할 총 금액
     var totalPrice: Int {
@@ -149,6 +151,7 @@ struct ShoppingBackView: View {
                         .font(.title2.bold())
                         
                         HStack {
+
                             NavigationLink(destination: {
 								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
                             }, label: {
@@ -158,12 +161,10 @@ struct ShoppingBackView: View {
                                     Text("구매하기 (\(totalCount))")
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
+
                                 }
-                            })
-                            .disabled(totalCount == 0 ? true : false)
-                            .simultaneousGesture(TapGesture().onEnded{
-                                totalPriceForBinding = totalPrice
-                            })
+
+                            }
                             
                         }
                     }
@@ -171,6 +172,9 @@ struct ShoppingBackView: View {
                 .padding()
                 .background {
                     Color.gray.brightness(0.4)
+                }
+                .sheet(isPresented: $isShowingLoginSheet) {
+                    LoginView()
                 }
             }
             .navigationBarTitle("장바구니")

@@ -47,6 +47,9 @@ struct PurchaseHistoryView: View {
     @State private var searchItem = ""
     @State private var deliveryCompletedChecked = false
     
+    @State var isShowingLoginSheet = false
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -80,22 +83,16 @@ struct PurchaseHistoryView: View {
                     .padding(10)
                 }
             }
-            // 구매확정 상태에서 버튼 누르면 팝업 알림이 나온다
-            .popup(isPresented: $deliveryCompletedChecked, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
-                HStack {
-                    Image(systemName: "checkmark.circle")
-                        .foregroundColor(.white)
-                    
-                    Text("구매확정이 완료되었습니다.")
-                        .foregroundColor(.white)
-                        .font(.footnote)
-                        .bold()
-                }
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                .background(Color.accentColor)
-                .cornerRadius(100)
-            })
-            
+
+        } // VStack
+        .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
+            if signUpViewModel.currentUser?.userEmail == nil {
+                isShowingLoginSheet = true
+            }
+        }
+        .sheet(isPresented: $isShowingLoginSheet) {
+            LoginView()
+
         }
     }
 }
