@@ -91,41 +91,7 @@ struct MyPageInfoDetailView: View {
             
             Divider()
             
-            
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(alignment: .top, spacing: 20) {
-                    
-                    Text("수령인")
-                        .foregroundColor(.secondary)
-                    
-                    Text("홍길동")
-                    
-                    Spacer()
-                    
-                    NavigationLink {
-
-                    } label: {
-                        Text("배송지 관리")
-                    }
-                    
-                }
-                
-                HStack(alignment: .top, spacing: 34.5) {
-                    Text("주소")
-                        .foregroundColor(.secondary)
-                    Text("서울특별시 A대로 100번지")
-                }
-                
-                HStack(alignment: .top, spacing: 20) {
-                    Text("연락처")
-                        .foregroundColor(.secondary)
-                    Text("010-1234-1234")
-                    
-                }
-                
-                
-            }
-            .padding(30)
+         
             
             
             Spacer()
