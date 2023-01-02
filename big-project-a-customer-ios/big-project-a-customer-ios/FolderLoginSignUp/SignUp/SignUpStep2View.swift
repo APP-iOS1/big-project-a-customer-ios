@@ -21,7 +21,6 @@ struct SignUpStep2View: View {
     @State var nickNmae = ""
     @FocusState var isInFocusNickName: Bool
     @State private var isShowSucceedToast = false
-	@Binding var isSignUpCompleted: Bool
     
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
     
@@ -77,13 +76,7 @@ struct SignUpStep2View: View {
 						userID = email
 						userPassword = password
 						
-						DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-							isSignUpCompleted.toggle()
-						}
-						
-						DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-							dismiss()
-						}
+                        dismiss()
 						
 					} label: {
 						// ** 임시 **
@@ -133,7 +126,7 @@ struct SignUpStep2View: View {
 					  .cornerRadius(100)
 				  }) // Toast
 				
-				if !isSignUpCompleted {
+				if false {
 					ProgressView()
 						.progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
 						.scaleEffect(3)
@@ -158,9 +151,9 @@ struct SignUpStep2View: View {
 		} // ZStack
     } // Body
 }
-//
-//struct SignUpStep2View_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignUpStep2View(email: .constant(""), password: .constant(""), isActive: .constant(false))
-//    }
-//}
+
+struct SignUpStep2View_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpStep2View(email: .constant(""), password: .constant(""))
+    }
+}
