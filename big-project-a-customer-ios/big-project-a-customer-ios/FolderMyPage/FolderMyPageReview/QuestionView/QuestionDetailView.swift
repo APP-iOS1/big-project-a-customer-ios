@@ -48,33 +48,49 @@ struct QuestionDetailView: View {
                     
                     
                 }
-                .padding(10)
+                .padding(.horizontal, 8)
             }
             
             VStack(alignment: .leading) {
-                
                 Text(item.question)
-                    .frame(width: 350, alignment: .leading)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 4)
+                    .frame(width: UIScreen.main.bounds.width - 35)
                 //TO DO : 글자가 길어질 시 '더보기' 하면 전문이 보이도록 하는 기능 구현
                 
                 // QnA 답글이 아직 없는 경우 분류
                 // FIXME: 답글의 길이가 길면 답글이 짤림. Rectangle의 height 유동적 조정 필요
-                if item.answer != "" {
-                    Rectangle()
-                        .frame(width: UIScreen.main.bounds.width - 35, height: 200)
-                        .foregroundColor(.gray)
-                        .opacity(0.20)
-                        .overlay(Text(item.answer)
-                            .padding(),alignment: .topLeading)
+                //                if item.answer != "" {
+                //                    Rectangle()
+                //                        .frame(width: UIScreen.main.bounds.width - 35, height: 200)
+                //                        .foregroundColor(.gray)
+                //                        .opacity(0.20)
+                //                        .overlay(Text(item.answer)
+                //                            .padding(),alignment: .topLeading)
+                //                }
+                
+                // Rectangle의 height 유동적으로 변경
+                // leading을 보장하기 위해 HStack + Spacer 활용
+                if !item.answer.isEmpty {
+                    HStack {
+                        Text(item.answer)
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .overlay(
+                        Rectangle()
+                            .foregroundColor(.gray)
+                            .opacity(0.2)
+                    )
+                    .frame(width: UIScreen.main.bounds.width - 35)
                 }
             }
-            .frame(width: 360, alignment: .leading)
-            .padding()
             
-//            Rectangle()
-//                .frame(width: 400)
-//                .foregroundColor(.gray)
-//                .opacity(0.20)
+            //            Rectangle()
+            //                .frame(width: 400)
+            //                .foregroundColor(.gray)
+            //                .opacity(0.20)
             
         }
     }
