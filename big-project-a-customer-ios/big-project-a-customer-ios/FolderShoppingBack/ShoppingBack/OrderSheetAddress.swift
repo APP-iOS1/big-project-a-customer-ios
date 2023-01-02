@@ -34,22 +34,34 @@ struct OrderSheetAddress: View {
 	
 	var body: some View {
 		VStack {
+            Spacer()
 			ScrollView(showsIndicators: false) {
 				ForEach(Array(Address.addresses.enumerated()), id: \.offset) { (index, address) in
-					if index == selectAddressIndex {
-						OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
-							.modifier(PurchaseHistoryButtonModifier(borderColor: .accentColor, lineWidth: 2))
-					} else {
-						OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
-							.modifier(PurchaseHistoryButtonModifier())
-					}
+                    if address.isDefaultAddress {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(address.recipient)
+                                .font(.title3)
+                                .bold()
+                            Text(address.recipientAddress)
+                            Text(address.recipientNumber)
+                        }
+                        .modifier(PurchaseHistoryButtonModifier(borderColor: .gray, lineWidth: 2))
+                    }
+//
+//					if index == selectAddressIndex {
+//						OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
+//							.modifier(PurchaseHistoryButtonModifier(borderColor: .accentColor, lineWidth: 2))
+//					} else {
+//						OrderSheetAddressCell(selectAddressIndex: $selectAddressIndex, index: index, address: address)
+//							.modifier(PurchaseHistoryButtonModifier())
+//					}
 				}
-				
 				NavigationLink {
-					AddAddressView()
+					//AddAddressView()
+                    ManageAddressView()
 				} label: {
-					Image(systemName: "plus")
-					Text("배송지 추가")
+					//Image(systemName: "plus")
+					Text("배송지 설정하기")
 				}
 				.modifier(PurchaseHistoryButtonModifier())
 				
@@ -78,6 +90,7 @@ struct OrderSheetAddressCell: View {
 	let address: Address
 	
 	var body: some View {
+        
 		VStack(alignment: .leading, spacing: 10) {
 			Text(address.recipient)
 				.font(.title3)
