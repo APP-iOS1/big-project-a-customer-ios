@@ -18,7 +18,7 @@ struct SignUpStep2View: View {
     //	@Binding var isLoginSheet: Bool
     @Binding var email: String
     @Binding var password: String
-    @State var nickNmae = ""
+    @State var nickName = ""
     @FocusState var isInFocusNickName: Bool
     @State private var isShowSucceedToast = false
     @Binding var navStack: NavigationPath
@@ -31,7 +31,7 @@ struct SignUpStep2View: View {
     // Firebase Authentication에 계정을 생성하고 성공 유무를 isSucceedSignUp에 담는 함수입니다.
     private func signUpWithEmailPassword() {
         Task {
-            if await signUpViewModel.createUser(email: email, password: password, nickname: nickNmae) {
+            if await signUpViewModel.createUser(email: email, password: password, nickname: nickName) {
                 navStack = .init() // 루트뷰(로그인뷰)로 돌아가기
                 print("회원가입 성공")
             } else {
@@ -54,7 +54,7 @@ struct SignUpStep2View: View {
             .padding(EdgeInsets(top: 30, leading: 15, bottom: 40, trailing: 15))
             
             VStack(spacing: 5) {
-                TextField("닉네임 (6자리 이내)", text: $nickNmae)
+                TextField("닉네임 (6자리 이내)", text: $nickName)
                     .focused($isInFocusNickName)
                     .modifier(LoginTextFieldModifier())
                     .frame(height: 30)
@@ -70,11 +70,6 @@ struct SignUpStep2View: View {
                 isShowSucceedToast.toggle()
                 signUpWithEmailPassword()
                 
-                // Login Sheet를 띄울 때 사용되었던 Bool변수(얘: isShowingSheet)를 toggle 시켜야 함.
-                userID = email
-                userPassword = password
-                
-                
             } label: {
                 // 비동기 작업이 끝나기 전까지(작업 중)는 ProgressView를 띄워서 회원가입 버튼을 없앤다.
                 if signUpViewModel.authenticationState == .authenticating {
@@ -87,7 +82,7 @@ struct SignUpStep2View: View {
                 }
             }
             // TextField가 비어있으면 "회원가입" 버튼 비활성화
-            .disabled(nickNmae.isEmpty || nickNmae.count > 6 ? true : false)
+            .disabled(nickName.isEmpty || nickName.count > 6 ? true : false)
         } // VStack
         .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
         .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐

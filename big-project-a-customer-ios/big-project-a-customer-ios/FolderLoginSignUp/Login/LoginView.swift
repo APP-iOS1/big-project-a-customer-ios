@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-var userID : String = "z,mxcnv,zmxcvnlaksdfjlaksdflkasdjf" // 이메일
-var userPassword : String = "102938102938sldkfjadslkfjz,xmcvnz,xmvn" // 패스워드
-var isLoggedIn: Bool = false
 
 // MARK: - LoginView
 /// 로그인을 하는 View 입니다.
