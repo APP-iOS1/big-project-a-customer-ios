@@ -21,7 +21,6 @@ struct SignUpStep2View: View {
     @State var nickNmae = ""
     @FocusState var isInFocusNickName: Bool
     @State private var isShowSucceedToast = false
-	@Binding var isSignUpCompleted: Bool
     
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
     
@@ -31,7 +30,7 @@ struct SignUpStep2View: View {
     // Firebase Authentication에 계정을 생성하고 성공 유무를 isSucceedSignUp에 담는 함수입니다.
     private func signUpWithEmailPassword() {
         Task {
-            if await signUpViewModel.register(email: email, password: password) {
+            if await signUpViewModel.createUser(email: email, password: password, nickname: nickNmae) {
                 dismiss()
                 print("회원가입 성공")
             } else {
@@ -70,20 +69,14 @@ struct SignUpStep2View: View {
 					Button {
 						// 앞서 입력한 이메일과 비밀번호로 Firebase Auth에 계정을 생성하고 사용자 정보 문서(이메일, 닉네임)가 생성되어야 함.
 						// ** 서버 연동 후 필요한 코드 **
-						//                    signUpWithEmailPassword()
+                        signUpWithEmailPassword()
 						// ** 임시 **
 						// Login Sheet를 띄울 때 사용되었던 Bool변수(얘: isShowingSheet)를 toggle 시켜야 함.
 						isShowSucceedToast.toggle()
 						userID = email
 						userPassword = password
 						
-						DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-							isSignUpCompleted.toggle()
-						}
-						
-						DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-							dismiss()
-						}
+                        dismiss()
 						
 					} label: {
 						// ** 임시 **
@@ -133,7 +126,7 @@ struct SignUpStep2View: View {
 					  .cornerRadius(100)
 				  }) // Toast
 				
-				if !isSignUpCompleted {
+				if false {
 					ProgressView()
 						.progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
 						.scaleEffect(3)
@@ -158,9 +151,9 @@ struct SignUpStep2View: View {
 		} // ZStack
     } // Body
 }
-//
-//struct SignUpStep2View_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignUpStep2View(email: .constant(""), password: .constant(""), isActive: .constant(false))
-//    }
-//}
+
+struct SignUpStep2View_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpStep2View(email: .constant(""), password: .constant(""))
+    }
+}

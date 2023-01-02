@@ -41,6 +41,7 @@ struct MyQuestionReview: View {
             HStack{
                 Text("전체")
                 Text("1개월")
+                    .foregroundColor(.gray)
                 
                 Spacer()
                 
@@ -60,7 +61,7 @@ struct MyQuestionReview: View {
                 
                 ScrollView(showsIndicators: false, content: {
                     ForEach($questionViewModel.questionItems) { item in
-                        QuestionDetailView(item: item, vm: questionViewModel)
+                        QuestionDetailView(item: item)
                         .padding(.vertical)
 
                         Divider()

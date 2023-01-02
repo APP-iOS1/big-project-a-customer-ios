@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import PopupView
 
 enum DeliveryStatusEnum: String {
-//    배송중
-//    배송완료
-//    배송준비중
-//    리뷰작성 가능
-//    리뷰작성 완료
+    //    배송중
+    //    배송완료
+    //    배송준비중
+    //    리뷰작성 가능
+    //    리뷰작성 완료
     case pending
     case deliveryCompleted
     case createReview
@@ -44,6 +45,7 @@ class OrderInfoViewModel: ObservableObject {
 struct PurchaseHistoryView: View {
     @ObservedObject var orderStore: OrderInfoViewModel = OrderInfoViewModel()
     @State private var searchItem = ""
+    @State private var deliveryCompletedChecked = false
     
     var body: some View {
         VStack {
@@ -56,7 +58,7 @@ struct PurchaseHistoryView: View {
             .padding(.horizontal, 10)
             .modifier(PurchaseHistoryButtonModifier())
             .padding(.horizontal, 10)
-
+            
             ScrollView {
                 ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
                     VStack {
@@ -73,11 +75,27 @@ struct PurchaseHistoryView: View {
                             
                         }
                         
-                        PurchaseListCell(orderStore: orderStore, order: order, index: index)
+                        PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
                     }
                     .padding(10)
                 }
             }
+            // 구매확정 상태에서 버튼 누르면 팝업 알림이 나온다
+            .popup(isPresented: $deliveryCompletedChecked, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
+                HStack {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(.white)
+                    
+                    Text("구매확정이 완료되었습니다.")
+                        .foregroundColor(.white)
+                        .font(.footnote)
+                        .bold()
+                }
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                .background(Color.accentColor)
+                .cornerRadius(100)
+            })
+            
         }
     }
 }
@@ -87,6 +105,7 @@ struct PurchaseListCell: View {
     @ObservedObject var orderStore: OrderInfoViewModel
     var order: OrderInfo
     let index: Int
+    @Binding var isDeliveryCompleted: Bool
     
     var body: some View{
         VStack(alignment: .leading){
@@ -109,20 +128,22 @@ struct PurchaseListCell: View {
                         Text("\(order.itemAmount)개")
                             .font(.caption)
                         Spacer()
-                        Button {
-                            // 장바구니로 이동
-                        } label: {
-                            Text("장바구니 담기")
-                                .font(.caption)
-                        }
-                        .modifier(PurchaseHistoryButtonModifier())
-                        .frame(maxWidth: 80)
+//                        Button {
+//                            // 장바구니로 이동
+//                        } label: {
+//                            Text("장바구니 담기")
+//                                .font(.caption)
+//                        }
+//                        .modifier(PurchaseHistoryButtonModifier())
+//                        .frame(maxWidth: 80)
                         
                     }
                     .padding(.bottom, 10)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
             }
+            
             HStack{
                 Button {
                     // 교환 반품 신청
@@ -143,10 +164,13 @@ struct PurchaseListCell: View {
                 case .deliveryCompleted:
                     Button {
                         orderStore.orders[index].deliveryStatus = .createReview
+                        isDeliveryCompleted = true
                     } label: {
                         Text("구매확정")
                     }
                     .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
+                    
+                    
                 case .createReview:
                     Button {
                         // 리뷰 작성 view

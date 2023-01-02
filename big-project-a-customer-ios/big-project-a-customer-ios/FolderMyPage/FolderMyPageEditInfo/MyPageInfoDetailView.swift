@@ -91,41 +91,7 @@ struct MyPageInfoDetailView: View {
             
             Divider()
             
-            
-//            VStack(alignment: .leading, spacing: 10) {
-//                HStack(alignment: .top, spacing: 20) {
-//
-//                    Text("수령인")
-//                        .foregroundColor(.secondary)
-//
-//                    Text(vm.users.name)
-//
-//                    Spacer()
-//
-//                    NavigationLink {
-//                        ManageAddressView(myPageViewModel: vm)
-//                    } label: {
-//                        Text("배송지 관리")
-//                    }
-//
-//                }
-//
-//                HStack(alignment: .top, spacing: 34.5) {
-//                    Text("주소")
-//                        .foregroundColor(.secondary)
-//                    Text(vm.users.userAddress)
-//                }
-//
-//                HStack(alignment: .top, spacing: 20) {
-//                    Text("연락처")
-//                        .foregroundColor(.secondary)
-//                    Text(vm.users.phoneNumber)
-//
-//                }
-//
-//
-//            }
-//            .padding(30)
+         
             
             
             Spacer()
