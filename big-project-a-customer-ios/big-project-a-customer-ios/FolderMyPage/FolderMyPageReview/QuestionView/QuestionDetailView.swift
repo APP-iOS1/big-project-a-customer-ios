@@ -9,7 +9,6 @@ import SwiftUI
 
 struct QuestionDetailView: View {
     @Binding var item: QuestionItems
-    @ObservedObject var vm: QuestionViewModel
     
     var body: some View {
         VStack {
@@ -98,9 +97,8 @@ struct QuestionDetailView: View {
 
 struct QuestionDetailView_Previews: PreviewProvider {
     @State static var items = QuestionItems(title: "애케플 문의 드립니다.", question: "스페이스 그레이를 샀습니다 살 때 애케플 까먹고 구매 안했는데 15%할인된 가격으로 추가 구매 할 수 있는 방법 있을 가요?", answer: "Apple 2021 맥북프로 14 상품은 구매 후 상품페이지를 통해 AppleCare+만 단독 구매가 가능하지 않으며, 애플케어 관련 문의는 애플공식서비스센터/ 080-000-0000 또는 애플 홈페이지를 통해 자세한 상담이 가능한 점 참고하여 이용 부탁드립니다.", itemName: "iPhone14 Pro", itemCategory: "스마트폰", date: "2022-11-21", image: "Phone")
-    @StateObject static var vm = QuestionViewModel()
     
     static var previews: some View {
-        QuestionDetailView(item: $items, vm: vm)
+        QuestionDetailView(item: $items)
     }
 }
