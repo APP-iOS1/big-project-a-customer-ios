@@ -23,6 +23,7 @@ struct LoginView: View {
 	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
+    
 	
 //	@Binding var totalPriceForBinding: Int
     
