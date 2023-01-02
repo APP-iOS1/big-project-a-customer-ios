@@ -50,15 +50,15 @@ struct AddAddressView: View {
                 }.pickerStyle(.menu)
             }
             Divider()
-            HStack{
-                Button {
-                    isDefaultAddress.toggle()
-                } label: {
-                    Image(systemName: isDefaultAddress ? "checkmark.square.fill" : "square")
-                        .foregroundColor(isDefaultAddress ? .green : .gray)
-                }
-                Text("기본 배송지로 설정")
-            }.modifier(TextCaptionGrayModifier())
+//            HStack{
+//                Button {
+//                    isDefaultAddress.toggle()
+//                } label: {
+//                    Image(systemName: isDefaultAddress ? "checkmark.square.fill" : "square")
+//                        .foregroundColor(isDefaultAddress ? .green : .gray)
+//                }
+//                Text("기본 배송지로 설정")
+//            }.modifier(TextCaptionGrayModifier())
 //            Button {
 //                // 새로운 배송지 저장
 //            } label: {

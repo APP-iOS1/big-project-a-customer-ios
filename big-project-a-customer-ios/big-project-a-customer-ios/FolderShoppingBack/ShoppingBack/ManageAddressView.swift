@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ManageAddressView: View {
+    @Environment(\.dismiss) private var dissmiss
     @ObservedObject var myPageViewModel: MyPageViewModel
     
     @State private var name: String = ""
@@ -48,12 +49,13 @@ struct ManageAddressView: View {
             Spacer()
             Button(action: {
                 finishEdit()
+                dissmiss()
             }, label: {
                 Text("수정 완료")
             })
             .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
             .padding()
-            
+            .navigationTitle("기본배송지 수정")
         }
         .onAppear {
             name = myPageViewModel.users.name
@@ -62,6 +64,8 @@ struct ManageAddressView: View {
         }
     }
     
+    /// 수정 완료 버튼을 누르면 호출되는 함수로
+    /// 텍스트 필드로 입력 받아 수령인, 주소, 연락처를 변경한다
     func finishEdit() {
         myPageViewModel.users.name = name
         myPageViewModel.users.userAddress = address
