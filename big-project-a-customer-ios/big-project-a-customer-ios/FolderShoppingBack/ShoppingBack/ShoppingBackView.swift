@@ -59,6 +59,8 @@ struct ShoppingBackView: View {
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     @State var totalPriceForBinding = 0
     
+    @State var isShowingLoginSheet = false
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
     
     // 결제할 총 금액
     var totalPrice: Int {
@@ -79,10 +81,8 @@ struct ShoppingBackView: View {
     var body: some View {
         // MARK: head
         NavigationStack {
+            Spacer().frame(height:30)
             VStack {
-                Text("장바구니")
-                    .font(.title2.bold())
-                
                 Section {
                     HStack {
                         Button {
@@ -90,7 +90,7 @@ struct ShoppingBackView: View {
                             checkBoxAll()
                         } label: {
                             Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                                .foregroundColor(isCheckedAll ? .green : .gray)
+                                .foregroundColor(isCheckedAll ? Color("AccentColor") : .gray)
                         }
                         
                         Text("모두선택")
@@ -109,7 +109,7 @@ struct ShoppingBackView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 .padding(.top, 1)
                 
                 Divider()
@@ -127,7 +127,7 @@ struct ShoppingBackView: View {
                         Divider()
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 
                 // MARK: tail
                 Section {
@@ -151,30 +151,34 @@ struct ShoppingBackView: View {
                         .font(.title2.bold())
                         
                         HStack {
+
                             NavigationLink(destination: {
 								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
                             }, label: {
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
+                                    RoundedRectangle(cornerRadius: 5)
                                         .frame(width: UIScreen.main.bounds.width - 40, height: 50)
                                     Text("구매하기 (\(totalCount))")
-                                        .bold()
+                                        .fontWeight(.bold)
                                         .foregroundColor(.white)
+
                                 }
-                            })
-                            .disabled(totalCount == 0 ? true : false)
-                            .simultaneousGesture(TapGesture().onEnded{
-                                totalPriceForBinding = totalPrice
-                            })
+
+                            }
                             
-                        }
+                        )}
                     }
                 }
                 .padding()
                 .background {
                     Color.gray.brightness(0.4)
                 }
+                .sheet(isPresented: $isShowingLoginSheet) {
+                    LoginView()
+                }
             }
+            .navigationBarTitle("장바구니")
+            .navigationBarTitleDisplayMode(.automatic)
         }
     }
     

@@ -91,6 +91,7 @@ struct MyPageInfoDetailView: View {
             
             Divider()
             
+
             
             
             Spacer()
