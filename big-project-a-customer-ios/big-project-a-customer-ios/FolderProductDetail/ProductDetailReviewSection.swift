@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductDetailReviewSection: View {
+    
     var body: some View {
         VStack {
             
@@ -70,9 +71,9 @@ struct ProductDetailReviewSection: View {
                     .resizable()
                     .frame(width: 75, height: 75)
             }
-                .frame(maxHeight: 180)
+            .frame(maxHeight: 200)
             
-            Divider()
+//            Divider()
             
         }
     }

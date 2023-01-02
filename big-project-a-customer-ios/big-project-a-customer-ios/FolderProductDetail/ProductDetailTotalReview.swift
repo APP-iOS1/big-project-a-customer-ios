@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductDetailTotalReview: View {
 
     @EnvironmentObject var myReviewViewModel : MyReviewViewModel
+    
     var body: some View {
         ScrollView {
             ForEach(myReviewViewModel.reviewItems) { review in
