@@ -62,7 +62,7 @@ struct MyPageInfoView: View {
                             case "작성한 문의 글":
                                 MyQuestionReview()
                             case "최근 본 상품":
-                                MyReview()
+                                MyRecentView()
                             default :
                                 Text("default")
                             }
