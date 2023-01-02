@@ -22,16 +22,33 @@ struct LoginView: View {
 	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
-	
+    
+    @State var navStack = NavigationPath()
+    
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
 //	@Binding var totalPriceForBinding: Int
     
-    // MARK: - Properties
+    
+    
+    // MARK: - Methods
+    private func logInWithEmailPassword() {
+        Task {
+            await signUpViewModel.requestUserLogin(withEmail: email, withPassword: password)
+            if signUpViewModel.currentUser?.userEmail != nil {
+                dismiss()
+                print("로그인 성공 - 이메일: \(signUpViewModel.currentUser?.userEmail ?? "???")")
+            } else {
+                
+                print("로그인 실패")
+            }
+        }
+    }
     
     
     // MARK: - Body LoginView
     /// LoginView의 body 입니다.
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navStack) {
             VStack {
                 HStack {
                     Text("로그인")
@@ -85,13 +102,15 @@ struct LoginView: View {
                 HStack {
                     Text("아직 계정이 없으신가요?")
                         .font(.footnote)
-                    NavigationLink {
-                        // Going to SignupView
-                        SignUpView()
-                    } label: {
+
+                    NavigationLink(value: "") {
                         Text("회원가입")
                             .font(.footnote)
                             .foregroundColor(.accentColor)
+                    }
+                    .navigationDestination(for: String.self) { value in
+                        // Going to SignupView
+                        SignUpView(navStack: $navStack)
                     }
                 } // HStack - 회원가입
                 .padding(.top, 30)
@@ -105,22 +124,22 @@ struct LoginView: View {
                 
                 Button {
                     // Login action with firebase...
-                    // ** 임시 **
-					if userID == email && userPassword == password {
-//						OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-					} else {
-						Text("로그인 실패")
-					}
+                    logInWithEmailPassword()
                 } label: {
-                    RoundedRectangle(cornerRadius: 15)
-                        .modifier(LoginButtonModifier(label: "로그인하기"))
+                    if signUpViewModel.loginRequestState == .loggingIn {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                            .frame(height: 40)
+                    } else { // 로그인 전이나 후에는 버튼을 띄운다.
+                        RoundedRectangle(cornerRadius: 15)
+                            .modifier(LoginButtonModifier(label: "로그인하기"))
+                    }
                 }
             } // VStack - body 바로 아래
             .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
                 endEditing()
             } // onTapGesture
-            /*
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -136,17 +155,16 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
-             */
         } // NavigationStack - 임시
     } // Body
 }
 
 // MARK: - LoginView Previews
-//struct LoginView_Previews: PreviewProvider {
-//    static var previews: some View {
-//		LoginView()
-//    }
-//}
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+		LoginView()
+    }
+}
 
 
 // MARK: - Modifier : LoginView TextField 속성

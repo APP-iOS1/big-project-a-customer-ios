@@ -45,6 +45,9 @@ struct PurchaseHistoryView: View {
     @ObservedObject var orderStore: OrderInfoViewModel = OrderInfoViewModel()
     @State private var searchItem = ""
     
+    @State var isShowingLoginSheet = false
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -78,6 +81,14 @@ struct PurchaseHistoryView: View {
                     .padding(10)
                 }
             }
+        } // VStack
+        .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
+            if signUpViewModel.currentUser?.userEmail == nil {
+                isShowingLoginSheet = true
+            }
+        }
+        .sheet(isPresented: $isShowingLoginSheet) {
+            LoginView()
         }
     }
 }

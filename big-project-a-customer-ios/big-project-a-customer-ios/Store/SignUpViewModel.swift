@@ -7,9 +7,16 @@ enum AuthenticationState {
     case authenticated
 }
 
+enum LoginRequestState {
+    case loggingIn
+    case loggedIn
+    case notLoggedIn
+}
+
 class SignUpViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var authenticationState: AuthenticationState = .unauthenticated
+    @Published var loginRequestState: LoginRequestState = .notLoggedIn
     @Published var currentUser: CustomerInfo?
     
     let database = Firestore.firestore()
@@ -92,14 +99,18 @@ class SignUpViewModel: ObservableObject {
     }
     
     // MARK: - Login
+    @MainActor
     public func requestUserLogin(withEmail email: String, withPassword password: String) async -> Void {
+        loginRequestState = .loggingIn
         do {
+            loginRequestState = .loggedIn
             try await authentification.signIn(withEmail: email, password: password)
             // 현재 로그인 한 유저의 정보 담아주는 코드
             // 변경이 필요함!
             self.currentUser = CustomerInfo(userEmail: email, userNickname: " " )
             
         } catch {
+            loginRequestState = .notLoggedIn
             dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")
         }
     }

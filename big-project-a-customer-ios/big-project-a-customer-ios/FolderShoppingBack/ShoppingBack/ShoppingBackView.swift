@@ -59,6 +59,8 @@ struct ShoppingBackView: View {
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     @State var totalPriceForBinding = 0
     
+    @State var isShowingLoginSheet = false
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
     
     // 결제할 총 금액
     var totalPrice: Int {
@@ -153,20 +155,35 @@ struct ShoppingBackView: View {
                                 .font(.subheadline)
                             Spacer()
                             
-                            NavigationLink(destination: {
-								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                            }, label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .frame(maxWidth: 200, maxHeight: 50)
-                                    Text("바로구매")
-                                        .foregroundColor(.white)
+                            // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
+                            if signUpViewModel.currentUser?.userEmail != nil {
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .frame(maxWidth: 200, maxHeight: 50)
+                                        Text("바로구매")
+                                            .foregroundColor(.white)
+                                    }
+                                })
+                                .disabled(totalCount == 0 ? true : false)
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    totalPriceForBinding = totalPrice
+                                })
+                            } else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
+                                Button {
+                                    isShowingLoginSheet.toggle()
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .frame(maxWidth: 200, maxHeight: 50)
+                                        Text("바로구매")
+                                            .foregroundColor(.white)
+                                    }
                                 }
-                            })
-                            .disabled(totalCount == 0 ? true : false)
-                            .simultaneousGesture(TapGesture().onEnded{
-                                totalPriceForBinding = totalPrice
-                            })
+
+                            }
                             
                         }
                     }
@@ -174,6 +191,9 @@ struct ShoppingBackView: View {
                 .padding()
                 .background {
                     Color.gray.brightness(0.4)
+                }
+                .sheet(isPresented: $isShowingLoginSheet) {
+                    LoginView()
                 }
             }
         }
