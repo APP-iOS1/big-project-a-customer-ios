@@ -31,7 +31,7 @@ struct SignUpStep2View: View {
     // Firebase Authentication에 계정을 생성하고 성공 유무를 isSucceedSignUp에 담는 함수입니다.
     private func signUpWithEmailPassword() {
         Task {
-            if await signUpViewModel.register(email: email, password: password) {
+            if await signUpViewModel.createUser(email: email, password: password, nickname: nickNmae) {
                 dismiss()
                 print("회원가입 성공")
             } else {
