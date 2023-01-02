@@ -70,7 +70,7 @@ struct SignUpStep2View: View {
 					Button {
 						// 앞서 입력한 이메일과 비밀번호로 Firebase Auth에 계정을 생성하고 사용자 정보 문서(이메일, 닉네임)가 생성되어야 함.
 						// ** 서버 연동 후 필요한 코드 **
-						//                    signUpWithEmailPassword()
+                        signUpWithEmailPassword()
 						// ** 임시 **
 						// Login Sheet를 띄울 때 사용되었던 Bool변수(얘: isShowingSheet)를 toggle 시켜야 함.
 						isShowSucceedToast.toggle()

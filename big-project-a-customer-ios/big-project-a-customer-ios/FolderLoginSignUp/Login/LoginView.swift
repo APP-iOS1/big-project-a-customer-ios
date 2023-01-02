@@ -15,6 +15,7 @@ var isLoggedIn: Bool = false
 /// 로그인을 하는 View 입니다.
 struct LoginView: View {
     // MARK: - Property Wrappers
+    @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
 //	@Binding var isLoginSheet: Bool
     @State var email = ""
@@ -104,7 +105,10 @@ struct LoginView: View {
                 Divider() // 로그인 버튼 구분선
                 
                 Button {
-                    // Login action with firebase...
+                    // Login action with firebase...'
+                    Task{
+                        await signupViewModel.requestUserLogin(withEmail: email, withPassword: password)
+                    }
                     // ** 임시 **
 					if userID == email && userPassword == password {
 //						OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)

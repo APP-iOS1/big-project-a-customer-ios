@@ -97,8 +97,10 @@ class SignUpViewModel: ObservableObject {
             try await authentification.signIn(withEmail: email, password: password)
             // 현재 로그인 한 유저의 정보 담아주는 코드
             // 변경이 필요함!
-            self.currentUser = CustomerInfo(userEmail: email, userNickname: " " )
-            
+            var userNickname = ""
+            userNickname = await requestUserNickname(uid: authentification.currentUser?.uid ?? "")
+            self.currentUser = CustomerInfo(id: authentification.currentUser?.uid ?? "", userEmail: email, userNickname: userNickname )
+            print("userNickname: \(userNickname)")
         } catch {
             dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")
         }
@@ -111,5 +113,27 @@ class SignUpViewModel: ObservableObject {
         } catch {
             dump("DEBUG : LOG OUT FAILED \(error.localizedDescription)")
         }
+    }
+    
+    // MARK: - request Nickname
+    /// uid 값을 통해 database의 특정 uid에 저장된 userNickname을 요청합니다.
+    ///  - Parameter uid : currentUser의 UID
+    ///  - Returns : currentUser의 userNickname
+    private func requestUserNickname(uid: String) async -> String{
+        var retValue = ""
+        do{
+            try await database.collection(appCategory.rawValue).document(uid).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    retValue = document.get("userNickname") as! String
+                } else {
+                    print(error)
+                    
+                }
+            }
+            return retValue
+        }catch{
+            print(error)
+        }
+        
     }
 }
