@@ -41,6 +41,7 @@ struct MyQuestionReview: View {
             HStack{
                 Text("전체")
                 Text("1개월")
+                    .foregroundColor(.gray)
                 
                 Spacer()
                 

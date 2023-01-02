@@ -38,6 +38,7 @@ struct PurchaseDetail: View {
     @State var userAddress = "서울특별시 종로구 종로3길 17"
     @State var phoneNumber = "010-1234-5678"
     @State var deliveryRequest = "문 앞"
+    @State var check = false
     
     // 전체 가격을 연산프로퍼티로 구하는데, 연산프로퍼티 사용시 타입 명시가 필요함to
     var totalPrice: Int {
@@ -102,7 +103,7 @@ struct PurchaseDetail: View {
             
             ForEach(0..<3){ _ in
                 VStack {
-                    PurchaseListCell(orderStore: orderStore, order: OrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"), index: 1)
+                    PurchaseListCell(orderStore: orderStore, order: OrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"), index: 1, isDeliveryCompleted: $check)
                 }
             }
             Button {

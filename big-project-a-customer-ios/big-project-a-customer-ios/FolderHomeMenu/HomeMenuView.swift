@@ -34,7 +34,7 @@ struct HomeMenuView: View {
     var body: some View{
         NavigationStack {
             ScrollView(.vertical){
-                LazyVGrid(columns: columns, spacing: 10){
+                LazyVGrid(columns: columns, spacing: 16){
                     ForEach(searchItem) { item in
                         NavigationLink {
                             NotebookView()
@@ -76,7 +76,9 @@ struct HomeMenuView: View {
         }
     }
 }
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeMenuView()
-//    }
+
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeMenuView()
+    }
+}

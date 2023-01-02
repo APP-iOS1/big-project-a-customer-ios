@@ -24,7 +24,10 @@ struct PurchaseHistoryButtonModifier: ViewModifier {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(borderColor, lineWidth: lineWidth)
             )
+            
             .background(backgroundColor)
+            .cornerRadius(5)
+            
     }
 }
 
