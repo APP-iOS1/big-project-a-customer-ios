@@ -91,25 +91,55 @@ class SignUpViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Login
+    // MARK: - User Login
+    /// 사용자의 이메일과 패스워드를 받아 로그인을 요청합니다.
+    /// - Parameter email: 입력받은 사용자 email
+    /// - Parameter password: 입력받은 사용자 비밀번호
+    @MainActor
     public func requestUserLogin(withEmail email: String, withPassword password: String) async -> Void {
+        authenticationState = .authenticating
         do {
             try await authentification.signIn(withEmail: email, password: password)
             // 현재 로그인 한 유저의 정보 담아주는 코드
             // 변경이 필요함!
-            self.currentUser = CustomerInfo(userEmail: email, userNickname: " " )
-            
+            let userNickname = await requestUserNickname(uid: authentification.currentUser?.uid ?? "")
+            self.currentUser = CustomerInfo(id: self.authentification.currentUser?.uid ?? "", userEmail: email, userNickname: userNickname )
+            print("userNickname: \(userNickname)")
         } catch {
             dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")
         }
+        authenticationState = .authenticated
     }
     
-    // MARK: - Logout
+    // MARK: - User Logout
+    /// 로그인한 사용자의 로그아웃을 요청합니다.
     public func requestUserSignOut() {
         do {
             try authentification.signOut()
+            authenticationState = .unauthenticated
         } catch {
             dump("DEBUG : LOG OUT FAILED \(error.localizedDescription)")
         }
+    }
+    
+    // MARK: - request Nickname
+    /// uid 값을 통해 database의 특정 uid에 저장된 userNickname을 요청합니다.
+    ///  - Parameter uid : currentUser의 UID
+    ///  - Returns : currentUser의 userNickname
+    private func requestUserNickname(uid: String) async -> String {
+        var retValue = ""
+//        print("requestUserNickname 1")
+        return await withCheckedContinuation({ continuation in
+            database.collection(appCategory.rawValue).document(uid).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    retValue = document.get("userNickname") as! String
+//                    print("requestUserNickname 2: \(retValue)")
+                    continuation.resume(returning: retValue)
+                } else {
+                    print("2-")
+                    continuation.resume(throwing: error as! Never)
+                }
+            }
+        })
     }
 }

@@ -25,7 +25,7 @@ struct big_project_a_customer_iosApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(MyReviewViewModel())
-
+                .environmentObject(SignUpViewModel())
         }
     }
 }
