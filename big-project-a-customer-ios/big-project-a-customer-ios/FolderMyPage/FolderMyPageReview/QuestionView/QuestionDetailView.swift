@@ -52,9 +52,6 @@ struct QuestionDetailView: View {
             
             VStack(alignment: .leading) {
                 Text(item.question)
-                    .padding(.horizontal, 4)
-                    .padding(.vertical, 4)
-                    .frame(width: UIScreen.main.bounds.width - 35)
                 //TO DO : 글자가 길어질 시 '더보기' 하면 전문이 보이도록 하는 기능 구현
                 
                 // QnA 답글이 아직 없는 경우 분류
@@ -82,9 +79,9 @@ struct QuestionDetailView: View {
                             .foregroundColor(.gray)
                             .opacity(0.2)
                     )
-                    .frame(width: UIScreen.main.bounds.width - 35)
+                    
                 }
-            }
+            }.frame(width: UIScreen.main.bounds.width - 35)
             
             //            Rectangle()
             //                .frame(width: 400)
