@@ -166,7 +166,7 @@ struct ShoppingBackView: View {
 
                             }
                             
-                        }
+                        )}
                     }
                 }
                 .padding()
