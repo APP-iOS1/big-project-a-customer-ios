@@ -23,7 +23,8 @@ import SwiftUI
 
 // MARK: - 목업용 리뷰 데이터 모델
 struct MyReviewItems: Identifiable {
-    var id = UUID().uuidString
+    var id: String
+    var profileImage: String
     var date: String
     var itemName: String
     var itemOption: String
@@ -40,9 +41,15 @@ struct MyReviewItems: Identifiable {
 class MyReviewViewModel: ObservableObject {
     // MyReviewItems 약자
     @Published var mRItems: [MyReviewItems] = [
-        MyReviewItems(date: "2022-12-07", itemName: "MacBook Air M1", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-11-30", itemReview: "가벼워서 카페에 들고다니기 좋아요!", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
-        MyReviewItems(date: "2022-12-02", itemName: "MacBook Pro 16", itemOption: "Space Black", itemCategory: "노트북", purchaseDate: "2022-11-26", itemReview: "화면이 커서 시원시원합니다, 조금 무거운게 단점이에요", itemImgs: ["macbookpro1", "macbookpro2"], stars: 4),
-        MyReviewItems(date: "2022-11-17", itemName: "iPhone14 Pro", itemOption: "256gb", itemCategory: "핸드폰", purchaseDate: "2022-10-29", itemReview: "카메라 성능이 너무 좋습니다, 다이나믹 아일랜드 영롱해요", itemImgs: ["iphone14pro1", "iphone14pro2"], stars: 5)
+        MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-12-07", itemName: "MacBook Air M1", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-11-30", itemReview: "가벼워서 카페에 들고다니기 좋아요!", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
+        MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-12-02", itemName: "MacBook Pro 16", itemOption: "Space Black", itemCategory: "노트북", purchaseDate: "2022-11-26", itemReview: "화면이 커서 시원시원합니다, 조금 무거운게 단점이에요", itemImgs: ["macbookpro1", "macbookpro2"], stars: 4),
+        MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-11-17", itemName: "iPhone14 Pro", itemOption: "256gb", itemCategory: "핸드폰", purchaseDate: "2022-10-29", itemReview: "카메라 성능이 너무 좋습니다, 다이나믹 아일랜드 영롱해요", itemImgs: ["iphone14pro1", "iphone14pro2"], stars: 5)
+    ]
+    
+    @Published var reviewItems: [MyReviewItems] = [
+        MyReviewItems(id: "둘리", profileImage: "person.fill", date: "2023-01-02", itemName: "MacBook Air 13", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-12-25", itemReview: "호이 호이", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
+        MyReviewItems(id: "침착맨", profileImage: "person.fill", date: "2023-01-01", itemName: "MacBook Air 13", itemOption: "SSD 512gb", itemCategory: "노트북", purchaseDate: "2022-12-24", itemReview: "맥북 에어를 샀는데 맥북 프로가 왔네요 오히려 좋아", itemImgs: ["macbookpro1", "macbookpro2"], stars: 5)
+
     ]
 }
 
