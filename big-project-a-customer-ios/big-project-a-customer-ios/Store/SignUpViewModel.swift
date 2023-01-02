@@ -95,7 +95,9 @@ class SignUpViewModel: ObservableObject {
     public func requestUserLogin(withEmail email: String, withPassword password: String) async -> Void {
         do {
             try await authentification.signIn(withEmail: email, password: password)
-            self.currentUser = <#AppUserModel#>
+            // 현재 로그인 한 유저의 정보 담아주는 코드
+            // 변경이 필요함!
+            self.currentUser = CustomerInfo(userEmail: email, userNickname: " " )
             
         } catch {
             dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")

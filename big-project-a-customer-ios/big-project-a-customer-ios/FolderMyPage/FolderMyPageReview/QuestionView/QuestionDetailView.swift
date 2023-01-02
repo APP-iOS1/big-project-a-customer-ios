@@ -5,7 +5,7 @@
 //  Created by 김태성 on 2022/12/27.
 //
 
-import SwiftUI
+import SwiftUI 
 
 struct QuestionDetailView: View {
     @Binding var item: QuestionItems
