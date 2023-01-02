@@ -13,48 +13,10 @@ import PhotosUI
 struct MyPageInfoDetailView: View {
     
     @StateObject var vm = MyPageViewModel()
-    // 이미지 피커뷰를 키고나서 클릭한 이미지
-    @State private var selectedItem: PhotosPickerItem? = nil
-    // 이미지 피커뷰를 키고나서 클릭한 이미지의 데이터
-    @State private var selectedImageData: Data? = nil
-    
-    @State private var isShowingProfile: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                
-                VStack{
-                    
-                    
-                    
-                    if !isShowingProfile {
-                        PhotosPicker(
-                            selection: $selectedItem,
-                            matching: .images,
-                            photoLibrary: .shared()) {
-                                Text("Choose")
-                                    .modifier(ProfileModifier())
-                            }
-                            .onChange(of: selectedItem) { newItem in
-                                Task {
-                                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                        selectedImageData = data
-                                    }
-                                    isShowingProfile.toggle()
-                                }
-                            }
-                    }
-                    
-                    if let selectedImageData,
-                       let uiImage = UIImage(data: selectedImageData) {
-                        Image(uiImage: uiImage)
-                            .modifier(ProfileModifier())
-                    }
-                    
-                    
-                    
-                }
                 
                 // 유저 이름
                 Text(vm.users.name)
@@ -72,77 +34,104 @@ struct MyPageInfoDetailView: View {
             }
             .padding(30)
             
-            Text("회원정보")
-                .padding(.leading, 30)
+            HStack {
+                
+                Text("회원정보")
+                    .font(.title3)
+                
+                // 회원정보 수정 링크
+                // 비밀번호, 주소를 수정할 수 있음
+                
+                Spacer()
+                
+                NavigationLink {
+                    MyPageInfoEditCheckingView()
+                } label: {
+                    Text("회원정보 수정")
+                }
+            }
+            .padding(.horizontal, 30)
             
             Divider()
             
-            HStack {
-                VStack(alignment: .leading) {
+            
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .top, spacing: 20) {
+                    
                     Text("고객명")
+                        .foregroundColor(.secondary)
+                    
+                    Text("홍길동")
+                    
+                    Spacer()
+                    
+                    
+                }
+                
+                HStack(alignment: .top, spacing: 20) {
                     Text("이메일")
+                        .foregroundColor(.secondary)
+                    Text("yahoth@naver.com")
+                }
+                
+                HStack(alignment: .top, spacing: 20) {
                     Text("연락처")
+                        .foregroundColor(.secondary)
+                    Text("010-1234-1234")
+                    
+                }
+                HStack(alignment: .top, spacing: 34.5) {
                     Text("주소")
-                    
+                        .foregroundColor(.secondary)
+                    Text("서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지")
                 }
-                //.foregroundColor(.secondary)
-                VStack(alignment: .leading) {
-                    HStack {
-                        // 유저 이름
-                        Text(vm.users.name)
-                        Spacer()
-                        
-                        // 회원정보 수정 링크
-                        // 비밀번호, 주소를 수정할 수 있음
-                        NavigationLink {
-                            MyPageInfoEditCheckingView()
-                        } label: {
-                            Text("회원정보 수정")
-                        }
-                    }
-                    // 유저 이메일
-                    Text(vm.users.userEmail)
-                    // 유저 전화번호
-                    Text(vm.users.phoneNumber)
-                    // 유저 주소
-                    Text(vm.users.userAddress)
-                    
-                }
+                
             }
-            .padding(.horizontal, 30)
+            .padding(30)
+            
             Divider()
             
-            HStack {
-                VStack(alignment: .leading) {
+            
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .top, spacing: 20) {
+                    
                     Text("수령인")
-                    Text("주소")
-                    Text("연락처")
-                }
-                //.foregroundColor(.secondary)
-                VStack(alignment: .leading) {
-                    HStack {
-                        // 수령인 이름
-                        Text(vm.users.name)
-                        Spacer()
-                        
-                        // 회원정보 수정 링크
-                        // 비밀번호, 주소를 수정할 수 있음
-                        NavigationLink {
-                            ManageAddressView()
-                        } label: {
-                            Text("주소록 관리")
-                        }
+                        .foregroundColor(.secondary)
+                    
+                    Text(vm.users.name)
+                    
+                    Spacer()
+                    
+                    NavigationLink {
+                        ManageAddressView()
+                    } label: {
+                        Text("배송지 관리")
                     }
-                    // 수령인 주소
-                    Text(vm.users.userAddress)
-                    // 수령인 전화번호
-                    Text(vm.users.phoneNumber)
+                    
                 }
+                
+                HStack(alignment: .top, spacing: 34.5) {
+                    Text("주소")
+                        .foregroundColor(.secondary)
+                    Text(vm.users.userAddress)
+                }
+                
+                HStack(alignment: .top, spacing: 20) {
+                    Text("연락처")
+                        .foregroundColor(.secondary)
+                    Text(vm.users.phoneNumber)
+                    
+                }
+                
+                
             }
-            .padding(.horizontal, 30)
-            Divider()
+            .padding(30)
             
+            
+            Spacer()
         }
+        .navigationTitle("내정보관리")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
