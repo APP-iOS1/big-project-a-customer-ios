@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct Product {
+struct Item: Identifiable {
     
-    var id: String
-    var name: String
-    var image: String
-    //    var reviews: [Review]
-    // 문의?? -> 제품별 관리 or 스토어쪽에서 따로 관리?
-    var rating: Double
-    var options: [String:[String]]
-    var category: String
-    var brand: String
-    var price: Int
+    var id: String // 제품id
+    var storeId: String // 판매자 id
+    var itemName: String // 제품명
+    var itemImage: [String] // 제품이미지
+    var itemCategory: String // 제품카테고리
+    var itemAmount: Int // 제품수량
+    var options: [String:[String]] // 제품옵션
+    var price: Int // 제품가격
+    //    var rating: Double
+    //    var brand: String
     
 }

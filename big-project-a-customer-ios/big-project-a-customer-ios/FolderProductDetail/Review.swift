@@ -10,15 +10,18 @@ import Foundation
 struct Review {
     
     var id: String
-    var author: String
-    var authorImageURL: String
-    var reviewImageURL: String
-    var rating: Double
-    var updatedAt: String // timestamp?
-    var createdAt: String // timestamp?
-    var content: String
-    var option: String
-//    var likes: Int
-//    var dislikes: Int
-    // 좋아요, 싫어요 -> 기능상 빼야 할듯?
+    var postDescription: String
+    var postDate: String
+    var reviewerId: String
+    var rate: Double
+    var isAnswered: Bool
+    
+//    var id: String = UUID().uuidstring
+//    var postDescription: String
+//    var postDate: Timestamp
+//    var reviewerId: String
+//    (리뷰 생성시점에 updateData)
+//    var rate: Number
+//    var isAnswered: Bool
+//    var orderedItem: [OrderedItemInfo]
 }
