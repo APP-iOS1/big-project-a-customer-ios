@@ -31,6 +31,8 @@ struct SignUpStep1View: View {
     @State private var isSecuredPassword = true
     @State private var isSecuredPasswordCheck = true
     
+    @Binding var navStack: NavigationPath
+    
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
     
@@ -51,7 +53,6 @@ struct SignUpStep1View: View {
     // MARK: - Body SignUpStep1View
     /// SignUpStep1View의 body 입니다.
     var body: some View {
-        
             VStack {
                 HStack {
                     Text("이메일과 비밀번호를\n입력해 주세요.")
@@ -59,14 +60,14 @@ struct SignUpStep1View: View {
                     Spacer()
                 } // HStack 입력 안내문구
                 .padding(EdgeInsets(top: 30, leading: 15, bottom: 40, trailing: 15))
-
+                
                 VStack(spacing: 40) {
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             TextField("이메일 (예: test@gmail.com)", text: $email)
                                 .focused($isInFocusEmail)
                                 .modifier(LoginTextFieldModifier())
-                                
+                            
                             
                             // passwordCheck가 비어있지 않으면서, password와 같으면 체크 아이콘 띄움.
                             if !email.isEmpty && checkEmailRule(string: email) {
@@ -97,7 +98,7 @@ struct SignUpStep1View: View {
                         }
                     } // VStack - HStack과 밑줄 Rectangle
                     .frame(height: 30)
-
+                    
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             // 비밀번호 숨김 아이콘일 때
@@ -110,7 +111,7 @@ struct SignUpStep1View: View {
                                     .focused($isInFocusPassword)
                                     .modifier(LoginTextFieldModifier())
                             }
-
+                            
                             Button(action: {
                                 // 비밀번호 보임/숨김을 설정함.
                                 isSecuredPassword.toggle()
@@ -150,7 +151,7 @@ struct SignUpStep1View: View {
                         }
                     } // VStack - HStack과 밑줄 Rectangle
                     .frame(height: 30)
-
+                    
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             // 비밀번호 숨김 아이콘일 때
@@ -163,7 +164,7 @@ struct SignUpStep1View: View {
                                     .focused($isInFocusPasswordCheck)
                                     .modifier(LoginTextFieldModifier())
                             }
-
+                            
                             Button(action: {
                                 isSecuredPasswordCheck.toggle()
                             }) {
@@ -203,13 +204,13 @@ struct SignUpStep1View: View {
                     } // VStack - HStack과 밑줄 Rectangle
                     .frame(height: 30)
                 } // VStack - 이메일, 비밀번호 TextField)
-
+                
                 Spacer()
                 Divider() // 로그인 버튼 구분선
-
+                
                 // 회원가입 성공 시에 다음 버튼을 띄운다. ( Step3: 닉네임 설정 뷰으로 넘어가기 )
                 NavigationLink {
-					SignUpStep2View(email: $email, password: $password)
+                    SignUpStep2View(email: $email, password: $password, navStack: $navStack)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -226,7 +227,6 @@ struct SignUpStep1View: View {
                     CustomProgressView(nowStep: 2)
                 } // toolbarItem
             } // toolbar
-         // NavigationStack - 임시
     } // Body
 }
 
@@ -234,7 +234,7 @@ struct SignUpStep1View: View {
 // MARK: - SignUpStep1View Previews
 struct SignUpStep1View_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpStep1View()
+        SignUpStep1View(navStack: .constant(NavigationPath()))
     }
 }
 
