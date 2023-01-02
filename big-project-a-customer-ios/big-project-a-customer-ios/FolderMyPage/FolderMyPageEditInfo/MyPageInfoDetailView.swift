@@ -26,8 +26,8 @@ struct MyPageInfoDetailView: View {
                 
                 VStack{
                     
-           
-                        
+                    
+                    
                     if !isShowingProfile {
                         PhotosPicker(
                             selection: $selectedItem,
@@ -52,10 +52,10 @@ struct MyPageInfoDetailView: View {
                             .modifier(ProfileModifier())
                     }
                     
-                        
+                    
                     
                 }
-              
+                
                 // 유저 이름
                 Text(vm.users.name)
                     .modifier(NameModifier())
@@ -106,12 +106,42 @@ struct MyPageInfoDetailView: View {
                     Text(vm.users.phoneNumber)
                     // 유저 주소
                     Text(vm.users.userAddress)
-
+                    
                 }
             }
             .padding(.horizontal, 30)
             Divider()
-  
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("수령인")
+                    Text("주소")
+                    Text("연락처")
+                }
+                //.foregroundColor(.secondary)
+                VStack(alignment: .leading) {
+                    HStack {
+                        // 수령인 이름
+                        Text(vm.users.name)
+                        Spacer()
+                        
+                        // 회원정보 수정 링크
+                        // 비밀번호, 주소를 수정할 수 있음
+                        NavigationLink {
+                            ManageAddressView()
+                        } label: {
+                            Text("주소록 관리")
+                        }
+                    }
+                    // 수령인 주소
+                    Text(vm.users.userAddress)
+                    // 수령인 전화번호
+                    Text(vm.users.phoneNumber)
+                }
+            }
+            .padding(.horizontal, 30)
+            Divider()
+            
         }
     }
 }
