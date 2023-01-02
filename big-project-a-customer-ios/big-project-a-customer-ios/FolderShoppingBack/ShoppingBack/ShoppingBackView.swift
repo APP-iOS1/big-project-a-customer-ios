@@ -81,10 +81,8 @@ struct ShoppingBackView: View {
     var body: some View {
         // MARK: head
         NavigationStack {
+            Spacer().frame(height:30)
             VStack {
-                Text("장바구니")
-                    .font(.title2.bold())
-                
                 Section {
                     HStack {
                         Button {
@@ -92,7 +90,7 @@ struct ShoppingBackView: View {
                             checkBoxAll()
                         } label: {
                             Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                                .foregroundColor(isCheckedAll ? .green : .gray)
+                                .foregroundColor(isCheckedAll ? Color("AccentColor") : .gray)
                         }
                         
                         Text("모두선택")
@@ -111,7 +109,7 @@ struct ShoppingBackView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 .padding(.top, 1)
                 
                 Divider()
@@ -129,7 +127,7 @@ struct ShoppingBackView: View {
                         Divider()
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 
                 // MARK: tail
                 Section {
@@ -154,36 +152,15 @@ struct ShoppingBackView: View {
                         
                         HStack {
 
-                            Text("총 수량 : \(totalCount)개")
-                                .font(.subheadline)
-                            Spacer()
-                            
-                            // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
-                            if signUpViewModel.currentUser?.userEmail != nil {
-                                NavigationLink(destination: {
-                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                                }, label: {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .frame(maxWidth: 200, maxHeight: 50)
-                                        Text("바로구매")
-                                            .foregroundColor(.white)
-                                    }
-                                })
-                                .disabled(totalCount == 0 ? true : false)
-                                .simultaneousGesture(TapGesture().onEnded{
-                                    totalPriceForBinding = totalPrice
-                                })
-                            } else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
-                                Button {
-                                    isShowingLoginSheet.toggle()
-                                } label: {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .frame(maxWidth: 200, maxHeight: 50)
-                                        Text("바로구매")
-                                            .foregroundColor(.white)
-                                    }
+                            NavigationLink(destination: {
+								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                            }, label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                    Text("구매하기 (\(totalCount))")
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
 
                                 }
 
@@ -200,6 +177,8 @@ struct ShoppingBackView: View {
                     LoginView()
                 }
             }
+            .navigationBarTitle("장바구니")
+            .navigationBarTitleDisplayMode(.automatic)
         }
     }
     

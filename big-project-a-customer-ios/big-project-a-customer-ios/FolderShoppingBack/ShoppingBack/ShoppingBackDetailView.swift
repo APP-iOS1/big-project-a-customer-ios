@@ -20,7 +20,7 @@ struct ShoppingBackDetailView: View {
                     item.isChecked.toggle()
                 } label: {
                     Image(systemName: item.isChecked ? "checkmark.square.fill" : "square")
-                        .foregroundColor(item.isChecked ? .green : .gray)
+                        .foregroundColor(item.isChecked ? Color("AccentColor") : .gray)
                 }
                 
                 Image(item.image)
