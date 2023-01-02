@@ -79,10 +79,8 @@ struct ShoppingBackView: View {
     var body: some View {
         // MARK: head
         NavigationStack {
+            Spacer().frame(height:30)
             VStack {
-                Text("장바구니")
-                    .font(.title2.bold())
-                
                 Section {
                     HStack {
                         Button {
@@ -90,7 +88,7 @@ struct ShoppingBackView: View {
                             checkBoxAll()
                         } label: {
                             Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                                .foregroundColor(isCheckedAll ? .green : .gray)
+                                .foregroundColor(isCheckedAll ? Color("AccentColor") : .gray)
                         }
                         
                         Text("모두선택")
@@ -109,7 +107,7 @@ struct ShoppingBackView: View {
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 .padding(.top, 1)
                 
                 Divider()
@@ -127,7 +125,7 @@ struct ShoppingBackView: View {
                         Divider()
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
                 
                 // MARK: tail
                 Section {
@@ -155,10 +153,10 @@ struct ShoppingBackView: View {
 								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
                             }, label: {
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
+                                    RoundedRectangle(cornerRadius: 5)
                                         .frame(width: UIScreen.main.bounds.width - 40, height: 50)
                                     Text("구매하기 (\(totalCount))")
-                                        .bold()
+                                        .fontWeight(.bold)
                                         .foregroundColor(.white)
                                 }
                             })
@@ -175,6 +173,8 @@ struct ShoppingBackView: View {
                     Color.gray.brightness(0.4)
                 }
             }
+            .navigationBarTitle("장바구니")
+            .navigationBarTitleDisplayMode(.automatic)
         }
     }
     
