@@ -97,6 +97,7 @@ class SignUpViewModel: ObservableObject {
     /// - Parameter password: 입력받은 사용자 비밀번호
     public func requestUserLogin(withEmail email: String, withPassword password: String) async -> Void {
         do {
+            authenticationState = .authenticating
             try await authentification.signIn(withEmail: email, password: password)
             // 현재 로그인 한 유저의 정보 담아주는 코드
             // 변경이 필요함!
@@ -104,8 +105,8 @@ class SignUpViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.currentUser = CustomerInfo(id: self.authentification.currentUser?.uid ?? "", userEmail: email, userNickname: userNickname )
             }
-                print("userNickname: \(userNickname)")
-            
+            print("userNickname: \(userNickname)")
+            authenticationState = .authenticated
         } catch {
             dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")
         }
@@ -116,6 +117,7 @@ class SignUpViewModel: ObservableObject {
     public func requestUserSignOut() {
         do {
             try authentification.signOut()
+            authenticationState = .unauthenticated
         } catch {
             dump("DEBUG : LOG OUT FAILED \(error.localizedDescription)")
         }
