@@ -1,10 +1,3 @@
-//
-//  SignUpViewModel.swift
-//  big-project-a-customer-ios
-//
-//  Created by 박민주 on 2022/12/27.
-//
-
 import Foundation
 import Firebase
 
@@ -17,6 +10,7 @@ enum AuthenticationState {
 class SignUpViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var authenticationState: AuthenticationState = .unauthenticated
+    @Published var currentUser: CustomerInfo?
     
     let database = Firestore.firestore()
     let authentification = Auth.auth()
@@ -47,14 +41,14 @@ class SignUpViewModel: ObservableObject {
             return false
         }
     }
-
+    
     // MARK: - Register Customer(user) in Firestore
     /// Auth에 새롭게 만든 사용자 정보를 Firestore에 등록합니다.
     /// - Parameter uid: 현재 사용자의 Auth uid
     /// - Parameter email: 현재 사용자의 email
     /// - Parameter nickname: 현재 사용자의 nickname
     func registerUser(uid: String, email: String, nickname: String) {
-        database.collection("CustomerInfo")
+        database.collection("\(appCategory.rawValue)")
             .document(uid)
             .setData([
                 "id" : uid,
@@ -70,7 +64,7 @@ class SignUpViewModel: ObservableObject {
     /// - Returns: 중복된 이메일이 있는지에 대한 Boolean 값
     func isEmailDuplicated(currentUserEmail: String) async -> Bool {
         do {
-            let document = try await database.collection("CustomerInfo")
+            let document = try await database.collection("\(appCategory.rawValue)")
                 .whereField("userEmail", isEqualTo: currentUserEmail)
                 .getDocuments()
             return !(document.isEmpty)
@@ -87,13 +81,33 @@ class SignUpViewModel: ObservableObject {
     /// - Returns: 중복된 닉네임이 있는지에 대한 Boolean 값
     func isNicknameDuplicated(currentUserNickname: String) async -> Bool {
         do {
-            let document = try await database.collection("CustomerInfo")
+            let document = try await database.collection("\(appCategory.rawValue)")
                 .whereField("userNickname", isEqualTo: currentUserNickname)
                 .getDocuments()
             return !(document.isEmpty)
         } catch {
             print(error.localizedDescription)
             return false
+        }
+    }
+    
+    // MARK: - Login
+    public func requestUserLogin(withEmail email: String, withPassword password: String) async -> Void {
+        do {
+            try await authentification.signIn(withEmail: email, password: password)
+            self.currentUser = <#AppUserModel#>
+            
+        } catch {
+            dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - Logout
+    public func requestUserSignOut() {
+        do {
+            try authentification.signOut()
+        } catch {
+            dump("DEBUG : LOG OUT FAILED \(error.localizedDescription)")
         }
     }
 }
