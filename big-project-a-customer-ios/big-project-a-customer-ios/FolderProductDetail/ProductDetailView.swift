@@ -60,6 +60,38 @@ struct ProductDetailView: View {
                         }
                         .padding(.leading, 15)
                         
+                        Divider()
+                        
+                        NavigationLink(destination: QnAListView()) {
+                            HStack {
+                                Text("상품 문의")
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                            }
+                        }
+                        .buttonStyle(.automatic)
+                        .foregroundColor(.black)
+                        .padding()
+                        
+                        Divider()
+                        
+                        NavigationLink(destination: QnAListView()) {
+                            HStack {
+                                Text("리뷰 확인")
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                            }
+                        }
+                        .buttonStyle(.automatic)
+                        .foregroundColor(.black)
+                        .padding()
+                        
+                        Divider()
+                        
                         //                        Image("productInformation")
                         //                            .resizable()
                         //                            .scaledToFit()

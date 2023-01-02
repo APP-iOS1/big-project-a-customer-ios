@@ -53,6 +53,8 @@
 		A78DA21C295C4F9C0047C5AE /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DA216295C4F9C0047C5AE /* PaymentView.swift */; };
 		A78DA21D295C4F9C0047C5AE /* PaymentCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DA217295C4F9C0047C5AE /* PaymentCompleteView.swift */; };
 		A78DA21E295C4F9C0047C5AE /* ReadyToPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DA218295C4F9C0047C5AE /* ReadyToPayView.swift */; };
+		C08D494F296262660035A01D /* QnAListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D494E296262660035A01D /* QnAListView.swift */; };
+		C08D4953296275C00035A01D /* QnARegistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D4952296275C00035A01D /* QnARegistView.swift */; };
 		C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A5E295AAEF4009CB1EC /* LoginView.swift */; };
 		C4961A61295AAF25009CB1EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A60295AAF25009CB1EC /* SignUpView.swift */; };
 		C4961A63295AAFBC009CB1EC /* SignUpStep1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */; };
@@ -110,6 +112,8 @@
 		A78DA216295C4F9C0047C5AE /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		A78DA217295C4F9C0047C5AE /* PaymentCompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentCompleteView.swift; sourceTree = "<group>"; };
 		A78DA218295C4F9C0047C5AE /* ReadyToPayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyToPayView.swift; sourceTree = "<group>"; };
+		C08D494E296262660035A01D /* QnAListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAListView.swift; sourceTree = "<group>"; };
+		C08D4952296275C00035A01D /* QnARegistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnARegistView.swift; sourceTree = "<group>"; };
 		C4961A5E295AAEF4009CB1EC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C4961A60295AAF25009CB1EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C4961A62295AAFBC009CB1EC /* SignUpStep1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStep1View.swift; sourceTree = "<group>"; };
@@ -310,9 +314,19 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		C08D494D2962616E0035A01D /* QnA */ = {
+			isa = PBXGroup;
+			children = (
+				C08D494E296262660035A01D /* QnAListView.swift */,
+				C08D4952296275C00035A01D /* QnARegistView.swift */,
+			);
+			path = QnA;
+			sourceTree = "<group>";
+		};
 		C0D4BDD2295BD0BA002A0083 /* FolderProductDetail */ = {
 			isa = PBXGroup;
 			children = (
+				C08D494D2962616E0035A01D /* QnA */,
 				A78DA1FF295C4CAE0047C5AE /* Modifiers */,
 				A78DA201295C4CAE0047C5AE /* ProductDetailModalView.swift */,
 				A78DA1FE295C4CAE0047C5AE /* ProductDetailView.swift */,
@@ -465,11 +479,13 @@
 				C4961A5F295AAEF4009CB1EC /* LoginView.swift in Sources */,
 				A78DA1FB295C450F0047C5AE /* MyPageInfoView.swift in Sources */,
 				A78DA186295C1E590047C5AE /* CardView.swift in Sources */,
+				C08D4953296275C00035A01D /* QnARegistView.swift in Sources */,
 				A78DA21D295C4F9C0047C5AE /* PaymentCompleteView.swift in Sources */,
 				A78DA1F6295C44FF0047C5AE /* MyPageInfoDetailView.swift in Sources */,
 				A78DA185295C1E590047C5AE /* MyReview.swift in Sources */,
 				EAA1A14B295AD3EF00E84C36 /* MyPageLike+ViewModifiers.swift in Sources */,
 				A78DA212295C4F940047C5AE /* Bank.swift in Sources */,
+				C08D494F296262660035A01D /* QnAListView.swift in Sources */,
 				A78DA188295C1E590047C5AE /* MyRecentView.swift in Sources */,
 				EAA1A14D295BD0C400E84C36 /* PurchaseHistoryDetailView.swift in Sources */,
 				A78DA1F4295C44FF0047C5AE /* MyPageInfoEditCheckingView.swift in Sources */,
