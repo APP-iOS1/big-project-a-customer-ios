@@ -18,6 +18,12 @@ var items = [
     Item(categoryTitles: "모니터", categoryImages: "Monitor"),
     Item(categoryTitles: "태블릿", categoryImages: "Tablet"),
     Item(categoryTitles: "스마트워치", categoryImages: "Watch"),
+    Item(categoryTitles: "마이크", categoryImages: "Mike"),
+    Item(categoryTitles: "스피커", categoryImages: "Speaker"),
+    Item(categoryTitles: "휴대용 게임기", categoryImages: "GameMachine"),
+    Item(categoryTitles: "마우스", categoryImages: "Mouse"),
+    Item(categoryTitles: "키보드", categoryImages: "Keyboard"),
+    Item(categoryTitles: "카메라", categoryImages: "Camera"),
     
 ]
 
