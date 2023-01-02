@@ -78,6 +78,8 @@ struct MyReview: View {
                 ScrollView(showsIndicators: false, content: {
                     ForEach(myReviewViewModel.mRItems) { mRItem in
                         CardView(card: mRItem)
+                        
+                        Divider()
                     }
                     
                     

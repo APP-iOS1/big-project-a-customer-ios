@@ -5,7 +5,7 @@
 //  Created by 김태성 on 2022/12/27.
 //
 
-import SwiftUI
+import SwiftUI 
 
 struct QuestionDetailView: View {
     @Binding var item: QuestionItems
@@ -48,34 +48,29 @@ struct QuestionDetailView: View {
                     
                     
                 }
-                .padding(10)
+                .padding(.bottom, -20)
             }
             
             VStack(alignment: .leading) {
                 
                 Text(item.question)
                     .frame(width: 350, alignment: .leading)
+                
                 //TO DO : 글자가 길어질 시 '더보기' 하면 전문이 보이도록 하는 기능 구현
                 
                 // QnA 답글이 아직 없는 경우 분류
                 // FIXME: 답글의 길이가 길면 답글이 짤림. Rectangle의 height 유동적 조정 필요
+                
                 if item.answer != "" {
-                    Rectangle()
-                        .frame(width: UIScreen.main.bounds.width - 35, height: 200)
-                        .foregroundColor(.gray)
-                        .opacity(0.20)
-                        .overlay(Text(item.answer)
-                            .padding(),alignment: .topLeading)
+                    Text(item.answer)
+                        .padding()
+                        .frame(width: UIScreen.main.bounds.width - 35, alignment: .leading)
+                        .border(Color.gray.opacity(0.2))
+                        .background(Color.gray.opacity(0.2))
                 }
             }
             .frame(width: 360, alignment: .leading)
             .padding()
-            
-//            Rectangle()
-//                .frame(width: 400)
-//                .foregroundColor(.gray)
-//                .opacity(0.20)
-            
         }
     }
 }

@@ -86,6 +86,7 @@ struct MyPageInfoView: View {
                                 MyRecentView()
                             case "취소, 반품, 교환목록":
                                 EmptyView()
+
                             default :
                                 Text("default")
                             }
