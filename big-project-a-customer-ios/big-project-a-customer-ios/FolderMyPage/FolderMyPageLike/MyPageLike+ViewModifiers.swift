@@ -11,9 +11,9 @@ import SwiftUI
 struct PurchaseHistoryButtonModifier: ViewModifier {
     var textColor = Color.black
     // FIXME: gray 색상 좀 연하게 해야함
-    var borderColor = Color.gray
+    var borderColor = Color("marble")
     var backgroundColor = Color.white
-    var lineWidth: CGFloat = 1
+    var lineWidth: CGFloat = 1.5
     
     func body(content: Content) -> some View {
         content
@@ -32,6 +32,7 @@ struct TextCaptionGrayModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.caption)
+            .fontWeight(.bold)
             .foregroundColor(.gray)
     }
 }

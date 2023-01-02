@@ -105,7 +105,7 @@ struct ProductDetailView: View {
                                 .fontWeight(.bold)
                             Spacer()
                         }
-                        .modifier(ProductButtonModifier(color: .pink))
+                        .modifier(ProductButtonModifier(color: Color("AccentColor")))
                     }
                     .tint(.white)
                 }

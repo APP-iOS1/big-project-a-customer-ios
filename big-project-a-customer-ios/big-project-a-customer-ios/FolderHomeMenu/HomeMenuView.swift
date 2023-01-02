@@ -72,11 +72,12 @@ struct HomeMenuView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width:85, height: 85)
             }
-            .modifier(CategoryButtonModifier(color: .white))
+            .modifier(TmpButtonModifier(color: .white))
         }
     }
 }
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeMenuView()
-//    }
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeMenuView()
+    }
+}

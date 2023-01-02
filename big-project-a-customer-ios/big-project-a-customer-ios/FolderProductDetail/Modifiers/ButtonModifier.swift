@@ -28,3 +28,17 @@ struct ContentButtonModifier: ViewModifier {
             .shadow(color: Color.black.opacity(0.2), radius: 3, y: 2)
     }
 }
+
+struct TmpButtonModifier: ViewModifier {
+    var color: Color
+    func body(content: Content) -> some View {
+        content
+            .frame(width:160 , height: 160)
+            .background(color)
+            .cornerRadius(20)
+            .overlay{
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color("marble"), lineWidth: 2)
+            }
+    }
+}

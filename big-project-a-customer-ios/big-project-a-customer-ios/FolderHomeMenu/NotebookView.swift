@@ -76,7 +76,7 @@ struct NotebookView: View {
                 
                 Text(item.NotebookTitles)
                     .font(.system(.body, weight: .thin))
-                    .foregroundColor(Color.black.opacity(0.8))
+                    .foregroundColor(Color.gray)
                 
                 Text(item.NotebookPrices)
                     .font(.system(.footnote , weight: .bold))

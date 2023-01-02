@@ -55,7 +55,7 @@ struct PurchaseHistoryView: View {
             }
             .padding(.horizontal, 10)
             .modifier(PurchaseHistoryButtonModifier())
-            .padding(.horizontal, 10)
+            //.padding(.horizontal, 20)
 
             ScrollView {
                 ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
@@ -75,10 +75,11 @@ struct PurchaseHistoryView: View {
                         
                         PurchaseListCell(orderStore: orderStore, order: order, index: index)
                     }
-                    .padding(10)
+                    //.padding(20)
                 }
             }
         }
+        .padding(.horizontal, 20)
     }
 }
 

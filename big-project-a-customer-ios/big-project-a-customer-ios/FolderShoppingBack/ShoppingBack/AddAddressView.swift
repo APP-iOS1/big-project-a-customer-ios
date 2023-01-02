@@ -63,6 +63,7 @@ struct AddAddressView: View {
                 // 새로운 배송지 저장
             } label: {
                 Text("저장")
+                    .bold()
             }
             .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
         }
