@@ -30,7 +30,6 @@ struct SignUpStep1View: View {
     @FocusState var isInFocusPasswordCheck: Bool
     @State private var isSecuredPassword = true
     @State private var isSecuredPasswordCheck = true
-	@Binding var isSignUpCompleted: Bool
     
     @State var isSucceedSignUp = false // ** 서버 연동 후 필요한 코드 **
     @EnvironmentObject var signUpViewModel: SignUpViewModel // ** 서버 연동 후 필요한 코드 **
@@ -62,7 +61,7 @@ struct SignUpStep1View: View {
                 .padding(EdgeInsets(top: 30, leading: 15, bottom: 40, trailing: 15))
 
                 VStack(spacing: 40) {
-                    VStack(spacing: 5) {
+                    VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             TextField("이메일 (예: test@gmail.com)", text: $email)
                                 .focused($isInFocusEmail)
@@ -83,17 +82,31 @@ struct SignUpStep1View: View {
                         
                         Rectangle()
                             .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusEmail))
-                    }
+                        
+                        // 이메일 형식이 아닐 경우 경고 메시지
+                        if !email.isEmpty && !checkEmailRule(string: email) {
+                            HStack(alignment: .center, spacing: 5) {
+                                Image(systemName: "exclamationmark.circle")
+                                Text("올바른 이메일 형식이 아닙니다.")
+                            }
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .padding(.horizontal, 20)
+                        } else {
+                            Text("") // TextField 자리 고정
+                        }
+                    } // VStack - HStack과 밑줄 Rectangle
+                    .frame(height: 30)
 
-                    VStack(spacing: 5) {
+                    VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             // 비밀번호 숨김 아이콘일 때
                             if isSecuredPassword {
-                                SecureField("비밀번호 (영문, 숫자, 특수문자를 포함 8~20자)", text: $password)
+                                SecureField("비밀번호를 입력해주세요.", text: $password)
                                     .focused($isInFocusPassword) // 커서가 올라가있을 때 상태를 저장.
                                     .modifier(LoginTextFieldModifier())
                             } else { // 비밀번호 보임 아이콘일 때
-                                TextField("비밀번호 (영문, 숫자, 특수문자를 포함 8~20자)", text: $password)
+                                TextField("비밀번호를 입력해주세요.", text: $password)
                                     .focused($isInFocusPassword)
                                     .modifier(LoginTextFieldModifier())
                             }
@@ -119,11 +132,26 @@ struct SignUpStep1View: View {
                         } // HStack - TextField, Secured Image, Check Image
                         .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                         .padding(.trailing, 20)
+                        
                         Rectangle()
                             .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPassword))
+                        
+                        // 비밀번호 형식이 아닐 경우 경고 메시지
+                        if !password.isEmpty && !checkPasswordRule(password: password) {
+                            HStack(alignment: .center, spacing: 5) {
+                                Image(systemName: "exclamationmark.circle")
+                                Text("영문, 숫자, 특수문자를 포함하여 8~20자로 작성해주세요.")
+                            }
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .padding(.horizontal, 20)
+                        } else {
+                            Text("") // TextField 자리 고정
+                        }
                     } // VStack - HStack과 밑줄 Rectangle
+                    .frame(height: 30)
 
-                    VStack(spacing: 5) {
+                    VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             // 비밀번호 숨김 아이콘일 때
                             if isSecuredPasswordCheck {
@@ -156,9 +184,24 @@ struct SignUpStep1View: View {
                         } // HStack - TextField, Secured Image, Check Image
                         .frame(height: 30) // TextField가 있는 HStack의 height 고정 <- 아이콘 크기 변경 방지
                         .padding(.trailing, 20)
+                        
                         Rectangle()
                             .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPasswordCheck))
+                        
+                        // 비밀번호가 같지 않을 경우 경고 메시지
+                        if !passwordCheck.isEmpty && password != passwordCheck {
+                            HStack(alignment: .center, spacing: 5) {
+                                Image(systemName: "exclamationmark.circle")
+                                Text("비밀번호를 다시 입력해주세요.")
+                            }
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .padding(.horizontal, 20)
+                        } else {
+                            Text("") // TextField 자리 고정
+                        }
                     } // VStack - HStack과 밑줄 Rectangle
+                    .frame(height: 30)
                 } // VStack - 이메일, 비밀번호 TextField)
 
                 Spacer()
@@ -166,7 +209,7 @@ struct SignUpStep1View: View {
 
                 // 회원가입 성공 시에 다음 버튼을 띄운다. ( Step3: 닉네임 설정 뷰으로 넘어가기 )
                 NavigationLink {
-					SignUpStep2View(email: $email, password: $password, isSignUpCompleted: $isSignUpCompleted)
+					SignUpStep2View(email: $email, password: $password)
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "다음"))
@@ -178,11 +221,6 @@ struct SignUpStep1View: View {
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
                 endEditing()
             } // onTapGesture
-			.onAppear {
-				if isSignUpCompleted {
-					dismiss()
-				}
-			}
             .toolbar {
                 ToolbarItem(placement: .principal) { // 회원가입 진행 현황 툴바
                     CustomProgressView(nowStep: 2)
@@ -193,10 +231,10 @@ struct SignUpStep1View: View {
 }
 
 
-//// MARK: - SignUpStep1View Previews
-//struct SignUpStep1View_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SignUpStep1View(isActive : .constant(false))
-//    }
-//}
+// MARK: - SignUpStep1View Previews
+struct SignUpStep1View_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpStep1View()
+    }
+}
 
