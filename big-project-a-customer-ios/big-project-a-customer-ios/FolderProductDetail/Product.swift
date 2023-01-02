@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item: Identifiable {
+struct ItemJegyun: Identifiable {
     
     var id: String // 제품id
     var storeId: String // 판매자 id
