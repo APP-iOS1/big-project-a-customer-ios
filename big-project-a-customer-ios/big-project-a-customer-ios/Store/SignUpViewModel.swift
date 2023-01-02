@@ -95,21 +95,20 @@ class SignUpViewModel: ObservableObject {
     /// 사용자의 이메일과 패스워드를 받아 로그인을 요청합니다.
     /// - Parameter email: 입력받은 사용자 email
     /// - Parameter password: 입력받은 사용자 비밀번호
+    @MainActor
     public func requestUserLogin(withEmail email: String, withPassword password: String) async -> Void {
+        authenticationState = .authenticating
         do {
-            authenticationState = .authenticating
             try await authentification.signIn(withEmail: email, password: password)
             // 현재 로그인 한 유저의 정보 담아주는 코드
             // 변경이 필요함!
             let userNickname = await requestUserNickname(uid: authentification.currentUser?.uid ?? "")
-            DispatchQueue.main.async {
-                self.currentUser = CustomerInfo(id: self.authentification.currentUser?.uid ?? "", userEmail: email, userNickname: userNickname )
-            }
+            self.currentUser = CustomerInfo(id: self.authentification.currentUser?.uid ?? "", userEmail: email, userNickname: userNickname )
             print("userNickname: \(userNickname)")
-            authenticationState = .authenticated
         } catch {
             dump("DEBUG : LOGIN FAILED \(error.localizedDescription)")
         }
+        authenticationState = .authenticated
     }
     
     // MARK: - User Logout
