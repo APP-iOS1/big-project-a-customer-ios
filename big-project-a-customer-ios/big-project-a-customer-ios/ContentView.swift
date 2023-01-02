@@ -8,24 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
+	var body: some View {
         TabView {
             HomeMenuView().tabItem {
                 Image(systemName: "house")
                 Text("홈")
             }.tag(1)
-            MyPageInfoView().tabItem {
-                Image(systemName: "person.circle")
-                Text("마이페이지")
+            PurchaseHistoryView().tabItem {
+                Image(systemName: "shippingbox.and.arrow.backward")
+                Text("주문내역")
             }.tag(2)
             ShoppingBackView().tabItem {
                 Image(systemName: "cart.badge.plus")
                 Text("장바구니")
             }.tag(3)
-            Text("뷰가 들어갈 자리4").tabItem {
-                Image(systemName: "shippingbox.and.arrow.backward")
-                Text("배송관리")
+            MyPageInfoView().tabItem {
+                Image(systemName: "person.circle")
+                Text("마이페이지")
             }.tag(4)
+			LoginView().tabItem {
+				Image(systemName: "house")
+				Text("로그인UX확인용")
+			}.tag(5)
         }
     }
 }
@@ -35,3 +39,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

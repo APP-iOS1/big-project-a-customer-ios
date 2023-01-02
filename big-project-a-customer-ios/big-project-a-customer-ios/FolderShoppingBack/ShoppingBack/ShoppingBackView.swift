@@ -10,11 +10,13 @@ import SwiftUI
 // MARK: - 임시 장바구니 데이터 모델
 struct ShoppingCartItems: Identifiable {
     var id = UUID().uuidString
-    var itemIsChecked: Bool
-    var itemName: String
-    var itemPrice: Int
-    var itemListCount: Int
+    var name: String
+    var price: Int
     var image: String
+    var amount: Int
+    var isChecked: Bool
+    // [옵션 이름: (옵션 값, 추가 가격)]
+    var options: [String: (String, Int)]
 }
 
 // MARK: - 임시 장바구니 뷰 모델
@@ -22,11 +24,31 @@ struct ShoppingCartItems: Identifiable {
 class ShoppingCartViewModel: ObservableObject {
     // ShoppingCartItems 약자
     @Published var sCItems: [ShoppingCartItems] = [
-        ShoppingCartItems(itemIsChecked: true, itemName: "MacBook Pro", itemPrice: 2060000, itemListCount: 0, image: "macbookpro"),
-        ShoppingCartItems(itemIsChecked: true, itemName: "MacBook Air", itemPrice: 1690000, itemListCount: 0, image: "macbookair"),
-        ShoppingCartItems(itemIsChecked: true, itemName: "Iphone 14", itemPrice: 1550000, itemListCount: 0, image: "iphone14")
+        ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0,isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)]),
+        ShoppingCartItems(name: "MacBook Air", price: 1690000,image: "macbookair", amount: 0 ,isChecked: true, options: ["색상" : ("실버", 0), "저장용량" : ("1024GB", 300000), "RAM" : ("16GB", 200000)]),
+        ShoppingCartItems(name: "iphone14", price: 1550000,image: "iphone14", amount: 0, isChecked: true, options: ["색상" : ("딥 퍼플", 0), "저장용량" : ("128GB", 0)])
     ]
+    // MARK: - 장바구니에 아이템을 추가하는 메소드
+    /// 파라미터로 ShoppingCartItems 인스턴스를 전달하면 됩니다
+    /// ex) ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0, isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)])
+    func addItemToShoppingCart(_ item: ShoppingCartItems) {
+        sCItems.append(item)
+    }
+    
+    // 장바구니에 아이템을 삭제하는 메소드
+    func deleteItem(_ item: ShoppingCartItems) {
+        let index = sCItems.firstIndex {
+            $0.id == item.id
+        }
+        sCItems.remove(at: index!)
+    }
+    
+    // 장바구니에서 선택된 아이템을 삭제하는 메소드
+    func clearSelectedShoppingCart() {
+        sCItems.removeAll(where: { $0.isChecked})
+    }
 }
+
 
 struct ShoppingBackView: View {
     // 전체 선택 체크박스 State 변수
@@ -35,19 +57,22 @@ struct ShoppingBackView: View {
     @State private var shippingCost = 3000
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
+    @State var totalPriceForBinding = 0
+    
     
     // 결제할 총 금액
     var totalPrice: Int {
         return vm.sCItems
-            .filter{ $0.itemIsChecked }
-            .map{$0.itemPrice * ($0.itemListCount + 1)} 
+            .filter{ $0.isChecked }
+            .map{$0.price * ($0.amount + 1) + ($0.options).values.map{$0.1}.reduce(0,+) }
             .reduce(0, +)
     }
+    
     // 결제할 총 수량
     var totalCount: Int {
         return vm.sCItems
-            .filter{ $0.itemIsChecked }
-            .map{$0.itemListCount + 1}
+            .filter{ $0.isChecked }
+            .map{$0.amount + 1}
             .reduce(0, +)
     }
     
@@ -75,14 +100,15 @@ struct ShoppingBackView: View {
                         
                         // 선택된 item들 한번에 삭제
                         Button {
-                            vm.sCItems.removeAll(where: { $0.itemIsChecked})
+                            vm.sCItems.removeAll(where: { $0.isChecked})
                         } label: {
                             Text("선택삭제")
                                 .font(.headline)
                         }
                     }
                 }
-                .padding(.top, 5)
+                .padding(.horizontal)
+                .padding(.top, 1)
                 
                 Divider()
                     .frame(minHeight: 3)
@@ -91,14 +117,15 @@ struct ShoppingBackView: View {
                 Spacer()
                 
                 // MARK: body
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     ForEach($vm.sCItems) { item in
                         ShoppingBackDetailView(item: item, vm: vm)
-                        .padding(.vertical)
+                            .padding(.vertical)
                         
                         Divider()
                     }
                 }
+                .padding(.horizontal)
                 
                 // MARK: tail
                 Section {
@@ -120,15 +147,14 @@ struct ShoppingBackView: View {
                         }
                         .font(.title.bold())
                         .padding(.top, 5)
-
+                        
                         HStack {
                             Text("총 수량 : \(totalCount)개")
                                 .font(.subheadline)
                             Spacer()
                             
-                            // 무통장 구매 view로 이동
                             NavigationLink(destination: {
-                                Text("구매")
+								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
                             }, label: {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
@@ -138,23 +164,29 @@ struct ShoppingBackView: View {
                                 }
                             })
                             .disabled(totalCount == 0 ? true : false)
+                            .simultaneousGesture(TapGesture().onEnded{
+                                totalPriceForBinding = totalPrice
+                            })
                             
                         }
                     }
                 }
+                .padding()
+                .background {
+                    Color.gray.brightness(0.4)
+                }
             }
-            .padding(.horizontal)
         }
     }
     
     func checkBoxAll() {
         if isCheckedAll {
             for index in vm.sCItems.indices {
-                vm.sCItems[index].itemIsChecked = true
+                vm.sCItems[index].isChecked = true
             }
         } else {
             for index in vm.sCItems.indices {
-                vm.sCItems[index].itemIsChecked = false
+                vm.sCItems[index].isChecked = false
             }
         }
     }

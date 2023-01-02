@@ -7,17 +7,23 @@
 
 import SwiftUI
 
+var userID : String = "z,mxcnv,zmxcvnlaksdfjlaksdflkasdjf" // 이메일
+var userPassword : String = "102938102938sldkfjadslkfjz,xmcvnz,xmvn" // 패스워드
+var isLoggedIn: Bool = false
 
 // MARK: - LoginView
 /// 로그인을 하는 View 입니다.
 struct LoginView: View {
     // MARK: - Property Wrappers
     @Environment(\.dismiss) private var dismiss
+//	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
+	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
-    
+	
+//	@Binding var totalPriceForBinding: Int
     
     // MARK: - Properties
     
@@ -25,7 +31,7 @@ struct LoginView: View {
     // MARK: - Body LoginView
     /// LoginView의 body 입니다.
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 HStack {
                     Text("로그인")
@@ -100,17 +106,21 @@ struct LoginView: View {
                 Button {
                     // Login action with firebase...
                     // ** 임시 **
-                    dismiss()
+					if userID == email && userPassword == password {
+//						OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+					} else {
+						Text("로그인 실패")
+					}
                 } label: {
                     RoundedRectangle(cornerRadius: 15)
                         .modifier(LoginButtonModifier(label: "로그인하기"))
                 }
-   
             } // VStack - body 바로 아래
             .background(Color.white) // 화면 밖 터치할 때 백그라운드 지정을 안 해주면 View에 올라간 요소들 클릭 시에만 적용됨.
             .onTapGesture() { // 키보드 밖 화면 터치 시 키보드 사라짐
                 endEditing()
             } // onTapGesture
+            /*
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -126,16 +136,17 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
+             */
         } // NavigationStack - 임시
     } // Body
 }
 
 // MARK: - LoginView Previews
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//		LoginView()
+//    }
+//}
 
 
 // MARK: - Modifier : LoginView TextField 속성
