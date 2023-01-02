@@ -83,7 +83,7 @@ struct MyPageInfoDetailView: View {
                 HStack(alignment: .top, spacing: 34.5) {
                     Text("주소")
                         .foregroundColor(.secondary)
-                    Text("서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지")
+                    Text("서울특별시 A대로 100번지")
                 }
                 
             }
@@ -91,7 +91,7 @@ struct MyPageInfoDetailView: View {
             
             Divider()
             
-         
+
             
             
             Spacer()

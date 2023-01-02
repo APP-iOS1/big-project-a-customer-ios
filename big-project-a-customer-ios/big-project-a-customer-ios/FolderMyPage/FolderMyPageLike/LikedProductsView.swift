@@ -16,7 +16,13 @@ struct LikedProductsView: View {
         ScrollView{
             LazyVGrid(columns: columns) {
                 ForEach(0..<50) { index in
-                    ItemListCell()
+                    VStack{
+                        ItemListCell()
+                        Divider()
+                            .background(Color("AccentColor"))
+                        
+                        
+                    }
                 }
             }
             .padding(.horizontal)
@@ -58,7 +64,7 @@ struct ItemListCell: View {
                 .foregroundColor(.accentColor)
                 .font(.callout)
         }
-        .frame(maxWidth: UIScreen.main.bounds.width/2 - 20)
+        .frame(maxWidth: UIScreen.main.bounds.width/2)
         .padding()
     }
 }

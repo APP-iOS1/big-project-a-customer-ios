@@ -15,6 +15,8 @@ struct MyPageCustomerServiceView: View {
     @State var myShoppingList = ["iPTime 외장 케이스"]
     
     @State var isShowingShoppinglist = false
+    @State var selectItem: (image: String, name: String)?
+    
     
     
     var body: some View {
@@ -36,7 +38,7 @@ struct MyPageCustomerServiceView: View {
     
     var customerservice: some View {
         VStack{
-
+            
             HStack{
                 
                 Text("주문 상품 문의")
@@ -48,11 +50,25 @@ struct MyPageCustomerServiceView: View {
                     Text("주문상품 선택")
                 }
                 .sheet(isPresented: $isShowingShoppinglist) {
-                    MyPageShoppingListView(isShowingShoppinglist: $isShowingShoppinglist, myShoppingList: $myShoppingList)
+                    MyPageShoppingListView(isShowingShoppinglist: $isShowingShoppinglist, myShoppingList: $myShoppingList, selectItem: $selectItem)
                 }
-
                 
                 
+                
+            }
+            
+            if let selectItem = selectItem {
+                HStack {
+                    Image(selectItem.image)
+                        .ImageResizeModifier()
+                    
+                    Text(selectItem.name)
+                }
+                .frame(width: 300)
+                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20).stroke(Color.secondary.opacity(0.5) ,lineWidth: 2)
+                )
             }
             
             TextEditor(text: $somethingToAsk)
@@ -76,20 +92,21 @@ struct MyPageCustomerServiceView: View {
                     print("Cancel")
                 } label: {
                     Text("취소")
-                      
+                    
                 }
                 
                 Button {
                     print("Check")
                 } label: {
                     Text("확인")
-                      
+                    
                 }
                 
             }
         }
     }
 }
+
 
 struct MyPageCustomerServiceView_Previews: PreviewProvider {
     static var previews: some View {
