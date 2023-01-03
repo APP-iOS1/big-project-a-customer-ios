@@ -12,14 +12,14 @@ struct ProductDetailModalView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var options: [String: [String]] // 서버에서 가져온 옵션들
+//    @Binding var options: [String: [String]] // 서버에서 가져온 옵션들
     
     @State var count: Int = 1 // 수량
     
     @State private var selection: [String] = ["", ""]
     // FIXME: - 유저가 중복선택할 경우를 생각해서 Set을 적용할지 생각해보기.
     
-    @State private var selectedOptions: [String: (String, Int)] = [:]
+//    @State private var selectedOptions: [String: (String, Int)] = [:]
     
     // 기본 가격(옵션 제외)
     var basePrice: Int = 50000
@@ -46,17 +46,22 @@ struct ProductDetailModalView: View {
                         Text("선택없음").tag(Optional<String>(nil))
                         
                         ForEach(tempVM.options[key]!, id: \.0) { (option, price) in
-                            Text("\(option) +\(price)원").tag(Optional(option))
+                            Text("\(option) +\(price)원").tag("\(option)_\(price)")
                         }
                     }
                     .pickerStyle(.menu)
                     .background(.white)
                     .cornerRadius(15)
-                    // 피커를 선택하면 selection[index] 값이 바뀌고
-                    //
-                    .onChange(of: tempVM.selectedPicker[index], perform: { value in // value가 String이네요?
-                        if !value.isEmpty {
-                            print(value)
+                    // 피커를 선택하면 selection[index] 값이 바뀌고 
+                    .onChange(of: tempVM.selectedPicker[index], perform: { value in
+                        
+                        let newValue = value.split(separator: "_").map { String($0) }
+                        if !newValue.isEmpty {
+                            tempVM.selectedOptions[key] = (tempVM.options[key]!.filter { $0.1 == Int(newValue[1]) }.first!.0, Int(newValue[1])!)
+                            
+                            print("\(tempVM.selectedOptions)")
+                            tempVM.calcTotalPrice()
+                            
                         }
                     })
                 }
@@ -68,7 +73,7 @@ struct ProductDetailModalView: View {
                 Spacer()
                 
                 VStack {
-                    ForEach(Array(selectedOptions.sorted(by: { $0.1 < $1.1 })), id: \.key) { tuple in
+                    ForEach(Array(tempVM.selectedOptions.sorted(by: { $0.1 < $1.1 })), id: \.key) { tuple in
                         HStack {
                             Spacer()
                             
@@ -93,7 +98,7 @@ struct ProductDetailModalView: View {
                 
                 Spacer()
                 
-                Text("\(count * (basePrice + optionPrice))원")
+                Text("\(count * tempVM.totalPrice)원")
             }
             .padding()
             
@@ -190,11 +195,11 @@ struct CustomStepper: View {
     }
 }
 
-struct ProductDetailModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductDetailModalView(options: .constant([
-            "사이즈": ["S", "M", "L"],
-            "컬러": ["레드", "블루", "블랙"]
-        ]))
-    }
-}
+//struct ProductDetailModalView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProductDetailModalView(options: .constant([
+//            "사이즈": ["S", "M", "L"],
+//            "컬러": ["레드", "블루", "블랙"]
+//        ]))
+//    }
+//}

@@ -11,9 +11,19 @@ class TempViewModel: ObservableObject {
     @Published var options: [String: [(String, Int)]] = [:]
     @Published var selectedPicker: [String] = []
     @Published var selectedOptions: [String: (String, Int)] = [:]
+    @Published var basePrice: Int = 50000
+    @Published var totalPrice: Int = 0
+    @Published var optionPrice: Int = 0
     
     init() {
         self.fetchPostDetail()
+    }
+    
+    func calcTotalPrice() {
+        totalPrice = basePrice
+        for (_, price) in Array(selectedOptions.values) {
+            totalPrice += price
+        }
     }
     
     func fetchPostDetail() {
