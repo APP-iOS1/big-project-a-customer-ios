@@ -36,79 +36,79 @@ struct ProductDetailView: View {
                                     .productImageModifier()
                             }
                         }
-                            .tabViewStyle(.page)
-                            .frame(height: UIScreen.screenWidth)
-
+                        .tabViewStyle(.page)
+                        .frame(height: UIScreen.screenWidth)
+                        
                         Divider()
-
+                        
                         VStack(alignment: .leading) {
                             Text("Apple 애플워치 시리즈 8")
                                 .modifier(ProductTitleModifier())
-
+                            
                             HStack {
                                 Image(systemName: "star")
                                     .renderingMode(.original)
-
+                                
                                 Text("4.7")
                                     .padding(.trailing, 10)
-
+                                
                                 Text("리뷰 100건 구매 4,681건")
                                     .font(.caption)
                                     .foregroundColor(.gray)
                             }.padding(.bottom, 10)
-
+                            
                             Text("596,730원")
                                 .font(.title2)
                                 .fontWeight(.bold)
                         }
-                            .padding(.leading, 15)
-
+                        .padding(.leading, 15)
+                        
                         Divider()
                         // TODO: - 문의 Section
                         // TODO: - 리뷰 Section
                         NavigationLink(destination: QnAListView()) {
                             HStack {
                                 Text("상품 문의")
-
+                                
                                 Spacer()
-
+                                
                                 Image(systemName: "chevron.right")
                             }
                         }
-                            .buttonStyle(.automatic)
-                            .foregroundColor(.black)
-                            .padding()
-
+                        .buttonStyle(.automatic)
+                        .foregroundColor(.black)
+                        .padding()
+                        
                         Divider()
-
+                        
                         NavigationLink(destination: ProductDetailTotalReview()) {
                             HStack {
                                 Text("리뷰 확인")
-
+                                
                                 Spacer()
-
+                                
                                 Image(systemName: "chevron.right")
                             }
-//                            ProductDetailReviewSection()
+                            //                            ProductDetailReviewSection()
                         }
-                            .buttonStyle(.automatic)
-                            .foregroundColor(.black)
-                            .padding()
-
-//                        Divider()
-
+                        .buttonStyle(.automatic)
+                        .foregroundColor(.black)
+                        .padding()
+                        
+                        //                        Divider()
+                        
                         Image("productInformation")
                             .resizable()
                             .scaledToFit()
-
+                        
                         Image("productDetail")
                             .resizable()
                             .scaledToFit()
-//                            .scaledToFill()
-//                            .frame(width: geo.size.width, height: imageHeight)
-//                            .clipped()
-//                            .scaledToFit()
-
+                        //                            .scaledToFill()
+                        //                            .frame(width: geo.size.width, height: imageHeight)
+                        //                            .clipped()
+                        //                            .scaledToFit()
+                        
                         Button {
                             // 버튼을 눌렀을때 image의 height를 최대로 늘려준다.
                             imageHeight = CGFloat.infinity
@@ -119,10 +119,10 @@ struct ProductDetailView: View {
                                 Spacer()
                             }
                         }
-
+                        
                     }
                 }//scroll vstack
-
+                
                 HStack {
                     Button {
                         print("")
@@ -132,7 +132,7 @@ struct ProductDetailView: View {
                             heartImage
                                 .foregroundColor(.red)
                         }
-                            .modifier(ProductButtonModifier(color: .white))
+                        .modifier(ProductButtonModifier(color: .white))
                     }
                     Button {
                         self.isShow = true
@@ -143,26 +143,14 @@ struct ProductDetailView: View {
                                 .fontWeight(.bold)
                             Spacer()
                         }
-                            .modifier(ProductButtonModifier(color: .pink))
+                        .modifier(ProductButtonModifier(color: .pink))
                     }
-                        .tint(.white)
+                    .tint(.white)
                 }
             }
-
-            // TODO: - navibar (safe area)
-            .toolbar {
-                //                ToolbarItem(placement: .navigationBarTrailing) {
-                //                    Button(action: { }) {
-                //                        Image(systemName: "magnifyingglass")
-                //                    }
-                //                        .foregroundColor(.black)
-                //                }
-            }
-
-//            .navigationBarHidden(false)
         }
-            .sheet(isPresented: $isShow) {
-            ProductDetailModalView(options: $options)
+        .sheet(isPresented: $isShow) {
+            ProductDetailModalView()
                 .presentationDetents([.medium, .large])
         }
         // navigationView
