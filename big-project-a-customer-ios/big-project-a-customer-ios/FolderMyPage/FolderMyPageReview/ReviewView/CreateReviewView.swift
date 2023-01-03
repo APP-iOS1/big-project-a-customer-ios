@@ -90,20 +90,20 @@ struct CreateReviewView: View {
                         .animation(.easeInOut, value: selected)
             
             // MARK: imagePicker 구현부
-            ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(alignment: .center, spacing: 20.0) {
-                                selectionImageButton
-
-                                ForEach(selectedImages, id: \.self) { uiImage in
-                                    imageCard(from: uiImage)
-                                }
-                            }
-                            .padding(.vertical, 20.0)
-                        }
-            .padding(.leading)
-            .padding(.top, -35)
-            .opacity(selected >= 0 ? 1 : 0)
-            .animation(.easeInOut, value: selected)
+//            ScrollView(.horizontal, showsIndicators: false) {
+//                            HStack(alignment: .center, spacing: 20.0) {
+//                                selectionImageButton
+//
+//                                ForEach(selectedImages, id: \.self) { uiImage in
+//                                    imageCard(from: uiImage)
+//                                }
+//                            }
+//                            .padding(.vertical, 20.0)
+//                        }
+//            .padding(.leading)
+//            .padding(.top, -35)
+//            .opacity(selected >= 0 ? 1 : 0)
+//            .animation(.easeInOut, value: selected)
             /// imagePicker
             
             /// 리뷰 등록 버튼
