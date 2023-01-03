@@ -90,9 +90,8 @@ struct PurchaseHistoryView: View {
                 isShowingLoginSheet = true
             }
         }
-        .sheet(isPresented: $isShowingLoginSheet) {
+        .fullScreenCover(isPresented: $isShowingLoginSheet) {
             LoginView()
-
         }
     }
 }

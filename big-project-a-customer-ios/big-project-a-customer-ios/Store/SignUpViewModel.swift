@@ -13,10 +13,24 @@ enum LoginRequestState {
     case notLoggedIn
 }
 
+enum EmailDuplicationState {
+    case checking
+    case duplicated
+    case notDuplicated
+}
+
+enum NickNamelDuplicationState {
+    case checking
+    case duplicated
+    case notDuplicated
+}
+
 class SignUpViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var loginRequestState: LoginRequestState = .notLoggedIn
+    @Published var emailDuplicationState: EmailDuplicationState = .duplicated // 중복한다고 전제
+    @Published var nickNameDuplicationState: NickNamelDuplicationState = .duplicated // 중복한다고 전제
     @Published var currentUser: CustomerInfo?
     
     let database = Firestore.firestore()
@@ -69,11 +83,14 @@ class SignUpViewModel: ObservableObject {
     /// 입력받은 이메일이 DB에 이미 있다면 false를, 그렇지 않다면 true를 반환합니다.
     /// - Parameter currentUserEmail: 입력받은 사용자 이메일
     /// - Returns: 중복된 이메일이 있는지에 대한 Boolean 값
+    @MainActor
     func isEmailDuplicated(currentUserEmail: String) async -> Bool {
+        emailDuplicationState = .checking
         do {
             let document = try await database.collection("\(appCategory.rawValue)")
                 .whereField("userEmail", isEqualTo: currentUserEmail)
                 .getDocuments()
+            emailDuplicationState = document.isEmpty ? .notDuplicated : .duplicated
             return !(document.isEmpty)
         } catch {
             print(error.localizedDescription)
@@ -86,11 +103,14 @@ class SignUpViewModel: ObservableObject {
     /// 입력받은 닉네임이 DB에 이미 있다면 false를, 그렇지 않다면 true를 반환합니다.
     /// - Parameter currentUserNickname: 입력받은 사용자 닉네임
     /// - Returns: 중복된 닉네임이 있는지에 대한 Boolean 값
+    @MainActor
     func isNicknameDuplicated(currentUserNickname: String) async -> Bool {
+        nickNameDuplicationState = .checking
         do {
             let document = try await database.collection("\(appCategory.rawValue)")
                 .whereField("userNickname", isEqualTo: currentUserNickname)
                 .getDocuments()
+            nickNameDuplicationState = document.isEmpty ? .notDuplicated : .duplicated
             return !(document.isEmpty)
         } catch {
             print(error.localizedDescription)

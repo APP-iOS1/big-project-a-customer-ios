@@ -151,34 +151,53 @@ struct ShoppingBackView: View {
                         .font(.title2.bold())
                         
                         HStack {
-
-                            NavigationLink(destination: {
-								OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                            }, label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                                    Text("구매하기 (\(totalCount))")
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-
-                                }
-
-                            }
                             
-                        )}
+                            // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
+                            if signUpViewModel.currentUser?.userEmail != nil {
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                        
+                                    }
+                                })
+                                .disabled(totalCount == 0 ? true : false)
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    totalPriceForBinding = totalPrice
+                                })
+                            } else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
+                                Button {
+                                    isShowingLoginSheet.toggle()
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                            } // if - else
+                            
+                        } // HStack
                     }
+                    .padding()
+                    .background {
+                        Color.gray.brightness(0.4)
+                    }
+                    
                 }
-                .padding()
-                .background {
-                    Color.gray.brightness(0.4)
-                }
-                .sheet(isPresented: $isShowingLoginSheet) {
-                    LoginView()
-                }
+                .navigationBarTitle("장바구니")
+                .navigationBarTitleDisplayMode(.automatic)
             }
-            .navigationBarTitle("장바구니")
-            .navigationBarTitleDisplayMode(.automatic)
+            .fullScreenCover(isPresented: $isShowingLoginSheet) {
+                LoginView()
+            }
         }
     }
     
@@ -194,9 +213,9 @@ struct ShoppingBackView: View {
         }
     }
 }
-
-struct ShoppingBackView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShoppingBackView()
+    
+    struct ShoppingBackView_Previews: PreviewProvider {
+        static var previews: some View {
+            ShoppingBackView()
+        }
     }
-}
