@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MyPageCustomerServiceView: View {
     
-    @State var somethingToAsk = ""
+    @State var somethingToAsk = "문의사항을 적어주세요."
+    var placeholderString = "문의사항을 적어주세요."
     
     @State var myShoppingList = ["iPTime 외장 케이스"]
     
@@ -39,7 +40,8 @@ struct MyPageCustomerServiceView: View {
         VStack{
             
             HStack{
- 
+                
+                Text("주문 상품 문의")
                 
                 Button {
                     print("")
@@ -48,9 +50,7 @@ struct MyPageCustomerServiceView: View {
                     Text("주문상품 선택")
                 }
                 .sheet(isPresented: $isShowingShoppinglist) {
-//                    MyPageShoppingListView(isShowingShoppinglist: $isShowingShoppinglist, myShoppingList: $myShoppingList, selectItem: $selectItem)
-                    MyPageShoppingListView(isShowingShoppinglist: $isShowingShoppinglist)
-
+                    MyPageShoppingListView(isShowingShoppinglist: $isShowingShoppinglist, myShoppingList: $myShoppingList, selectItem: $selectItem)
                 }
                 
                 
@@ -71,38 +71,40 @@ struct MyPageCustomerServiceView: View {
                 )
             }
             
-//            TextEditor(text: $somethingToAsk)
-//                .scrollContentBackground(.hidden)
-//                .frame(width: 300,height: 300)
-//                .foregroundColor(self.somethingToAsk == placeholderString ? .gray : .primary)
-//                .onTapGesture {
-//                    if self.somethingToAsk == placeholderString {
-//                        self.somethingToAsk = ""
-//                    }
-//                }
-//                .padding()
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 20).stroke(Color.secondary.opacity(0.5) ,lineWidth: 2)
-//                )
-            TextField("문의 내용을 작성해주세요.", text: $somethingToAsk, axis: .vertical)
-                        .lineLimit(15...)
-                        .textFieldStyle(.roundedBorder)
-                        .padding(20)
-                        .padding(.top, -25)
+            TextEditor(text: $somethingToAsk)
+                .scrollContentBackground(.hidden)
+                .frame(width: 300,height: 300)
+                .foregroundColor(self.somethingToAsk == placeholderString ? .gray : .primary)
+                .onTapGesture {
+                    if self.somethingToAsk == placeholderString {
+                        self.somethingToAsk = ""
+                    }
+                }
+                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20).stroke(Color.secondary.opacity(0.5) ,lineWidth: 2)
+                )
+            
             
             HStack{
-                RoundedRectangle(cornerRadius: 10)
-                    .frame(width: UIScreen.main.bounds.width - 40)
-                    .modifier(LoginButtonModifier(label: "문의 남기기"))
+                
+                Button {
+                    print("Cancel")
+                } label: {
+                    Text("취소")
+                    
                 }
                 
+                Button {
+                    print("Check")
+                } label: {
+                    Text("확인")
+                    
+                }
                 
-            
+            }
         }
-        .navigationTitle("주문 상품 문의")
-        .navigationBarTitleDisplayMode(.large)
     }
-    
 }
 
 
