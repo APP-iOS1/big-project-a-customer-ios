@@ -89,3 +89,29 @@ struct PasswordAlertModifier: ViewModifier {
             }
     }
 }
+
+struct TmpButtonModifier: ViewModifier {
+    
+    var color: Color
+    
+    func body(content: Content) -> some View {
+        
+        content
+        
+            .frame(width:160 , height: 160)
+        
+            .background(color)
+        
+            .cornerRadius(20)
+        
+            .overlay{
+                
+                RoundedRectangle(cornerRadius: 6)
+                
+                    .stroke(Color("marble"), lineWidth: 2)
+                
+            }
+        
+    }
+    
+}

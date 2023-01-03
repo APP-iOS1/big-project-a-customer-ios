@@ -11,14 +11,14 @@ struct MyPageShoppingListView: View {
     
     @Binding var isShowingShoppinglist: Bool
     @Binding var myShoppingList: [String]
+    @Binding var selectItem: (image: String, name: String)?
     @State var checked: Bool = false
     
     var body: some View {
         List{
             VStack{
                 ForEach($myShoppingList, id: \.self) { item in
-                    MyPageShoppingListRowView(item: item, checked: $checked, isShowingShoppinglist: $isShowingShoppinglist )
-                
+                    MyPageShoppingListRowView(item: item, checked: $checked, isShowingShoppinglist: $isShowingShoppinglist, selectItem: $selectItem)
                 }
             }
         
@@ -38,6 +38,7 @@ struct MyPageShoppingListView: View {
             }
         }
     }
+
     
     
     struct MyPageShoppingListRowView: View{
@@ -45,7 +46,8 @@ struct MyPageShoppingListView: View {
         @Binding var item: String
         @Binding var checked: Bool
         @Binding var isShowingShoppinglist: Bool
-        
+        @Binding var selectItem: (image: String, name: String)?
+
         var body: some View{
             
             VStack{
@@ -56,6 +58,7 @@ struct MyPageShoppingListView: View {
                         .foregroundColor(checked ? Color(UIColor.systemBlue) : Color.secondary)
                         .onTapGesture {
                             self.checked.toggle()
+                            selectItem = (image: "itemImage", name: "ipTIME 외장케이스 WHITE HDD 3135 Plus")
                         }
                     
                     
@@ -85,7 +88,7 @@ struct MyPageShoppingListView: View {
     
     struct MyPageShoppingListView_Previews: PreviewProvider {
         static var previews: some View {
-            MyPageShoppingListView(isShowingShoppinglist: .constant(false), myShoppingList: .constant(["Mac"]))
+            MyPageShoppingListView(isShowingShoppinglist: .constant(false), myShoppingList: .constant(["Mac"]), selectItem: .constant(nil))
         }
     }
     
