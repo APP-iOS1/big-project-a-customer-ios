@@ -14,7 +14,6 @@ struct LoginView: View {
     // MARK: - Property Wrappers
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
-//	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
 	@State private var loginFailed = false
@@ -111,6 +110,7 @@ struct LoginView: View {
                         // Going to SignupView
                         SignUpView(navStack: $navStack)
                     }
+                    .navigationBarBackButtonHidden(true)
                 } // HStack - 회원가입
                 .padding(.top, 30)
                 
@@ -122,7 +122,6 @@ struct LoginView: View {
                 Divider() // 로그인 버튼 구분선
                 
                 Button {
-
                     // Login action with firebase...
                     logInWithEmailPassword()
 
@@ -163,7 +162,7 @@ struct LoginView: View {
 // MARK: - LoginView Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-		LoginView()
+        LoginView().environmentObject(SignUpViewModel())
     }
 }
 

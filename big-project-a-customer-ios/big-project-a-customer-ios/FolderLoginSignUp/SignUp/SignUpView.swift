@@ -20,9 +20,6 @@ struct SignUpView: View {
     
     var body: some View {
         VStack {
-            
-            Text("navigationStack : \(navStack.count)")
-            
             Spacer()
             
             HStack {
