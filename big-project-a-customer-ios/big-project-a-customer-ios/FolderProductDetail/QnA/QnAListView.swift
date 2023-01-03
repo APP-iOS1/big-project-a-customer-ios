@@ -14,7 +14,7 @@ struct QnA: Identifiable {
 }
 
 struct QnAListView: View {
-    @ObservedObject var questionViewModel: QuestionViewModel = QuestionViewModel()
+    
     @ObservedObject var customerServiceStore: CustomerServiceStore = CustomerServiceStore()
     let tempItemId: String = "watch1"
     
@@ -33,9 +33,10 @@ struct QnAListView: View {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView {
                     LazyVStack {
-                        ForEach($questionViewModel.questionItems) { item in
+                        ForEach($customerServiceStore.customerService) { item in
                             VStack {
-                                QuestionDetailView(item: item)
+                                
+                                QnARow(item: item)
                                 
                                 Divider()
                                     .padding(.horizontal, 8)
@@ -50,7 +51,6 @@ struct QnAListView: View {
             .navigationTitle("상품 문의")
             .onAppear {
                 Task {
-                    
                     await customerServiceStore.requestCustomerServiceList(itemId: tempItemId)
                 }
             }

@@ -89,6 +89,7 @@ struct ProductDetailView: View {
 struct QnAAndReviewNavigationButton: View {
     var body: some View {
         VStack {
+            // 문의 뷰로 가는 링크
             NavigationLink(destination: QnAListView()) {
                 HStack {
                     Text("상품 문의")
