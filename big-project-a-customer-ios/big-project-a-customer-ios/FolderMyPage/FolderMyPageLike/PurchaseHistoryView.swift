@@ -8,7 +8,7 @@
 import SwiftUI
 import PopupView
 
-enum DeliveryStatusEnum: String {
+enum DummyDeliveryStatusEnum: String {
     //    배송중
     //    배송완료
     //    배송준비중
@@ -19,7 +19,7 @@ enum DeliveryStatusEnum: String {
     case createReview
 }
 
-struct OrderInfo: Identifiable {
+struct DummyOrderInfo: Identifiable {
     var id = UUID().uuidString
     var orderDate: String
     var itemAmount: Int
@@ -27,17 +27,17 @@ struct OrderInfo: Identifiable {
     var deliveryStatusText: String
     var itemName: String
     var itemImage: String
-    var deliveryStatus: DeliveryStatusEnum = .pending
+    var deliveryStatus: DummyDeliveryStatusEnum = .pending
 }
 
 class OrderInfoViewModel: ObservableObject {
     // ShoppingCartItems 약자
-    @Published var orders: [OrderInfo] = [
-        OrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"),
-        OrderInfo(orderDate: "2022. 11. 30", itemAmount: 1, price: 24900, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 24W 듀얼 A타입 가정용 충전기 WCB002krWH, 화이트", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
-        OrderInfo(orderDate: "2022. 11. 28", itemAmount: 1, price: 66400, deliveryStatusText: "배송완료", itemName: "벨킨 7in1 USB C타입 멀티 허브 AVC009btSGY, 그레이", itemImage: "itemImage", deliveryStatus: .createReview),
-        OrderInfo(orderDate: "2022. 09. 30", itemAmount: 1, price: 34900, deliveryStatusText: "배송완료", itemName: "트리플블랙 RX 4in1 충전 스테이션, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
-        OrderInfo(orderDate: "2022. 09.30", itemAmount: 1, price: 20800, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 USB C to 라이트닝 아이폰 고속 충전케이블 CAA003bt1MBK, 1m, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted)
+    @Published var orders: [DummyOrderInfo] = [
+        DummyOrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"),
+        DummyOrderInfo(orderDate: "2022. 11. 30", itemAmount: 1, price: 24900, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 24W 듀얼 A타입 가정용 충전기 WCB002krWH, 화이트", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
+        DummyOrderInfo(orderDate: "2022. 11. 28", itemAmount: 1, price: 66400, deliveryStatusText: "배송완료", itemName: "벨킨 7in1 USB C타입 멀티 허브 AVC009btSGY, 그레이", itemImage: "itemImage", deliveryStatus: .createReview),
+        DummyOrderInfo(orderDate: "2022. 09. 30", itemAmount: 1, price: 34900, deliveryStatusText: "배송완료", itemName: "트리플블랙 RX 4in1 충전 스테이션, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
+        DummyOrderInfo(orderDate: "2022. 09.30", itemAmount: 1, price: 20800, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 USB C to 라이트닝 아이폰 고속 충전케이블 CAA003bt1MBK, 1m, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted)
     ]
 }
 
@@ -101,7 +101,7 @@ struct PurchaseHistoryView: View {
 // MARK: 재사용하기 위한 구매목록 cell
 struct PurchaseListCell: View {
     @ObservedObject var orderStore: OrderInfoViewModel
-    var order: OrderInfo
+    var order: DummyOrderInfo
     let index: Int
     @Binding var isDeliveryCompleted: Bool
     
