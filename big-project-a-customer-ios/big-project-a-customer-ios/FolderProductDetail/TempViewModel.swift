@@ -19,13 +19,17 @@ class TempViewModel: ObservableObject {
         self.fetchPostDetail()
     }
     
+    // 옵션을 선택했을 때 총 가격을 계산하는 메서드
     func calcTotalPrice() {
         totalPrice = basePrice
+        
         for (_, price) in Array(selectedOptions.values) {
             totalPrice += price
         }
     }
     
+    // 서버에서 옵션을 가져오는 메서드
+    // FIXME: - 임시로 구현
     func fetchPostDetail() {
         let optionsGetOnServer: [String: [String]] = [
             "색상" : ["빨강_1000", "파랑_2000", "초록_0"],
