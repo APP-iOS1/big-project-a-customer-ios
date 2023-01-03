@@ -50,7 +50,10 @@ final class CustomerServiceStore: ObservableObject {
     /// 매개변수 item의 자료형은 Item Model로 변경해야 합니다.
     /// 또한 item과 User에 대한 값도 받아서 필드 값으로 넣어줘야 합니다.
     // MARK: - Create CustomerService (QnA)
-    ///
+    /// 사용자가 특정 상품에 대해 작성한 문의 글을 서버에 등록합니다.
+    /// - Parameters title: customer service title
+    /// - Parameters description: customer service description
+    /// - Parameters userId: Current usre Id
     func createCustomerService(/* item: Item, */title: String, description: String, userId: String) async -> Void {
         let id = UUID().uuidString
         do {
