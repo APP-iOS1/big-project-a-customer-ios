@@ -14,12 +14,12 @@ struct LoginView: View {
     // MARK: - Property Wrappers
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
-//	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
 	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
+    @State private var isLoggedInFailed = false
     
     @State var navStack = NavigationPath()
     
@@ -34,10 +34,11 @@ struct LoginView: View {
         Task {
             await signUpViewModel.requestUserLogin(withEmail: email, withPassword: password)
             if signUpViewModel.currentUser?.userEmail != nil {
+                isLoggedInFailed = false
                 dismiss()
                 print("로그인 성공 - 이메일: \(signUpViewModel.currentUser?.userEmail ?? "???")")
             } else {
-                
+                isLoggedInFailed = true
                 print("로그인 실패")
             }
         }
@@ -111,6 +112,7 @@ struct LoginView: View {
                         // Going to SignupView
                         SignUpView(navStack: $navStack)
                     }
+                    .navigationBarBackButtonHidden(true)
                 } // HStack - 회원가입
                 .padding(.top, 30)
                 
@@ -122,7 +124,6 @@ struct LoginView: View {
                 Divider() // 로그인 버튼 구분선
                 
                 Button {
-
                     // Login action with firebase...
                     logInWithEmailPassword()
 
@@ -156,6 +157,20 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
+            .popup(isPresented: $isLoggedInFailed, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
+                HStack {
+                    Image(systemName: "exclamationmark.circle")
+                        .foregroundColor(.white)
+                    
+                    Text("이메일 및 비밀번호를 다시 확인해주세요.")
+                        .foregroundColor(.white)
+                        .font(.footnote)
+                        .bold()
+                }
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                .background(Color.red)
+                .cornerRadius(100)
+            }) // Toast
         } // NavigationStack - 임시
     } // Body
 }
@@ -163,7 +178,7 @@ struct LoginView: View {
 // MARK: - LoginView Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-		LoginView()
+        LoginView().environmentObject(SignUpViewModel())
     }
 }
 

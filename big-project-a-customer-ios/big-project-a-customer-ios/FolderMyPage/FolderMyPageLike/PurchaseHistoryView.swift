@@ -92,13 +92,10 @@ struct PurchaseHistoryView: View {
                     isShowingLoginSheet = true
                 }
             }
-            .sheet(isPresented: $isShowingLoginSheet) {
-                LoginView()
-                
-            }
+            .fullScreenCover(isPresented: $isShowingLoginSheet) {
+            LoginView()
         }
-    }
-    
+    } 
 }
 
 // MARK: 재사용하기 위한 구매목록 cell
