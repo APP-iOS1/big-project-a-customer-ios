@@ -18,10 +18,9 @@ struct MyPageInfoView: View {
     
     @State var loginSheetShowing: Bool = false
     
-    
     //더미 데이터
     var sampleActions = ["좋아요", "구매내역", "작성한 리뷰", "고객센터", "최근 본 상품", "취소, 반품, 교환목록"]
-    var sampleIcons = ["heart.fill", "doc.richtext", "person.fill.questionmark", "clock.badge.checkmark", "heart.fill", "heart.fill"]
+    var sampleIcons = ["heart.fill", "wallet.pass", "doc.richtext", "person.fill.questionmark", "clock.badge.checkmark", "cart.badge.minus"]
     var sampleMenu = ["취소, 반품, 교환목록"]
     
     var body: some View {
@@ -60,7 +59,7 @@ struct MyPageInfoView: View {
                             Text("로그인")
                         }
                     }
-                    .padding(20)
+                    //.padding(20)
                 }
                 // 좋아요, 구매내역, 쿠폰함 등 이후 다른 뷰들과 연결될 그리드
                 LazyVGrid(columns: columns, spacing: 19) {
@@ -86,11 +85,10 @@ struct MyPageInfoView: View {
                         } label: {
                             VStack{
                                 Image(systemName: sampleIcons[idx])
+                                    .padding(.bottom, 3)
                                 Text(action)
                             }
-                            .foregroundColor(.accentColor)
-                            .fontWeight(.bold)
-                            .modifier(TmpButtonModifier(color: .white))
+                            .modifier(CategoryButtonModifier(color: .white))
                         }
                     }
                 }
