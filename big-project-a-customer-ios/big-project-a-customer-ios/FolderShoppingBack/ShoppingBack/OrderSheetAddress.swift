@@ -41,6 +41,8 @@ struct OrderSheetAddress: View {
 	
     var body: some View {
         VStack {
+            Spacer().frame(height:30)
+            
             Picker("주소 선택",selection: $selectAddressOptions) {
                 Text("기본 배송지")
                     .tag(AddressOption.defaultAddress)
@@ -48,7 +50,7 @@ struct OrderSheetAddress: View {
                     .tag(AddressOption.otherAddress)
             }
             .pickerStyle(.segmented)
-            .padding(10)
+            .padding(.horizontal, 20)
             
             switch selectAddressOptions {
             case .defaultAddress:
@@ -76,7 +78,8 @@ struct OrderSheetAddress: View {
                     Spacer()
                     
                 }
-                .padding(.horizontal, 10)
+                .padding(.top)
+                .padding(.horizontal, 20)
             case .otherAddress:
                 AddAddressView()
                     .padding(.top, 30)
@@ -89,7 +92,7 @@ struct OrderSheetAddress: View {
                 Text("무통장 입금으로 결제하기")
             }
             .modifier(PurchaseHistoryButtonModifier(textColor: .white, borderColor: .accentColor, backgroundColor: .accentColor))
-            .padding()
+            .padding(.horizontal, 20)
             .navigationTitle("배송지 선택")
         }
     }
