@@ -36,6 +36,8 @@ struct LoginView: View {
             if signUpViewModel.currentUser?.userEmail != nil {
                 isLoggedInFailed = false
                 dismiss()
+                signupViewModel.fetchUserInfo(user: signupViewModel.currentUser!)
+
                 print("로그인 성공 - 이메일: \(signUpViewModel.currentUser?.userEmail ?? "???")")
             } else {
                 isLoggedInFailed = true
