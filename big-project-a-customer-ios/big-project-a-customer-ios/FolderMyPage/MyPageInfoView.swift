@@ -59,7 +59,7 @@ struct MyPageInfoView: View {
                             Text("로그인")
                         }
                     }
-                    .padding(20)
+//                    .padding(20)
                 }
                 // 좋아요, 구매내역, 쿠폰함 등 이후 다른 뷰들과 연결될 그리드
                 LazyVGrid(columns: columns, spacing: 19) {
