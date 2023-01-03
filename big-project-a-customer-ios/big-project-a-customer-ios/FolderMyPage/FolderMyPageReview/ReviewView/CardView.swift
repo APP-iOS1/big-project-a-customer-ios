@@ -13,12 +13,12 @@ struct CardView: View {
     var item : MyReviewItems
     
     var body: some View {
-        //NavigationLink(destination: CarDetail(selectedCar: car)) {
+        NavigationLink(destination: Text("\(item.stars)")) {
             
             Text(item.itemName)
             
             
-        //}
+        }
     }
 }
 

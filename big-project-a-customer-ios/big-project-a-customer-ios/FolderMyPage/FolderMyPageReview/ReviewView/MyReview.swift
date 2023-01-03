@@ -59,8 +59,9 @@ struct MyReview: View {
 
     @State var isShowingDuration : Bool = false
     
+    var tests = [1,2,3]
+    
     var body: some View {
-        
         VStack{
             HStack{
                 Text("전체")
@@ -75,26 +76,53 @@ struct MyReview: View {
                 }
             }
             .padding()
-            
+            Text("\(myReviewViewModel.mRItems[0].itemName)")
+            Text("\(myReviewViewModel.mRItems[1].itemName)")
+            Text("\(myReviewViewModel.mRItems[2].itemName)")
+            ForEach(myReviewViewModel.mRItems) { mRItem in
+                Text("\(mRItem.itemName)")
+            }
+            ForEach(tests, id: \.self) { test in
+                Text("\(test)")
+            }
+
             ZStack{
-                
                 DurationSettingView(isShowingDuration : $isShowingDuration)
                     .opacity(isShowingDuration ? 1 : 0)
                     .zIndex(1)
-
                 
                 NavigationView {
                     List {
                         ForEach(myReviewViewModel.mRItems) { mRItem in
-                            CardView(item: mRItem)
+                            //CardView(item: mRItem)
+                            Text("\(mRItem.itemName)")
                         }
                     }
-
                 }
                 
+                
+//                NavigationView {
+//
+//                    ScrollView(showsIndicators: false, content: {
+//                        ForEach(myReviewViewModel.mRItems) { mRItem in
+//                            CardView(item: mRItem)
+//
+//                            Divider()
+//                        }
+//
+//
+//
+//                    })
+//                }
+                
+                
+                
             }
+
         }
         .ignoresSafeArea(.all, edges: .bottom)
+        .navigationBarTitleDisplayMode(.inline)
+        
     }
 }
 
