@@ -43,7 +43,7 @@ class OrderInfoViewModel: ObservableObject {
 
 // MARK: 전체 구매목록
 struct PurchaseHistoryView: View {
-    @ObservedObject var orderStore: OrderInfoViewModel = OrderInfoViewModel()
+    @ObservedObject var orderStore: OrderInfoViewModel =  OrderInfoViewModel()
     @State private var searchItem = ""
     @State private var deliveryCompletedChecked = false
     
