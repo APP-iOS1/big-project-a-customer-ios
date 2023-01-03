@@ -24,7 +24,6 @@ var items = [
     Item(categoryTitles: "마우스", categoryImages: "Mouse"),
     Item(categoryTitles: "키보드", categoryImages: "Keyboard"),
     Item(categoryTitles: "카메라", categoryImages: "Camera"),
-    
 ]
 
 
@@ -43,7 +42,7 @@ struct HomeMenuView: View {
                 LazyVGrid(columns: columns, spacing: 16){
                     ForEach(searchItem) { item in
                         NavigationLink {
-                            NotebookView()
+                            NotebookView(items: item)
                         } label:{
                             ItemView(item: item)
                         }
