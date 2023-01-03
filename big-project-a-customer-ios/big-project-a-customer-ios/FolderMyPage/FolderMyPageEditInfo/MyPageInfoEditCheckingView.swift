@@ -11,10 +11,10 @@ import SwiftUI
 
 struct MyPageInfoEditCheckingView: View {
     
-    @StateObject var vm: MyPageViewModel
-    
+    @EnvironmentObject private var signupViewModel: SignUpViewModel
     @State var showingAlert = false
     @State var password = ""
+    @State var isLogedIn = false
     
     
     var body: some View {
@@ -31,7 +31,7 @@ struct MyPageInfoEditCheckingView: View {
                 HStack{
                     Image(systemName: "mail")
                     // 유저 이메일
-                    Text(vm.users.userEmail)
+                    Text(signupViewModel.currentUser?.userEmail ?? "이메일")
                 }
                 
                 HStack{
@@ -39,45 +39,90 @@ struct MyPageInfoEditCheckingView: View {
                         .padding(.horizontal, 3)
                     SecureField("Password", text: $password)
                         .modifier(InputModifier(padding: 5))
+                    //                        .onChange(of: password) { newValue in
+                    //                            Task {
+                    //                                isLogedIn = await signupViewModel.reAuthLoginIn(withEmail: signupViewModel.currentUser?.userEmail ?? "", withPassword: password)
+                    //                                print(isLogedIn)
+                    //                            }
+                    //                        }
                 }
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 20)
             .padding(.bottom, 10)
+            
             
             // 입력한 비밀번호가 일치할 시 네비게이션 링크를 보여주고,
             // 불일치할 시 버튼을 보여주고, alert를 띄운다
-            if password == String(vm.users.userPassward) {
-                NavigationLink {
-                    
-                    MyPageInfoEditView(vm: vm, newName: vm.users.name, newEmail: vm.users.userEmail, newPhoneNumber: vm.users.phoneNumber, newAddress: vm.users.userAddress)
-                    
-                } label: {
-                    Text("확인")
-                        .modifier(ConfirmModifier())
-                    
+            
+            Button {
+//                showingAlert = true
+                Task {
+                    isLogedIn = await signupViewModel.reAuthLoginIn(withEmail: signupViewModel.currentUser?.userEmail ?? "", withPassword: password)
+                    showingAlert = !isLogedIn
                 }
-                // 링크 클릭 후 입력받은 textField 초기화
-                .simultaneousGesture(TapGesture().onEnded({
-                    password = ""
-                }))
-            } else {
-                
-                // 비밀번호가 불일치 시 보여주는 버튼
-                // 클릭하면 alert이 뜬다
-                // navigationLink와 외관상 차이점 없음
-                Button {
-                    showingAlert = true
-                } label: {
-                    Text("확인")
-                        .modifier(ConfirmModifier())
-                }
-                
+            } label: {
+                Text("확인")
+                    .modifier(ConfirmModifier())
             }
+            .navigationDestination(isPresented: $isLogedIn) {
+                MyPageInfoEditView()
+            }
+//
+//            if true {
+//                NavigationLink {
+//
+//                    MyPageInfoEditView(vm: vm)
+//
+//                } label: {
+//                    Text("확인")
+//                        .modifier(ConfirmModifier())
+//
+//                }
+//                // 링크 클릭 후 입력받은 textField 초기화
+//                .simultaneousGesture(TapGesture().onEnded({
+//                    password = ""
+//                }))
+//            } else {
+//
+//                // 비밀번호가 불일치 시 보여주는 버튼
+//                // 클릭하면 alert이 뜬다
+//                // navigationLink와 외관상 차이점 없음
+//
+//            }
+            
+            //            if isLogedIn {
+            //                NavigationLink(isActive: $isLogedIn) {
+            //
+            //                    MyPageInfoEditView(vm: vm)
+            //
+            //                } label: {
+            //                    Text("확인")
+            //                        .modifier(ConfirmModifier())
+            //
+            //                }
+            //                // 링크 클릭 후 입력받은 textField 초기화
+            //                .simultaneousGesture(TapGesture().onEnded({
+            ////                    password = ""
+            //                }))
+            //            } else {
+            //
+            //                // 비밀번호가 불일치 시 보여주는 버튼
+            //                // 클릭하면 alert이 뜬다
+            //                // navigationLink와 외관상 차이점 없음
+            //                Button {
+            //                    showingAlert = true
+            //
+            //                } label: {
+            //                    Text("확인")
+            //                        .modifier(ConfirmModifier())
+            //                }
+            //
+            //            }
+            //
             
             Spacer()
             
         }
-        .padding()
         // 비밀번호 체크 후 일치하지 않을 시 나오는 alert
         .modifier(PasswordAlertModifier(showingAlert: $showingAlert, password: $password, password_2: $password))
         .navigationBarTitle("회원정보 수정")
@@ -88,7 +133,8 @@ struct MyPageInfoEditCheckingView: View {
 struct MyPageInfoEditCheckingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            MyPageInfoEditCheckingView(vm: MyPageViewModel())
+            MyPageInfoEditCheckingView()
+                .environmentObject(SignUpViewModel())
         }
     }
 }

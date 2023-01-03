@@ -82,7 +82,7 @@ struct SignUpStep1View: View {
                     HStack {
                         TextField("이메일 (예: test@gmail.com)", text: $email)
                         .focused($isInFocusEmail)
-                        .modifier(LoginTextFieldModifier())
+                        .modifier(ClearTextFieldModifier())
                         .onChange(of: email) { newValue in
                             signUpViewModel.emailDuplicationState = .duplicated
                         }
@@ -122,7 +122,7 @@ struct SignUpStep1View: View {
                     .padding(.trailing, 20)
                     
                     Rectangle()
-                        .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusEmail))
+                        .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusEmail))
                     
                     // 이메일 형식이 아닐 경우 경고 메시지
                     if !email.isEmpty && !checkEmailRule(string: email) {
@@ -145,11 +145,11 @@ struct SignUpStep1View: View {
                         if isSecuredPassword {
                             SecureField("비밀번호를 입력해주세요.", text: $password)
                                 .focused($isInFocusPassword) // 커서가 올라가있을 때 상태를 저장.
-                                .modifier(LoginTextFieldModifier())
+                                .modifier(ClearTextFieldModifier())
                         } else { // 비밀번호 보임 아이콘일 때
                             TextField("비밀번호를 입력해주세요.", text: $password)
                                 .focused($isInFocusPassword)
-                                .modifier(LoginTextFieldModifier())
+                                .modifier(ClearTextFieldModifier())
                         }
                         
                         Button(action: {
@@ -175,7 +175,7 @@ struct SignUpStep1View: View {
                     .padding(.trailing, 20)
                     
                     Rectangle()
-                        .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPassword))
+                        .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusPassword))
                     
                     // 비밀번호 형식이 아닐 경우 경고 메시지
                     if !password.isEmpty && !checkPasswordRule(password: password) {
@@ -198,11 +198,11 @@ struct SignUpStep1View: View {
                         if isSecuredPasswordCheck {
                             SecureField("비밀번호를 다시 입력해 주세요.", text: $passwordCheck)
                                 .focused($isInFocusPasswordCheck) // 커서가 올라가있을 때 상태를 저장.
-                                .modifier(LoginTextFieldModifier())
+                                .modifier(ClearTextFieldModifier())
                         } else { // 비밀번호 보임 아이콘일 때
                             TextField("비밀번호를 다시 입력해 주세요.", text: $passwordCheck)
                                 .focused($isInFocusPasswordCheck)
-                                .modifier(LoginTextFieldModifier())
+                                .modifier(ClearTextFieldModifier())
                         }
                         
                         Button(action: {
@@ -229,7 +229,7 @@ struct SignUpStep1View: View {
                     .padding(.trailing, 20)
                     
                     Rectangle()
-                        .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPasswordCheck))
+                        .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusPasswordCheck))
                     
                     // 비밀번호가 같지 않을 경우 경고 메시지
                     if !passwordCheck.isEmpty && password != passwordCheck {
@@ -254,8 +254,8 @@ struct SignUpStep1View: View {
             NavigationLink {
                 SignUpStep2View(email: $email, password: $password, navStack: $navStack)
             } label: {
-                RoundedRectangle(cornerRadius: 15)
-                    .modifier(LoginButtonModifier(label: "다음"))
+                Text("다음")
+                    .modifier(MaxWidthColoredButtonModifier(cornerRadius: 15))
             } // NavigationLink - 다음
             // TextField가 비어있거나 비밀번호 2개가 다를 경우에는 "다음" 버튼 비활성화
             .disabled(email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck || !checkEmailRule(string: email) || !checkPasswordRule(password: password) || signUpViewModel.emailDuplicationState != .notDuplicated ? true : false)
@@ -287,7 +287,7 @@ struct SignUpStep1View: View {
         }) // Toast - 이메일 중복 팝업
         .popup(isPresented: $isNotDuplicated, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
             HStack {
-                Image(systemName: "exclamationmark.circle")
+                Image(systemName: "checkmark.circle")
                     .foregroundColor(.white)
                 
                 Text("사용 가능한 이메일이에요.")
