@@ -87,7 +87,7 @@ struct PaymentView: View {
         NavigationStack {
             
             /// 결제하기 버튼 위까지의 영역은 ScrollView 영역 안에 묶어줌
-
+            Spacer().frame(height: 30)
             ZStack {
                 ScrollView {
                     VStack {
@@ -97,10 +97,10 @@ struct PaymentView: View {
                             Text("은행을 선택해주세요")
                                 .font(.headline)
                                 .foregroundColor(.gray)
-                                .frame(width: 370, height: 30)
+                                .frame(width: 360, height: 30)
                                 .border(Color.gray, width: 1)
                         }
-                        .padding(.top)
+                        .padding(.horizontal, 20)
                         
                         
                         /// 은행선택 GridView (2행 3열)
@@ -111,14 +111,14 @@ struct PaymentView: View {
                                     accountNum = item.account
                                     textAppear = true
                                     selectedBank = item
-                                }){            
+                                }){
                                     /// 은행 버튼 모양을 둥근사각형으로 설정
                                     /// 그 위에 은행 로고와 이름을 표시해 줌
                                     ZStack {
-                                        RoundedRectangle(cornerRadius: 20)
+                                        RoundedRectangle(cornerRadius: 10)
                                         
                                             /// 선택된 버튼은 파란색으로 바뀜
-                                            .fill(selectedBank.name == item.name ? Color.blue : Color.clear)
+                                            .fill(selectedBank.name == item.name ? Color("SubColor") : Color.clear)
                                         
                                         /// 위에서 부터 로고 이미지, 은행명 순으로 배치
                                         VStack {
@@ -126,7 +126,7 @@ struct PaymentView: View {
                                                 .resizable()
                                                 .frame(width: 40, height: 40)
                                             Text("\(item.name)")
-                                                .font(.caption)
+                                                .bold()
                                                 .foregroundColor(.black)
                                         }
                                         .padding()
@@ -134,7 +134,7 @@ struct PaymentView: View {
                                 }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 20)
                         
                         
                         /// textAppear 값이 true이면 결제정보 값이 보여짐
@@ -162,6 +162,7 @@ struct PaymentView: View {
                                 ToSView(isCheck: $isCheck)
                                 CashRecieptView(isCashCheck: $isCashCheck, isCheckExpenditure: $isCheckExpenditure, incomeDeduction: $incomeDeduction, cashReceiptNumber: $cashReceiptNumber, purchaseInfo: $purchaseInfo)
                             }
+                            .padding(.horizontal, 20)
                         }
                     }
                     
@@ -204,15 +205,15 @@ struct PaymentView: View {
                 
                 /// NavigationLink이 보여지는 문구를 "결제하기"로 설정
                 /// 여기서 현재 PurchaseInfo를 파이어스토어에 전달.
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 10)
                     /// 결제완료 버튼을 누를 수 있는 조건이 충족되면 파란색 아니면 회색으로 색깔을 채움
-                    .fill(isDisabledBtn ? Color.gray : Color.blue)
-                    .frame(width: 380, height: 60)
+                    .fill(isDisabledBtn ? Color.gray : Color("AccentColor"))
+                    .frame(width: 360, height: 60)
                 
                 /// NavigationLink를 푸른색 둥근 사각형위에 얹어줌
                     .overlay {
                         Text("결제하기")
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.white)
                             .font(.title3)
                             .fontWeight(.bold)
                     }
@@ -220,7 +221,7 @@ struct PaymentView: View {
             }
             /// 결제완료 버튼을 누를 수 있는 조건이 충족되지 않으면 disabled 처리
             .disabled(isDisabledBtn)
-            .padding(20)
+            .padding(.horizontal, 20)
         }
     }
     
