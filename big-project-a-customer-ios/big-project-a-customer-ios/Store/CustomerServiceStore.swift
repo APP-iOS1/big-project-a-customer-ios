@@ -11,6 +11,7 @@ import Firebase
 final class CustomerServiceStore: ObservableObject {
     @Published var customerService: [CustomerServiceInfo] = []
     
+    static var shared: CustomerServiceStore = CustomerServiceStore() // singleton 
     let database = Firestore.firestore()
     
     // FIXME: - item 아이디를 가져오는 매개변수
@@ -45,12 +46,31 @@ final class CustomerServiceStore: ObservableObject {
         }
     }
     
+    // FIXME: item의 자료형
+    /// 매개변수 item의 자료형은 Item Model로 변경해야 합니다.
+    /// 또한 item과 User에 대한 값도 받아서 필드 값으로 넣어줘야 합니다.
     // MARK: - Create CustomerService (QnA)
-    func createCustomerService() async -> Void {
+    ///
+    func createCustomerService(/* item: Item, */title: String, description: String, userId: String) async -> Void {
+        let id = UUID().uuidString
         do {
-            
+            try await database.collection(AppCategoryEnum.cs.rawValue)
+                .document(id)
+                .setData([
+                    "id": id,
+                    "title": title,
+                    "description": description,
+                    "itemId": "",
+                    "itemName": "",
+                    "itemImage": [],
+                    "serviceDate": Timestamp(date: Date.now),
+                    "customerId": userId,
+                    "orderId": "",
+                    "itemAllOption": [],
+                    "isAnswered": false
+                ])
         } catch {
-            
+            print(error.localizedDescription)
         }
     }
     

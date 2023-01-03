@@ -44,7 +44,7 @@ struct QnAListView: View {
                     }
                 }
                 
-                AddQnAButton()
+                AddQnAButton(csStore: customerServiceStore)
             }
             
             .navigationTitle("상품 문의")
@@ -60,8 +60,10 @@ struct QnAListView: View {
 }
 
 struct AddQnAButton: View {
+    @ObservedObject var csStore: CustomerServiceStore
+
     var body: some View {
-        NavigationLink(destination: QnARegistView()) {
+        NavigationLink(destination: QnARegistView(customerServiceStore: csStore)) {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.accentColor)

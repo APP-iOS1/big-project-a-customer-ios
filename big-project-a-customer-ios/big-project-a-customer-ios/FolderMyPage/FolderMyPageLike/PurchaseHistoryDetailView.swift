@@ -103,7 +103,7 @@ struct PurchaseDetail: View {
             
             ForEach(0..<3){ _ in
                 VStack {
-                    PurchaseListCell(orderStore: orderStore, order: OrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"), index: 1, isDeliveryCompleted: $check)
+                    PurchaseListCell(orderStore: orderStore, order: DummyOrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"), index: 1, isDeliveryCompleted: $check)
                 }
             }
             Button {
