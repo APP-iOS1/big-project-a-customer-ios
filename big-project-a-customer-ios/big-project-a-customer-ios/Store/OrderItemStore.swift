@@ -27,13 +27,14 @@ class OrderItemStore: ObservableObject {
     /// uid 값을 통해 database의 특정 uid에 저장된 장바구니 아이템을 요청합니다.
     /// - Parameter uid: 로그인한 사용자의 uid
     func createShoppingItem(uid: String, item: OrderItemInfo) {
-        
+        // Document의 id(name)는 상품의 id여야 한다.
         firebasePath.document(uid).collection("MyCart").addDocument(data: [
             "itemuid": item.itemuid,
             "storeId": item.storeId,
             "itemName": item.itemName,
             "itemImage": item.itemImage,
             "price": item.price,
+            "amount": item.amount,
             "deliveryStatus": item.deliveryStatus.rawValue,
             "option": item.option
         ])
@@ -44,7 +45,7 @@ class OrderItemStore: ObservableObject {
     /// uid 값을 통해 database의 특정 uid에 저장된 장바구니 아이템을 요청합니다.
     /// - Parameter uid: 로그인한 사용자의 uid
     func requestShoppingList(uid: String) async -> Void {
-        do {"C"
+        do {
             let snapshot = try await firebasePath.collection("CustomerInfo").document(uid).collection("MyCart").getDocuments()
 
             for document in snapshot.documents {
@@ -55,6 +56,7 @@ class OrderItemStore: ObservableObject {
                 let itemName: String = requestedData["itemName"] as? String ?? ""
                 let itemImage: String = requestedData["itemImage"] as? String ?? ""
                 let price: Int = requestedData["price"] as? Int ?? 0
+                let amount: Int = requestedData["amount"] as? Int ?? 0
                 // 배송상태가 서버에 열거형의 rawvalue로 저장되기 때문에 열거형 타입으로 변환
                 let deliveryStrings = requestedData["deliveryStatus"] as? String ?? "pending"
                 let deliveryStatus: DeliveryStatusEnum = DeliveryStatusEnum(rawValue: deliveryStrings) ?? .pending
@@ -69,6 +71,7 @@ class OrderItemStore: ObservableObject {
                                               itemName: itemName,
                                               itemImage: itemImage,
                                               price: price,
+                                              amount: amount,
                                               deliveryStatus: deliveryStatus,
                                               option: newOptions)
                 
@@ -86,6 +89,14 @@ class OrderItemStore: ObservableObject {
         }
     }
     
+    func updateShoppingItem(uid: String, itemUID: String, newAmount: Int) {
+        let itemRef = firebasePath.collection("CustomerInfo").document(uid).collection("MyCart").document(itemUID)
+        
+        itemRef.updateData([
+            "amount": newAmount
+        ]) 
+    }
+    
     // MARK: - 옵션의 형태를 변환하는 메소드
     /// 서버에 저장된 형태는 [색상: 노란색_100, 크기: s_1000 ]이다.
     /// 그러므로 [String: (String, Int)]형태로 변환하는 작업을 수행해야 한다.
@@ -99,4 +110,6 @@ class OrderItemStore: ObservableObject {
         
         return newOptions
     }
+    
+    
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ShoppingBackDetailView: View {
     @Binding var item: ShoppingCartItems
+    
     @ObservedObject var vm: ShoppingCartViewModel
     
     

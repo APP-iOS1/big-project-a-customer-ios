@@ -244,8 +244,8 @@ struct ShoppingBackView: View {
                 LoginView()
                     .onDisappear {
                         Task {
-                            print("signUpViewModel.currentUser?.id: \(signUpViewModel.currentUser?.id)")
                             await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
+                            shoppingStores.updateShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: "7fEFIEBtfZxUGuskuLwg", newAmount: 2)
                         }
                     }
             }

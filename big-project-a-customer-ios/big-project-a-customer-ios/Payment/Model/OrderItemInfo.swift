@@ -16,6 +16,7 @@ struct OrderItemInfo {
     var itemName: String
     var itemImage: String
     var price: Int
+    var amount: Int
     var deliveryStatus: DeliveryStatusEnum
     var option: [String: (String, Int)]
 }
