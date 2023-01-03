@@ -13,7 +13,7 @@ struct CardView: View {
     var item : MyReviewItems
     
     var body: some View {
-        NavigationLink(destination: Text("\(item.itemName) 리뷰")) {
+        NavigationLink(destination: ProductDetailTotalReview()) {
             Text("\(item.itemName)")
         }
     }

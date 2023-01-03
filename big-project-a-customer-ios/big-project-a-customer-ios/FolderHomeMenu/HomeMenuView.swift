@@ -28,6 +28,8 @@ var items = [
 
 
 struct HomeMenuView: View {
+    @StateObject private var itemInfoViewModel: ItemInfoViewModel = ItemInfoViewModel()
+    
     @State var searchItem = items
     @State private var searchText = ""
     
@@ -91,6 +93,9 @@ struct HomeMenuView: View {
         }//NavigationStack
       
         .background(.white)
+        .onAppear {
+            itemInfoViewModel.fetchStoreInfo()
+        }
     }
     // MARK: 홈 메뉴에 그려질 Cell View
     struct ItemView: View{
