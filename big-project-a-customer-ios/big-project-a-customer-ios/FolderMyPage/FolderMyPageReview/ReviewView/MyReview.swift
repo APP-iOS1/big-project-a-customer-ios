@@ -63,52 +63,58 @@ struct MyReview: View {
     
     var body: some View {
         VStack{
-//            HStack{
-//                Text("전체")
-//                Text("1개월")
-//
-//                Spacer()
-//
-//                Button{
-//                    isShowingDuration.toggle()
-//                } label: {
-//                    Image(systemName: "slider.horizontal.3")
-//                }
-//            }
-//            .padding()
-            
-//                DurationSettingView(isShowingDuration : $isShowingDuration)
-//                    .opacity(isShowingDuration ? 1 : 0)
-//                    .zIndex(1)
+            HStack{
+                Text("전체")
+                Text("1개월")
                 
-            NavigationView {
-                List {
-                    ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
-                        CardView(item: mRItem)
-                        //                            Text("\(mRItem.itemName)")
-                    }
+                Spacer()
+                
+                Button{
+                    isShowingDuration.toggle()
+                } label: {
+                    Image(systemName: "slider.horizontal.3")
                 }
-                .listStyle(.inset)
             }
+            .padding()
+            
+            ZStack{
+                DurationSettingView(isShowingDuration : $isShowingDuration)
+                    .opacity(isShowingDuration ? 1 : 0)
+                    .zIndex(1)
+                
+                NavigationView {
+                    List {
+                        ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
+                            CardView(item: mRItem)
+//                            Text("\(mRItem.itemName)")
+                        }
+                    }
                     
                     
-//            NavigationView {
-//
-//                ScrollView(showsIndicators: false, content: {
-//                    ForEach(myReviewViewModel.mRItems) { mRItem in
-//                        CardView(item: mRItem)
-//                        Divider()
-//                    }
-//                })
-//
-//            }
-            //.ignoresSafeArea(.all, edges: .bottom)
+                    //                NavigationView {
+                    //
+                    //                    ScrollView(showsIndicators: false, content: {
+                    //                        ForEach(myReviewViewModel.mRItems) { mRItem in
+                    //                            CardView(item: mRItem)
+                    //
+                    //                            Divider()
+                    //                        }
+                    //
+                    //
+                    //
+                    //                    })
+                    //                }
+                    
+                    
+                    
+                }
+                
+            }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .navigationBarTitleDisplayMode(.inline)
             
         }
-        .navigationTitle("작성한 리뷰")
-        .navigationBarTitleDisplayMode(.large)
     }
-    
 }
 
 struct MyReview_Previews: PreviewProvider {

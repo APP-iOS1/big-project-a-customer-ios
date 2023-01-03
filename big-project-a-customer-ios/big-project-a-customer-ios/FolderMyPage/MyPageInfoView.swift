@@ -16,13 +16,11 @@ struct MyPageInfoView: View {
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     
     @State var loginSheetShowing: Bool = false
-
     @State var loginAlertShowing: Bool = false
     
     //더미 데이터
     var sampleActions = ["좋아요", "구매내역", "작성한 리뷰", "고객센터", "최근 본 상품", "취소, 반품, 교환목록"]
     var sampleIcons = ["heart.fill", "doc.richtext", "person.fill.questionmark", "clock.badge.checkmark", "tray.full.fill", "arrow.uturn.backward.square"]
-
     var sampleMenu = ["취소, 반품, 교환목록"]
     
     var body: some View {
@@ -61,7 +59,7 @@ struct MyPageInfoView: View {
                             Text("로그인")
                         }
                     }
-                    //.padding(20)
+                    .padding(20)
                 }
                 // 좋아요, 구매내역, 쿠폰함 등 이후 다른 뷰들과 연결될 그리드
                 LazyVGrid(columns: columns, spacing: 19) {
@@ -72,7 +70,6 @@ struct MyPageInfoView: View {
                             } label: {
                                 MyPageCell(imageName: sampleIcons[idx], text: action)
                             }
-
                         } else {
                             NavigationLink(value: action) {
                                 MyPageCell(imageName: sampleIcons[idx], text: action)
@@ -95,7 +92,6 @@ struct MyPageInfoView: View {
                                     Text("default")
                                 }
                             }
-
                         }
                     }
                 }
