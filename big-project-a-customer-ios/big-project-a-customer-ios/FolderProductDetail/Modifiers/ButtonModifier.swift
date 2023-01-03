@@ -14,7 +14,10 @@ struct CategoryButtonModifier: ViewModifier {
             .frame(width:160 , height: 160)
             .background(color)
             .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 5, y: 5)
+            .overlay{
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color("SubColor"), lineWidth: 2)
+            }
     }
 }
 
