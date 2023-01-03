@@ -57,6 +57,9 @@ struct ShoppingBackView: View {
     @State private var shippingCost = 3000
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
+    
+    @ObservedObject var shoppingStores = OrderItemStore()
+    
     @State var totalPriceForBinding = 0
     
     @State var isShowingLoginSheet = false
@@ -217,6 +220,8 @@ struct ShoppingBackView: View {
                             } else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
                                 Button {
                                     isShowingLoginSheet.toggle()
+                                    
+                                    
                                 } label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
@@ -237,10 +242,25 @@ struct ShoppingBackView: View {
             }
             .fullScreenCover(isPresented: $isShowingLoginSheet) {
                 LoginView()
+                    .onDisappear {
+                        Task {
+                            print("signUpViewModel.currentUser?.id: \(signUpViewModel.currentUser?.id)")
+                            await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
+                        }
+                    }
             }
             .navigationBarTitle("장바구니")
             .navigationBarTitleDisplayMode(.automatic)
             
+            .onAppear {
+                print("ShoppingBag Appear 호출")
+                guard signUpViewModel.currentUser != nil else {
+                    return
+                }
+                Task {
+                    await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
+                }
+            }
         }
     }
     

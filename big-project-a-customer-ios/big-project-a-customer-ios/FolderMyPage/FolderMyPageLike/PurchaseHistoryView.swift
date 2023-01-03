@@ -9,17 +9,11 @@ import SwiftUI
 import PopupView
 
 enum DeliveryStatusEnum: String {
-//    //    배송중
-//    case shipping
-//    //    배송완료
-////    case deliveryCompleted
-//    //    배송준비중
-//
-//    //    리뷰작성 가능
-//    case reviewable
-//    //    리뷰작성 완료
-//    case reviewed
-    
+    //    배송중
+    //    배송완료
+    //    배송준비중
+    //    리뷰작성 가능
+    //    리뷰작성 완료
     case pending
     case deliveryCompleted
     case createReview
