@@ -91,7 +91,7 @@ struct ProductDetailModalView: View {
 
                 HStack {
                     Button {
-                        tempVM.addToCart(OrderInfo(orderDate: "2023-01-03", itemAmount: 1, price: 10000, deliveryStatusText: "배송준비중", itemName: "맥북 프로 M1 Max", itemImage: "~~~"))
+
                         dismiss()
                     } label: {
                         HStack {

@@ -73,25 +73,25 @@ class TempViewModel: ObservableObject {
      - Parameter orderItemInfo: OrderItemInfo 구조체를 초기화하여 전달합니다.
      
      */
-    func addToCart(_ orderItemInfo: OrderInfo) {
-        database.collection("CustomerInfo")
-            .document(tempUserId)
-            .collection("myCart") // 내 장바구니
-
-            .addDocument(data: [
-                "itemuid": orderItemInfo.id,
-                "storeId": "당근마켓",
-                "imageName": orderItemInfo.itemImage,
-                "price": orderItemInfo.price,
-                "deliveryStatus": orderItemInfo.deliveryStatusText,
-                "option": "옵션"
-            ])
-        // 제품 id
-        // 판매 스토어 id
-        // itemName
-        // itemImage
-        // price
-        // deliveryStatus
-        // option
-    }
+//    func addToCart(_ orderItemInfo: OrderInfo) {
+//        database.collection("CustomerInfo")
+//            .document(tempUserId)
+//            .collection("myCart") // 내 장바구니
+//
+//            .addDocument(data: [
+//                "itemuid": orderItemInfo.id,
+//                "storeId": "당근마켓",
+//                "imageName": orderItemInfo.itemImage,
+//                "price": orderItemInfo.price,
+//                "deliveryStatus": orderItemInfo.deliveryStatusText,
+//                "option": "옵션"
+//            ])
+//    }
+// 제품 id
+// 판매 스토어 id
+// itemName
+// itemImage
+// price
+// deliveryStatus
+// option
 }
