@@ -82,20 +82,20 @@ struct LoginView: View {
                     VStack(spacing: 5) {
                         TextField("이메일", text: $email)
                             .focused($isInFocusEmail)
-                            .modifier(LoginTextFieldModifier())
+                            .modifier(ClearTextFieldModifier())
                             .font(.subheadline)
                         Rectangle()
-                            .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusEmail))
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusEmail))
                     }
                     .padding(.bottom, 35)
                     
                     VStack(spacing: 5) {
                         SecureField("비밀번호", text: $password)
                             .focused($isInFocusPassword)
-                            .modifier(LoginTextFieldModifier())
+                            .modifier(ClearTextFieldModifier())
                             .font(.subheadline)
                         Rectangle()
-                            .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPassword))
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusPassword))
                     }
                 } // VStack - 이메일, 비밀번호 TextField
                 
@@ -133,8 +133,8 @@ struct LoginView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .black))
                             .frame(height: 40)
                     } else { // 로그인 전이나 후에는 버튼을 띄운다.
-                        RoundedRectangle(cornerRadius: 15)
-                            .modifier(LoginButtonModifier(label: "로그인하기"))
+                        Text("로그인하기")
+                            .modifier(MaxWidthColoredButtonModifier(cornerRadius: 15))
                     }
                 }
             } // VStack - body 바로 아래
@@ -179,46 +179,6 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView().environmentObject(SignUpViewModel())
-    }
-}
-
-
-// MARK: - Modifier : LoginView TextField 속성
-struct LoginTextFieldModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .disableAutocorrection(true)
-            .textInputAutocapitalization(.never)
-            .font(.subheadline)
-            .padding(.horizontal, 20)
-    }
-}
-
-// MARK: - Modifier : LoginView TextField 아래 Rectangle 속성
-struct LoginTextFieldRectangleModifier: ViewModifier {
-    let stateTyping: Bool
-    func body(content: Content) -> some View {
-        content
-            .frame(height: 1)
-            .foregroundColor(stateTyping ? .accentColor : .gray)
-            .padding(.horizontal, 20)
-    }
-}
-
-// MARK: - Modifier : LoginView Login Button 속성
-struct LoginButtonModifier: ViewModifier {
-    let label: String
-    func body(content: Content) -> some View {
-        content
-            .foregroundColor(.accentColor)
-            .frame(height: 50)
-            .overlay {
-                Text(label)
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-                    .bold()
-            }
-            .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
     }
 }
 
