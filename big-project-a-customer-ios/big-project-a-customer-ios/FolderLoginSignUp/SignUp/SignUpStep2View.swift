@@ -70,7 +70,7 @@ struct SignUpStep2View: View {
             
             VStack(spacing: 5) {
                 HStack {
-                    TextField("닉네임 (6자리 이내)", text: $nickName)
+                    TextField("닉네임 (20자리 이내)", text: $nickName)
                         .focused($isInFocusNickName)
                         .modifier(LoginTextFieldModifier())
                         .onChange(of: nickName) { newValue in
