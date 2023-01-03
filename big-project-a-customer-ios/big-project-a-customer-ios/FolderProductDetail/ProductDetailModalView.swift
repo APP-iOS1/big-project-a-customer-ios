@@ -8,30 +8,16 @@
 import SwiftUI
 
 struct ProductDetailModalView: View {
-    @ObservedObject var tempVM: TempViewModel = TempViewModel()
-    
     @Environment(\.dismiss) private var dismiss
     
-//    @Binding var options: [String: [String]] // 서버에서 가져온 옵션들
-    
+    @ObservedObject var tempVM: TempViewModel = TempViewModel()
     @State var count: Int = 1 // 수량
-    
-    @State private var selection: [String] = ["", ""]
-    // FIXME: - 유저가 중복선택할 경우를 생각해서 Set을 적용할지 생각해보기.
-    
-//    @State private var selectedOptions: [String: (String, Int)] = [:]
-    
-    // 기본 가격(옵션 제외)
-    var basePrice: Int = 50000
-    // 옵션 추가 금액
-    @State var optionPrice: Int = 0
     
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
     }
     
     var body: some View {
-        
         VStack {
             // 옵션 마다 picker를 만들어준다.
             ForEach(Array(optionsArray.enumerated()), id: \.offset) { (index, key) in
@@ -41,7 +27,6 @@ struct ProductDetailModalView: View {
                     
                     Spacer()
                     
-                    // FIXME: - Picker Error
                     Picker(key, selection: $tempVM.selectedPicker[index]) {
                         Text("선택없음").tag(Optional<String>(nil))
                         
@@ -50,18 +35,16 @@ struct ProductDetailModalView: View {
                         }
                     }
                     .pickerStyle(.menu)
-                    .background(.white)
-                    .cornerRadius(15)
+                    .modifier(PickerModifier())
+
                     // 피커를 선택하면 selection[index] 값이 바뀌고 
                     .onChange(of: tempVM.selectedPicker[index], perform: { value in
-                        
                         let newValue = value.split(separator: "_").map { String($0) }
+                        
                         if !newValue.isEmpty {
                             tempVM.selectedOptions[key] = (tempVM.options[key]!.filter { $0.1 == Int(newValue[1]) }.first!.0, Int(newValue[1])!)
                             
-                            print("\(tempVM.selectedOptions)")
                             tempVM.calcTotalPrice()
-                            
                         }
                     })
                 }
@@ -103,25 +86,6 @@ struct ProductDetailModalView: View {
             .padding()
             
             HStack {
-                //                Button {
-                //                    // FIXME: - 장바구니 ViewModel에 아이템 추가하는 로직 추가
-                //                } label: {
-                //                    HStack {
-                //                        Spacer()
-                ////                        NavigationLink {
-                ////                            ShoppingBackView()
-                ////                        } label: {
-                ////                            Text("장바구니 담기")
-                ////                                .onTapGesture{
-                ////                                    dismiss()
-                ////                                }
-                ////                                .fontWeight(.bold)
-                ////                                .tint(.white)
-                ////                        }
-                //
-                //                        Spacer()
-                //                    }.modifier(ProductButtonModifier(color: .pink))
-                //                }
                 Button {
                     // FIXME: - 장바구니 ViewModel에 아이템 추가하는 로직 추가
                     dismiss()
@@ -132,11 +96,11 @@ struct ProductDetailModalView: View {
                             .fontWeight(.bold)
                         Spacer()
                     }
-                    .modifier(ProductButtonModifier(color: .pink))
+                    .modifier(ColoredButtonModifier(cornerRadius: 10))
                 }
-                .tint(.white)
+                
                 Button {
-                    // FIXME: - 페이지 이동
+                    // FIXME: - 구매하기 뷰로 이동하는 로직 추가
                     dismiss()
                 } label: {
                     HStack {
@@ -145,15 +109,11 @@ struct ProductDetailModalView: View {
                             .fontWeight(.bold)
                         Spacer()
                     }
-                    .modifier(ProductButtonModifier(color: .pink))
+                    .modifier(ColoredButtonModifier(cornerRadius: 10))
                 }
-                .tint(.white)
             }
-        }
-        .onAppear {
-            // tempVM.fetchPostDetail()
             
-            print(tempVM.options)
+            Spacer()
         }
     }
 }
@@ -168,7 +128,6 @@ struct CustomStepper: View {
             Button(action: {
                 if self.value > 1 {
                     self.value -= self.step
-                    self.feedback()
                 }
             }, label: {
                 Image(systemName: "minus.square")
@@ -180,26 +139,16 @@ struct CustomStepper: View {
             
             Button(action: {
                 self.value += self.step
-                self.feedback()
-                
             }, label: {
                 Image(systemName: "plus.square")
                     .foregroundColor(.black)
             })
         }
     }
-    
-    func feedback() {
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-    }
 }
 
-//struct ProductDetailModalView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProductDetailModalView(options: .constant([
-//            "사이즈": ["S", "M", "L"],
-//            "컬러": ["레드", "블루", "블랙"]
-//        ]))
-//    }
-//}
+struct ProductDetailModalView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProductDetailModalView()
+    }
+}
