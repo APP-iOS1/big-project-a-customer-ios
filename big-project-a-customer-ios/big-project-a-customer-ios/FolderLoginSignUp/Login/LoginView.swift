@@ -20,6 +20,7 @@ struct LoginView: View {
 	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
+    @State private var isLoggedInFailed = false
     
     @State var navStack = NavigationPath()
     
@@ -34,10 +35,11 @@ struct LoginView: View {
         Task {
             await signUpViewModel.requestUserLogin(withEmail: email, withPassword: password)
             if signUpViewModel.currentUser?.userEmail != nil {
+                isLoggedInFailed = false
                 dismiss()
                 print("로그인 성공 - 이메일: \(signUpViewModel.currentUser?.userEmail ?? "???")")
             } else {
-                
+                isLoggedInFailed = true
                 print("로그인 실패")
             }
         }
@@ -156,6 +158,20 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
+            .popup(isPresented: $isLoggedInFailed, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
+                HStack {
+                    Image(systemName: "exclamationmark.circle")
+                        .foregroundColor(.white)
+                    
+                    Text("이메일 및 비밀번호를 다시 확인해주세요.")
+                        .foregroundColor(.white)
+                        .font(.footnote)
+                        .bold()
+                }
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                .background(Color.red)
+                .cornerRadius(100)
+            }) // Toast
         } // NavigationStack - 임시
     } // Body
 }
