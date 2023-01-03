@@ -154,22 +154,22 @@ struct ShoppingBackView: View {
                             .font(.title2.bold())
                             
                             HStack {
-                                    NavigationLink(destination: {
-                                        OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                                    }, label: {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                                            Text("구매하기 (\(totalCount))")
-                                                .fontWeight(.bold)
-                                                .foregroundColor(.white)
-                                            
-                                        }
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
                                         
                                     }
-                                                   
-                                    )
-
+                                    
+                                }
+                                               
+                                )
+                                
                                 
                                 
                             }
@@ -193,7 +193,7 @@ struct ShoppingBackView: View {
                                 .foregroundColor(.white)
                         }
                         
-
+                        
                         HStack {
                             
                             // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
@@ -229,7 +229,7 @@ struct ShoppingBackView: View {
                             } // if - else
                             
                         } // HStack
-
+                        
                     }
                     .padding()
                     .background {
@@ -237,14 +237,14 @@ struct ShoppingBackView: View {
                     }
                     
                 }
-
-                .navigationBarTitle("장바구니")
-                .navigationBarTitleDisplayMode(.automatic)
+                
             }
             .fullScreenCover(isPresented: $isShowingLoginSheet) {
                 LoginView()
-
             }
+            .navigationBarTitle("장바구니")
+            .navigationBarTitleDisplayMode(.automatic)
+            
         }
     }
     
@@ -260,9 +260,9 @@ struct ShoppingBackView: View {
         }
     }
 }
-    
-    struct ShoppingBackView_Previews: PreviewProvider {
-        static var previews: some View {
-            ShoppingBackView()
-        }
+
+struct ShoppingBackView_Previews: PreviewProvider {
+    static var previews: some View {
+        ShoppingBackView()
     }
+}
