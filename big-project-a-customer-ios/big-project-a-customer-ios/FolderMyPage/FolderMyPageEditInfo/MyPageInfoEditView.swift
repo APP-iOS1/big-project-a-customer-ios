@@ -10,12 +10,10 @@ import SwiftUI
 // 비밀번호 체크 후 나오는 정보를 수정할 수 있는 뷰
 
 struct MyPageInfoEditView: View {
-    @StateObject var vm = MyPageViewModel()
+    @State var vm: MyPageViewModel
     
     @State var newPassword = ""
     @State var checkPassword = ""
-    
-    @State var newAddress = ""
     
     @State var showingAlert = false
     
@@ -23,9 +21,12 @@ struct MyPageInfoEditView: View {
         VStack{
             
             //MARK: - 비밀번호를 변경하는 부분
-
-            Text("비밀 번호 수정")
-                .font(.title)
+            
+            Text("비밀번호 수정")
+                .font(.title3)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 30)
             // 수정할 비밀번호를 입력하는 텍스트필드
             SecureField("Input new password.", text: $newPassword)
                 .modifier(InputModifier())
@@ -54,35 +55,75 @@ struct MyPageInfoEditView: View {
                 Text("비밀번호 변경")
                     .modifier(ConfirmModifier())
             }
-            .padding(.bottom,20)
             // alert: 입력한 두 비밀번호가 일치하지 않을 때 알림
             // ok버튼을 누르면 텍스트필드 초기화
             .modifier(PasswordAlertModifier(showingAlert: $showingAlert, password: $newPassword, password_2: $checkPassword))
-
+            
+            Divider()
+                .padding(.vertical, 10)
+            
             //MARK: - 주소를 변경하는 부분
-            Text("주소 변경하기")
-                .font(.title)
-
-            TextField("New Address", text: $newAddress)
-                .modifier(InputModifier())
-
+            Text("기본정보 수정")
+                .font(.title3)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 30)
+            
+            
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 20) {
+                    Text("고객명")
+                        .foregroundColor(.secondary)
+                    TextField("New Name", text: $vm.users.name)
+                        .modifier(InputModifier(padding: 0))
+                }
+                
+                HStack(spacing: 20) {
+                    Text("이메일")
+                        .foregroundColor(.secondary)
+                    TextField("New Email", text: $vm.users.userEmail)
+                        .modifier(InputModifier(padding: 0))
+                }
+                
+                HStack(spacing: 20) {
+                    Text("연락처")
+                        .foregroundColor(.secondary)
+                    TextField("New PhoneNumber", text: $vm.users.phoneNumber)
+                        .modifier(InputModifier(padding: 0))
+                    
+                }
+                HStack(spacing: 34.5) {
+                    Text("주소")
+                        .foregroundColor(.secondary)
+                    TextField("New Address", text: $vm.users.userAddress)
+                        .modifier(InputModifier(padding: 0))
+                }
+            }
+            .padding(.horizontal, 30)
+            .padding(.top, 5)
+            
             // 주소 변경 버튼
             Button {
                 // 입력한 텍스트가 띄어쓰기나, 엔터 버튼이 눌렸을 때 버튼이 작동되지 않는 조건
-                if newAddress.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
-                    // 새로 입력한 주소를 저장
-                    vm.users.userAddress = newAddress
-                }
+//                if newAddress.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
+//                    // 새로 입력한 주소를 저장
+//                    vm.users.userAddress = newAddress
+//                }
             } label: {
-                Text("주소 변경")
+                Text("수정하기")
                     .modifier(ConfirmModifier())
             }
+            Spacer()
         }
+        .padding(.top, 10)
+        .navigationBarTitle("회원정보 수정")
     }
 }
 
 struct MyPageInfoEditView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPageInfoEditView()
+        NavigationStack {
+            MyPageInfoEditView(vm: MyPageViewModel())
+        }
     }
 }

@@ -45,7 +45,7 @@ struct MyPageInfoDetailView: View {
                 Spacer()
                 
                 NavigationLink {
-                    MyPageInfoEditCheckingView()
+                    MyPageInfoEditCheckingView(vm: vm)
                 } label: {
                     Text("회원정보 수정")
                 }

@@ -46,20 +46,30 @@ struct ProfileModifier : ViewModifier {
 struct ConfirmModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title3)
-            .frame(width:330, height: 100)
-            .background(.white)
-            .foregroundColor(.accentColor)
-            .shadow(radius: 3)
+            .foregroundColor(.white)
+            .padding(.vertical, 5)
+            .frame(maxWidth: .infinity, maxHeight: 50, alignment: .center)
+            .background {
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.accentColor)
+            }
+            .padding(.horizontal, 20)
     }
 }
 
 struct InputModifier : ViewModifier {
+    var padding: CGFloat = 10
+    
     func body(content: Content) -> some View {
         content
-            .frame(width: 300,height: 40)
-            .padding()
-            .border(.black)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(.gray)
+            )
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.horizontal, padding)
     }
 }
 
@@ -90,7 +100,7 @@ struct TmpButtonModifier: ViewModifier {
             .cornerRadius(20)
             .overlay{
                 RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color("marble"), lineWidth: 2)
+                    .stroke(Color("SubColor"), lineWidth: 2)
             }
     }
 }
