@@ -11,7 +11,6 @@ import FirebaseAuth
 
 struct MyPageInfoView: View {
     
-    @StateObject var vm = MyPageViewModel()
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     //    var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
@@ -78,13 +77,17 @@ struct MyPageInfoView: View {
                             .navigationDestination(for: String.self) { action in
                                 switch action {
                                 case "좋아요":
-                                    Text("좋아요")
+                                    LikedProductsView()
+                                case "구매내역":
+                                    PurchaseHistoryView()
                                 case "작성한 리뷰":
-                                    Text("작성한 리뷰")
-                                case "작성한 문의 글":
-                                    Text("작성한 문의 글")
+                                    MyReview()
+                                case "고객센터":
+                                    MyPageCustomerServiceView()
                                 case "최근 본 상품":
-                                    Text("최근 본 상품")
+                                    MyRecentView()
+                                case "취소, 반품, 교환목록":
+                                    EmptyView()
                                 default :
                                     Text("default")
                                 }
@@ -132,7 +135,6 @@ struct MyPageCell: View {
 struct MyPageInfoView_Previews: PreviewProvider {
     static var previews: some View {
         MyPageInfoView()
-            .environmentObject(MyPageViewModel())
             .environmentObject(MyReviewViewModel())
             .environmentObject(SignUpViewModel())
     }

@@ -35,6 +35,8 @@ struct LoginView: View {
             await signUpViewModel.requestUserLogin(withEmail: email, withPassword: password)
             if signUpViewModel.currentUser?.userEmail != nil {
                 dismiss()
+                signupViewModel.fetchUserInfo(user: signupViewModel.currentUser!)
+
                 print("로그인 성공 - 이메일: \(signUpViewModel.currentUser?.userEmail ?? "???")")
             } else {
                 

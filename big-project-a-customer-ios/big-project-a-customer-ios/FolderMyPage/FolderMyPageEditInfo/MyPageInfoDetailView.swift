@@ -11,15 +11,16 @@ import PhotosUI
 // 마이페이지 -> 설정버튼 누르면 보이는 내 정보 뷰
 
 struct MyPageInfoDetailView: View {
-    
-    @StateObject var vm = MyPageViewModel()
+    @EnvironmentObject private var signupViewModel: SignUpViewModel
+    @Environment(\.dismiss) private var dismiss
+
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 
                 // 유저 이름
-                Text(vm.users.name)
+                Text(signupViewModel.currentUser?.userNickname ?? "유저 이름")
                     .modifier(NameModifier())
                 
                 Spacer()
@@ -27,6 +28,8 @@ struct MyPageInfoDetailView: View {
                 //데이터 연결 후 로그아웃 로직 연결될 버튼
                 Button {
                     print("로그아웃")
+                    signupViewModel.requestUserSignOut()
+                    dismiss()
                 } label: {
                     Text("로그아웃")
                 }
@@ -45,7 +48,7 @@ struct MyPageInfoDetailView: View {
                 Spacer()
                 
                 NavigationLink {
-                    MyPageInfoEditCheckingView(vm: vm)
+                    MyPageInfoEditCheckingView()
                 } label: {
                     Text("회원정보 수정")
                 }
@@ -59,25 +62,25 @@ struct MyPageInfoDetailView: View {
                 HStack(alignment: .top, spacing: 20) {
                     Text("고객명")
                         .foregroundColor(.secondary)
-                    Text("홍길동")
+                    Text(signupViewModel.currentUser?.userNickname ?? "유저 이름")
                 }
                 
                 HStack(alignment: .top, spacing: 20) {
                     Text("이메일")
                         .foregroundColor(.secondary)
-                    Text("yahoth@naver.com")
+                    Text(signupViewModel.currentUser?.userEmail ?? "이메일")
                 }
                 
                 HStack(alignment: .top, spacing: 20) {
                     Text("연락처")
                         .foregroundColor(.secondary)
-                    Text("010-1234-1234")
+                    Text(signupViewModel.currentUser?.phoneNumber ?? "전화번호를 입력해주세요")
                     
                 }
                 HStack(alignment: .top, spacing: 34.5) {
                     Text("주소")
                         .foregroundColor(.secondary)
-                    Text("서울특별시 A대로 100번지")
+                    Text(signupViewModel.currentUser?.userAddress ?? "주소를 등록해주세요")
                 }
                 
             }
@@ -100,6 +103,8 @@ struct MyPageInfoDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             MyPageInfoDetailView()
+                .environmentObject(SignUpViewModel())
+
         }
     }
 }

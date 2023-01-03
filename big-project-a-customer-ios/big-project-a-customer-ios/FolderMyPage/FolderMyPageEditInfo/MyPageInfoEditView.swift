@@ -10,11 +10,12 @@ import SwiftUI
 // 비밀번호 체크 후 나오는 정보를 수정할 수 있는 뷰
 
 struct MyPageInfoEditView: View {
-    @State var vm: MyPageViewModel
-    
+    @EnvironmentObject private var signupViewModel: SignUpViewModel
     @State var newPassword = ""
     @State var checkPassword = ""
-    
+    @State var newAddress = ""
+    @State var newPhoneNumber = ""
+
     @State var showingAlert = false
     
     var body: some View{
@@ -39,17 +40,21 @@ struct MyPageInfoEditView: View {
                 
                 /// 비밀번호가 공백이거나, 엔터가 눌린 상태에서 변경 버튼이 눌리지 않게끔하는 조건을 걸고
                 /// 그 안에 두 번 입력한 비밀번호가 같을 경우 비밀번호 변경을 시행 가능하게 함
-                if newPassword.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
-                    // 비밀번호가 같을 때 비밀번호 변경할 수 있는 조건
-                    if newPassword == checkPassword {
-                        // 새로 입력한 비밀번호를 저장
-                        vm.users.userPassward = newPassword
-                    } else {
-                        // 입력한 두 비밀번호가 다를 때 alert를 띄워서
-                        // 일치하지 않다는 것을 알림
-                        showingAlert = true
-                    }
+//                if newPassword.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
+//                    // 비밀번호가 같을 때 비밀번호 변경할 수 있는 조건
+//                    if newPassword == checkPassword {
+//                        // 새로 입력한 비밀번호를 저장
+//                        vm.users.userPassward = newPassword
+//                    } else {
+//                        // 입력한 두 비밀번호가 다를 때 alert를 띄워서
+//                        // 일치하지 않다는 것을 알림
+//                        showingAlert = true
+//                    }
+//                }
+                if newPassword == checkPassword {
+                    signupViewModel.updatePassword(password: newPassword)
                 }
+                
                 
             } label: {
                 Text("비밀번호 변경")
@@ -74,30 +79,34 @@ struct MyPageInfoEditView: View {
                 HStack(spacing: 20) {
                     Text("고객명")
                         .foregroundColor(.secondary)
-                    TextField("New Name", text: $vm.users.name)
-                        .modifier(InputModifier(padding: 0))
+                    Text(signupViewModel.currentUser?.userNickname ?? "유저 이름")
                 }
                 
                 HStack(spacing: 20) {
                     Text("이메일")
                         .foregroundColor(.secondary)
-                    TextField("New Email", text: $vm.users.userEmail)
-                        .modifier(InputModifier(padding: 0))
+                    Text(signupViewModel.currentUser?.userEmail ?? "유저 이메일")
                 }
                 
                 HStack(spacing: 20) {
                     Text("연락처")
                         .foregroundColor(.secondary)
-                    TextField("New PhoneNumber", text: $vm.users.phoneNumber)
+                    TextField("전화번호를 등록해주세요", text: $newPhoneNumber)
                         .modifier(InputModifier(padding: 0))
+                        .keyboardType(.numberPad)
+
                     
                 }
                 HStack(spacing: 34.5) {
                     Text("주소")
                         .foregroundColor(.secondary)
-                    TextField("New Address", text: $vm.users.userAddress)
+                    TextField("주소를 등록해주세요", text: $newAddress) 
                         .modifier(InputModifier(padding: 0))
                 }
+            }
+            .onAppear {
+                newPhoneNumber = signupViewModel.currentUser?.phoneNumber ?? ""
+                newAddress = signupViewModel.currentUser?.userAddress ?? ""
             }
             .padding(.horizontal, 30)
             .padding(.top, 5)
@@ -109,6 +118,8 @@ struct MyPageInfoEditView: View {
 //                    // 새로 입력한 주소를 저장
 //                    vm.users.userAddress = newAddress
 //                }
+                signupViewModel.updateUserInfo(userAddress: newAddress, phoneNumber: newPhoneNumber, user: signupViewModel.currentUser!)
+                
             } label: {
                 Text("수정하기")
                     .modifier(ConfirmModifier())
@@ -123,7 +134,9 @@ struct MyPageInfoEditView: View {
 struct MyPageInfoEditView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            MyPageInfoEditView(vm: MyPageViewModel())
+            MyPageInfoEditView()
+                .environmentObject(SignUpViewModel())
+
         }
     }
 }
