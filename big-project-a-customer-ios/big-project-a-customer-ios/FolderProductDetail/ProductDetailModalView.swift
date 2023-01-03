@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ProductDetailModalView: View {
-    //    @ObservedObject var tempVM: TempViewModel = TempViewModel()
+    @ObservedObject var tempVM: TempViewModel = TempViewModel()
+    
     @Environment(\.dismiss) private var dismiss
     
     @Binding var options: [String: [String]] // 서버에서 가져온 옵션들
@@ -26,7 +27,7 @@ struct ProductDetailModalView: View {
     @State var optionPrice: Int = 0
     
     var optionsArray: [String] {
-        Array(options.keys).sorted()
+        Array(tempVM.options.keys).sorted()
     }
     
     var body: some View {
@@ -41,22 +42,21 @@ struct ProductDetailModalView: View {
                     Spacer()
                     
                     // FIXME: - Picker Error
-                    Picker(key, selection: $selection[index]) {
+                    Picker(key, selection: $tempVM.selectedPicker[index]) {
                         Text("선택없음").tag(Optional<String>(nil))
-                        ForEach(options[key]!, id: \.self) { item in
-                            let value = item.split(separator: "_").map { String($0) }
-                            Text("\(value[0]) +\(value[1])원").tag(Optional(item))
+                        
+                        ForEach(tempVM.options[key]!, id: \.0) { (option, price) in
+                            Text("\(option) +\(price)원").tag(Optional(option))
                         }
                     }
                     .pickerStyle(.menu)
                     .background(.white)
                     .cornerRadius(15)
-                    .onChange(of: selection[index], perform: { value in
+                    // 피커를 선택하면 selection[index] 값이 바뀌고
+                    //
+                    .onChange(of: tempVM.selectedPicker[index], perform: { value in // value가 String이네요?
                         if !value.isEmpty {
-                            let newValue = value.split(separator: "_").map { String($0) }
-                            
-                            selectedOptions[key] = (newValue[0], Int(newValue[1])!)
-                            optionPrice += Int(newValue[1])!
+                            print(value)
                         }
                     })
                 }
@@ -144,6 +144,11 @@ struct ProductDetailModalView: View {
                 }
                 .tint(.white)
             }
+        }
+        .onAppear {
+            // tempVM.fetchPostDetail()
+            
+            print(tempVM.options)
         }
     }
 }

@@ -9,9 +9,11 @@ import Foundation
 
 class TempViewModel: ObservableObject {
     @Published var options: [String: [(String, Int)]] = [:]
+    @Published var selectedPicker: [String] = []
+    @Published var selectedOptions: [String: (String, Int)] = [:]
     
     init() {
-//        self.fetchPostDetail()
+        self.fetchPostDetail()
     }
     
     func fetchPostDetail() {
@@ -19,7 +21,6 @@ class TempViewModel: ObservableObject {
             "색상" : ["빨강_1000", "파랑_2000", "초록_0"],
             "사이즈" : ["S_0", "M_0", "L_0"]
         ]
-        // parsing
         
         for key in optionsGetOnServer.keys {
             // FIXME: - default 구문 적용안됨
@@ -34,6 +35,8 @@ class TempViewModel: ObservableObject {
                 options[key]!.append((newValue[0], Int(newValue[1])!))
             }
         }
-        print(options)
+        
+        // 사용자가 선택한 옵션을 저장하기 위한 프로퍼티를 초기화
+        selectedPicker = [String](repeating: "", count: options.count)
     }
 }
