@@ -90,7 +90,7 @@ struct ShoppingBackView: View {
                             checkBoxAll()
                         } label: {
                             Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                                .foregroundColor(isCheckedAll ? Color("AccentColor") : .gray)
+                                .modifier(CheckBoxModifier(isCheckedAll: isCheckedAll))
                         }
                         
                         Text("모두선택")
@@ -231,11 +231,7 @@ struct ShoppingBackView: View {
                         } // HStack
                         
                     }
-                    .padding()
-                    .background {
-                        Color.gray.brightness(0.4)
-                    }
-                    
+                    .modifier(PurchaseSectionModifier())
                 }
                 
             }

@@ -20,7 +20,7 @@ struct ShoppingBackDetailView: View {
                     item.isChecked.toggle()
                 } label: {
                     Image(systemName: item.isChecked ? "checkmark.square.fill" : "square")
-                        .foregroundColor(item.isChecked ? Color("AccentColor") : .gray)
+                        .modifier(CheckBoxModifier(isCheckedAll: item.isChecked))
                 }
                 
                 Image(item.image)
@@ -43,8 +43,8 @@ struct ShoppingBackDetailView: View {
                             vm.deleteItem(item)
                         } label: {
                             Image(systemName: "x.circle.fill")
-                                .font(.title3)
-                                .foregroundColor(.secondary)
+                                .modifier(XButtonModifier())
+                            
                         }
                     }
                     
@@ -55,8 +55,7 @@ struct ShoppingBackDetailView: View {
                                     .font(.subheadline)
                                 if value.1 > 0 {
                                     Text("(+\(value.1)원)")
-                                        .font(.caption2)
-                                        .foregroundColor(.secondary)
+                                        .modifier(OptionTextModifier())
                                 }
                                 
                                 Spacer()
@@ -77,11 +76,7 @@ struct ShoppingBackDetailView: View {
                                     Text("\(num)개")
                                 }
                             }
-                            .colorMultiply(.black)
-                            .background {
-                                Color.gray.brightness(0.35)
-                            }
-                            .cornerRadius(10)
+                            .modifier(PickerModifier())
                         }
                         
                     }

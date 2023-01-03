@@ -202,7 +202,7 @@ struct PaymentView: View {
             NavigationLink(destination: {
                 PaymentCompleteView(purchaseInfo: $purchaseInfo, isCashCheck: isCashCheck)
             }){
-                
+                //FIXME: - 무통장 입금 결제하기 버튼 modifier 적용 필요
                 /// NavigationLink이 보여지는 문구를 "결제하기"로 설정
                 /// 여기서 현재 PurchaseInfo를 파이어스토어에 전달.
                 RoundedRectangle(cornerRadius: 10)
