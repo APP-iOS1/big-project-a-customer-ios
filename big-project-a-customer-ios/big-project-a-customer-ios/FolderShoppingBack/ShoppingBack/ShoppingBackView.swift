@@ -90,7 +90,7 @@ struct ShoppingBackView: View {
                             checkBoxAll()
                         } label: {
                             Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                                .foregroundColor(isCheckedAll ? Color("AccentColor") : .gray)
+                                .modifier(CheckBoxModifier(isCheckedAll: isCheckedAll))
                         }
                         
                         Text("모두선택")
@@ -154,22 +154,22 @@ struct ShoppingBackView: View {
                             .font(.title2.bold())
                             
                             HStack {
-                                    NavigationLink(destination: {
-                                        OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                                    }, label: {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                                            Text("구매하기 (\(totalCount))")
-                                                .fontWeight(.bold)
-                                                .foregroundColor(.white)
-                                            
-                                        }
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
                                         
                                     }
-                                                   
-                                    )
-
+                                    
+                                }
+                                               
+                                )
+                                
                                 
                                 
                             }
@@ -193,15 +193,54 @@ struct ShoppingBackView: View {
                                 .foregroundColor(.white)
                         }
                         
+                        
+                        HStack {
+                            
+                            // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
+                            if signUpViewModel.currentUser?.userEmail != nil {
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                        
+                                    }
+                                })
+                                .disabled(totalCount == 0 ? true : false)
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    totalPriceForBinding = totalPrice
+                                })
+                            } else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
+                                Button {
+                                    isShowingLoginSheet.toggle()
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                            } // if - else
+                            
+                        } // HStack
+                        
                     }
+                    .modifier(PurchaseSectionModifier())
                 }
                 
-               
-                
-                
+            }
+            .fullScreenCover(isPresented: $isShowingLoginSheet) {
+                LoginView()
             }
             .navigationBarTitle("장바구니")
             .navigationBarTitleDisplayMode(.automatic)
+            
         }
     }
     

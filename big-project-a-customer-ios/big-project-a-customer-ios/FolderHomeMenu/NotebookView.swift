@@ -29,7 +29,7 @@ var NotebookItems = [
 struct NotebookView: View {
     @State var searchNotebookItem = NotebookItems
     @State private var searchText = ""
-    
+    var items: Item
     let columns = [
            GridItem(.fixed(170)),
            GridItem(.fixed(170))
@@ -57,7 +57,7 @@ struct NotebookView: View {
                     }
                 }//.onChange
             }//ScrollView
-            .navigationTitle("노트북")
+            .navigationTitle("\(items.categoryTitles)")
         }//NavigationStack
       
         .background(.white)

@@ -14,12 +14,12 @@ struct LoginView: View {
     // MARK: - Property Wrappers
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
-//	@Binding var isLoginSheet: Bool
     @State var email = ""
     @State var password = ""
 	@State private var loginFailed = false
     @FocusState var isInFocusEmail: Bool
     @FocusState var isInFocusPassword: Bool
+    @State private var isLoggedInFailed = false
     
     @State var navStack = NavigationPath()
     
@@ -34,12 +34,13 @@ struct LoginView: View {
         Task {
             await signUpViewModel.requestUserLogin(withEmail: email, withPassword: password)
             if signUpViewModel.currentUser?.userEmail != nil {
+                isLoggedInFailed = false
                 dismiss()
                 signupViewModel.fetchUserInfo(user: signupViewModel.currentUser!)
 
                 print("로그인 성공 - 이메일: \(signUpViewModel.currentUser?.userEmail ?? "???")")
             } else {
-                
+                isLoggedInFailed = true
                 print("로그인 실패")
             }
         }
@@ -83,20 +84,20 @@ struct LoginView: View {
                     VStack(spacing: 5) {
                         TextField("이메일", text: $email)
                             .focused($isInFocusEmail)
-                            .modifier(LoginTextFieldModifier())
+                            .modifier(ClearTextFieldModifier())
                             .font(.subheadline)
                         Rectangle()
-                            .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusEmail))
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusEmail))
                     }
                     .padding(.bottom, 35)
                     
                     VStack(spacing: 5) {
                         SecureField("비밀번호", text: $password)
                             .focused($isInFocusPassword)
-                            .modifier(LoginTextFieldModifier())
+                            .modifier(ClearTextFieldModifier())
                             .font(.subheadline)
                         Rectangle()
-                            .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusPassword))
+                            .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusPassword))
                     }
                 } // VStack - 이메일, 비밀번호 TextField
                 
@@ -113,6 +114,7 @@ struct LoginView: View {
                         // Going to SignupView
                         SignUpView(navStack: $navStack)
                     }
+                    .navigationBarBackButtonHidden(true)
                 } // HStack - 회원가입
                 .padding(.top, 30)
                 
@@ -124,7 +126,6 @@ struct LoginView: View {
                 Divider() // 로그인 버튼 구분선
                 
                 Button {
-
                     // Login action with firebase...
                     logInWithEmailPassword()
 
@@ -134,8 +135,8 @@ struct LoginView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .black))
                             .frame(height: 40)
                     } else { // 로그인 전이나 후에는 버튼을 띄운다.
-                        RoundedRectangle(cornerRadius: 15)
-                            .modifier(LoginButtonModifier(label: "로그인하기"))
+                        Text("로그인하기")
+                            .modifier(MaxWidthColoredButtonModifier(cornerRadius: 15))
                     }
                 }
             } // VStack - body 바로 아래
@@ -158,6 +159,20 @@ struct LoginView: View {
                     } // label
                 } // toolbarItem
             } // toolbar
+            .popup(isPresented: $isLoggedInFailed, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
+                HStack {
+                    Image(systemName: "exclamationmark.circle")
+                        .foregroundColor(.white)
+                    
+                    Text("이메일 및 비밀번호를 다시 확인해주세요.")
+                        .foregroundColor(.white)
+                        .font(.footnote)
+                        .bold()
+                }
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                .background(Color.red)
+                .cornerRadius(100)
+            }) // Toast
         } // NavigationStack - 임시
     } // Body
 }
@@ -165,47 +180,7 @@ struct LoginView: View {
 // MARK: - LoginView Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-		LoginView()
-    }
-}
-
-
-// MARK: - Modifier : LoginView TextField 속성
-struct LoginTextFieldModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .disableAutocorrection(true)
-            .textInputAutocapitalization(.never)
-            .font(.subheadline)
-            .padding(.horizontal, 20)
-    }
-}
-
-// MARK: - Modifier : LoginView TextField 아래 Rectangle 속성
-struct LoginTextFieldRectangleModifier: ViewModifier {
-    let stateTyping: Bool
-    func body(content: Content) -> some View {
-        content
-            .frame(height: 1)
-            .foregroundColor(stateTyping ? .accentColor : .gray)
-            .padding(.horizontal, 20)
-    }
-}
-
-// MARK: - Modifier : LoginView Login Button 속성
-struct LoginButtonModifier: ViewModifier {
-    let label: String
-    func body(content: Content) -> some View {
-        content
-            .foregroundColor(.accentColor)
-            .frame(height: 50)
-            .overlay {
-                Text(label)
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-                    .bold()
-            }
-            .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
+        LoginView().environmentObject(SignUpViewModel())
     }
 }
 

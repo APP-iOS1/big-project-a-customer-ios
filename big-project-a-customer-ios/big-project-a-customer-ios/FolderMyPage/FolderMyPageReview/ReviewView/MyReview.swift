@@ -56,11 +56,12 @@ class MyReviewViewModel: ObservableObject {
 
 struct MyReview: View {
     @EnvironmentObject var myReviewViewModel : MyReviewViewModel
-
+    
     @State var isShowingDuration : Bool = false
     
+    var tests = [1,2,3]
+    
     var body: some View {
-        
         VStack{
             HStack{
                 Text("전체")
@@ -77,34 +78,44 @@ struct MyReview: View {
             .padding()
             
             ZStack{
-                
                 DurationSettingView(isShowingDuration : $isShowingDuration)
                     .opacity(isShowingDuration ? 1 : 0)
                     .zIndex(1)
                 
-                ScrollView(showsIndicators: false, content: {
-                    ForEach(myReviewViewModel.mRItems) { mRItem in
-                        CardView(card: mRItem)
-                        
-                        Divider()
+                NavigationView {
+                    List {
+                        ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
+                            CardView(item: mRItem)
+//                            Text("\(mRItem.itemName)")
+                        }
                     }
                     
                     
-                    // 스크롤 아래 빈공간 네모
-                    Rectangle()
-                        .frame(height: 300)
-                        .foregroundColor(.clear)
+                    //                NavigationView {
+                    //
+                    //                    ScrollView(showsIndicators: false, content: {
+                    //                        ForEach(myReviewViewModel.mRItems) { mRItem in
+                    //                            CardView(item: mRItem)
+                    //
+                    //                            Divider()
+                    //                        }
+                    //
+                    //
+                    //
+                    //                    })
+                    //                }
                     
-                })
-                .navigationTitle("작성한 리뷰")
-
+                    
+                    
+                }
                 
             }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .navigationBarTitleDisplayMode(.inline)
+            
         }
-        .ignoresSafeArea(.all, edges: .bottom)
     }
 }
-
 
 struct MyReview_Previews: PreviewProvider {
     static var previews: some View {
