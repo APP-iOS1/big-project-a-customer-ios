@@ -22,21 +22,7 @@ struct CreateReviewView: View {
     @State private var selectedImages  = [UIImage]()
     var body: some View {
         VStack(alignment: .leading){
-            HStack{
-                
-                // MARK: 상품 품질 평가 제목이 들어간 Label
-                Label {
-                    Text("상품 품질 평가")
-                    
-                } icon: {
-                    Image(systemName: "doc.append")
-                }
-                .font(.title2)
-                .fontWeight(.regular)
-                //Label
-                Spacer()
-            }.padding(.leading)
-            
+
             // MARK: 상품의 정보가 들어간 HStack
             HStack{
                 
@@ -51,7 +37,8 @@ struct CreateReviewView: View {
                     .fontWeight(.regular)
                     .multilineTextAlignment(.leading)
                 
-            }.padding()
+            }
+            .padding(.bottom, -15)
             
             // MARK: 별점 뷰 구현부
             VStack{
@@ -59,7 +46,7 @@ struct CreateReviewView: View {
                     Text("이 상품의 품질에 대해 얼마나 만족하시나요?")
                     Spacer()
                 }
-                .padding(.leading)
+                //.padding(.leading)
                 HStack(spacing: 10){
                     ForEach(0..<5){ i in
                         Image(systemName: "star.fill")
@@ -73,21 +60,28 @@ struct CreateReviewView: View {
                     }
                     Spacer()
                 }
-                .padding([.leading, .bottom])
+                //.padding([.leading, .bottom])
             }
+            .padding(20)
             
+            Divider()
             // MARK: 리뷰 작성 구현부
             HStack{
                 Text("이 상품을 상세히 평가해주세요")
                 
-            }.padding(.leading)
+            }
             .padding(.bottom, -10)
-            TextField("  리뷰를 작성해주세요.", text: $reviewText, axis: .vertical)
+            .padding(20)
+
+            TextField("리뷰를 작성해주세요.", text: $reviewText, axis: .vertical)
                         .lineLimit(4...)
                         .textFieldStyle(.roundedBorder)
-                        .padding()
+                        //.padding()
                         .opacity(selected >= 0 ? 1 : 0)
                         .animation(.easeInOut, value: selected)
+                        .padding(20)
+                        .padding(.top, -25)
+
             
             // MARK: imagePicker 구현부
 //            ScrollView(.horizontal, showsIndicators: false) {
@@ -105,17 +99,32 @@ struct CreateReviewView: View {
 //            .opacity(selected >= 0 ? 1 : 0)
 //            .animation(.easeInOut, value: selected)
             /// imagePicker
-            
+            Spacer()
             /// 리뷰 등록 버튼
-            Button {
-                print("button pressed")
-            } label: {
-                Text("리뷰 등록하기")
-            }
-            .frame(width: UIScreen.main.bounds.width)
+            ///
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: UIScreen.main.bounds.width - 40)
+                .modifier(LoginButtonModifier(label: "리뷰 등록하기"))
 
+//                Button {
+//                    print("button pressed")
+//                } label: {
+//                    Text("리뷰 등록하기")
+//                        .modifier(LoginButtonModifier(label: "리뷰 등록하기"))
+//
+//                }
+//                //.frame(width: UIScreen.main.bounds.width)
+//                .frame(width: 310)
+//                //.modifier(ColoredButtonModifier(cornerRadius: 5))
+//                .padding(.bottom, 20)
+
+            //Spacer()
             
         }
+        .navigationTitle("상품 품질 평가")
+        .navigationBarTitleDisplayMode(.large)
+        .padding(10)
+        
     }
     
     // MARK: -imagePickerView의 버튼 모양
