@@ -56,7 +56,7 @@ class MyReviewViewModel: ObservableObject {
 
 struct MyReview: View {
     @EnvironmentObject var myReviewViewModel : MyReviewViewModel
-
+    
     @State var isShowingDuration : Bool = false
     
     var tests = [1,2,3]
@@ -76,16 +76,7 @@ struct MyReview: View {
                 }
             }
             .padding()
-            Text("\(myReviewViewModel.mRItems[0].itemName)")
-            Text("\(myReviewViewModel.mRItems[1].itemName)")
-            Text("\(myReviewViewModel.mRItems[2].itemName)")
-            ForEach(myReviewViewModel.mRItems) { mRItem in
-                Text("\(mRItem.itemName)")
-            }
-            ForEach(tests, id: \.self) { test in
-                Text("\(test)")
-            }
-
+            
             ZStack{
                 DurationSettingView(isShowingDuration : $isShowingDuration)
                     .opacity(isShowingDuration ? 1 : 0)
@@ -93,39 +84,38 @@ struct MyReview: View {
                 
                 NavigationView {
                     List {
-                        ForEach(myReviewViewModel.mRItems) { mRItem in
-                            //CardView(item: mRItem)
-                            Text("\(mRItem.itemName)")
+                        ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
+                            CardView(item: mRItem)
+//                            Text("\(mRItem.itemName)")
                         }
                     }
+                    
+                    
+                    //                NavigationView {
+                    //
+                    //                    ScrollView(showsIndicators: false, content: {
+                    //                        ForEach(myReviewViewModel.mRItems) { mRItem in
+                    //                            CardView(item: mRItem)
+                    //
+                    //                            Divider()
+                    //                        }
+                    //
+                    //
+                    //
+                    //                    })
+                    //                }
+                    
+                    
+                    
                 }
                 
-                
-//                NavigationView {
-//
-//                    ScrollView(showsIndicators: false, content: {
-//                        ForEach(myReviewViewModel.mRItems) { mRItem in
-//                            CardView(item: mRItem)
-//
-//                            Divider()
-//                        }
-//
-//
-//
-//                    })
-//                }
-                
-                
-                
             }
-
+            .ignoresSafeArea(.all, edges: .bottom)
+            .navigationBarTitleDisplayMode(.inline)
+            
         }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .navigationBarTitleDisplayMode(.inline)
-        
     }
 }
-
 
 struct MyReview_Previews: PreviewProvider {
     static var previews: some View {
