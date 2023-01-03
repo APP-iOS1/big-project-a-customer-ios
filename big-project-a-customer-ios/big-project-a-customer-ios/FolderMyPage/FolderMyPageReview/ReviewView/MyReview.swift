@@ -81,23 +81,16 @@ struct MyReview: View {
                 DurationSettingView(isShowingDuration : $isShowingDuration)
                     .opacity(isShowingDuration ? 1 : 0)
                     .zIndex(1)
-                
-                ScrollView(showsIndicators: false, content: {
-                    ForEach(myReviewViewModel.mRItems) { mRItem in
-                        CardView(card: mRItem)
-                        
-                        Divider()
-                    }
-                    
-                    
-                    // 스크롤 아래 빈공간 네모
-                    Rectangle()
-                        .frame(height: 300)
-                        .foregroundColor(.clear)
-                    
-                })
-                .navigationTitle("작성한 리뷰")
 
+                
+                NavigationView {
+                    List {
+                        ForEach(myReviewViewModel.mRItems) { mRItem in
+                            CardView(item: mRItem)
+                        }
+                    }
+
+                }
                 
             }
         }

@@ -51,50 +51,54 @@ struct PurchaseHistoryView: View {
     @EnvironmentObject var signUpViewModel: SignUpViewModel
     
     var body: some View {
-        VStack {
-            HStack {
-                Image(systemName: "magnifyingglass")
-                TextField(text: $searchItem) {
-                    Text("주문한 상품을 검색할 수 있어요!")
-                }
-            }
-            .padding(.horizontal, 10)
-            .modifier(PurchaseHistoryButtonModifier())
-            .padding(.horizontal, 10)
+        NavigationStack {
             
-            ScrollView {
-                ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
-                    VStack {
-                        HStack {
-                            Text(order.orderDate)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .bold()
-                            Button {
-                                // 주문 상세보기
-                            } label: {
-                                Text("주문 상세보기")
-                                Image(systemName: "chevron.right")
+            VStack {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField(text: $searchItem) {
+                        Text("주문한 상품을 검색할 수 있어요!")
+                    }
+                }
+                .padding(.horizontal, 10)
+                .modifier(PurchaseHistoryButtonModifier())
+                .padding(.horizontal, 10)
+                
+                ScrollView {
+                    ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
+                        VStack {
+                            HStack {
+                                Text(order.orderDate)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .bold()
+                                Button {
+                                    // 주문 상세보기
+                                } label: {
+                                    Text("주문 상세보기")
+                                    Image(systemName: "chevron.right")
+                                }
+                                
                             }
                             
+                            PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
                         }
-                        
-                        PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
+                        .padding(10)
                     }
-                    .padding(10)
+                }
+                
+            } // VStack
+            .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
+                if signUpViewModel.currentUser?.userEmail == nil {
+                    isShowingLoginSheet = true
                 }
             }
-
-        } // VStack
-        .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
-            if signUpViewModel.currentUser?.userEmail == nil {
-                isShowingLoginSheet = true
+            .sheet(isPresented: $isShowingLoginSheet) {
+                LoginView()
+                
             }
         }
-        .sheet(isPresented: $isShowingLoginSheet) {
-            LoginView()
-
-        }
     }
+    
 }
 
 // MARK: 재사용하기 위한 구매목록 cell
@@ -169,13 +173,13 @@ struct PurchaseListCell: View {
                     
                     
                 case .createReview:
-                    Button {
+                    NavigationLink {
                         // 리뷰 작성 view
+                        CreateReviewView()
                     } label: {
                         Text("리뷰작성")
                     }
-                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
-                }
+                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))                }
                 
             }
             .font(.callout)
