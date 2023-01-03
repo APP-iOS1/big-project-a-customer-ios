@@ -41,15 +41,16 @@ struct MyPageInfoEditCheckingView: View {
                         .modifier(InputModifier(padding: 5))
                 }
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 20)
             .padding(.bottom, 10)
+            
             
             // 입력한 비밀번호가 일치할 시 네비게이션 링크를 보여주고,
             // 불일치할 시 버튼을 보여주고, alert를 띄운다
             if password == String(vm.users.userPassward) {
                 NavigationLink {
                     
-                    MyPageInfoEditView(vm: vm, newName: vm.users.name, newEmail: vm.users.userEmail, newPhoneNumber: vm.users.phoneNumber, newAddress: vm.users.userAddress)
+                    MyPageInfoEditView(vm: vm)
                     
                 } label: {
                     Text("확인")
@@ -77,7 +78,6 @@ struct MyPageInfoEditCheckingView: View {
             Spacer()
             
         }
-        .padding()
         // 비밀번호 체크 후 일치하지 않을 시 나오는 alert
         .modifier(PasswordAlertModifier(showingAlert: $showingAlert, password: $password, password_2: $password))
         .navigationBarTitle("회원정보 수정")

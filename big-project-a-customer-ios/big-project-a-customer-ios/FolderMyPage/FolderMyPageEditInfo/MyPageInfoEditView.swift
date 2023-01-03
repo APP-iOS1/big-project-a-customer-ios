@@ -10,24 +10,18 @@ import SwiftUI
 // 비밀번호 체크 후 나오는 정보를 수정할 수 있는 뷰
 
 struct MyPageInfoEditView: View {
-    @StateObject var vm: MyPageViewModel
+    @State var vm: MyPageViewModel
     
     @State var newPassword = ""
     @State var checkPassword = ""
     
-    @State var newName = ""
-    @State var newEmail = ""
-    @State var newPhoneNumber = ""
-    @State var newAddress = ""
-    
     @State var showingAlert = false
-    
     
     var body: some View{
         VStack{
             
             //MARK: - 비밀번호를 변경하는 부분
-
+            
             Text("비밀번호 수정")
                 .font(.title3)
                 .bold()
@@ -36,10 +30,10 @@ struct MyPageInfoEditView: View {
             // 수정할 비밀번호를 입력하는 텍스트필드
             SecureField("Input new password.", text: $newPassword)
                 .modifier(InputModifier())
-                
             // 수정할 비밀번호를 한 번 더 확인하는 텍스트필드
             SecureField("One more time.", text: $checkPassword)
                 .modifier(InputModifier())
+            
             
             Button {
                 
@@ -60,9 +54,7 @@ struct MyPageInfoEditView: View {
             } label: {
                 Text("비밀번호 변경")
                     .modifier(ConfirmModifier())
-                
             }
-            
             // alert: 입력한 두 비밀번호가 일치하지 않을 때 알림
             // ok버튼을 누르면 텍스트필드 초기화
             .modifier(PasswordAlertModifier(showingAlert: $showingAlert, password: $newPassword, password_2: $checkPassword))
@@ -76,33 +68,34 @@ struct MyPageInfoEditView: View {
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 30)
-
+            
+            
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 20) {
                     Text("고객명")
                         .foregroundColor(.secondary)
-                    TextField("New Name", text: $newName)
+                    TextField("New Name", text: $vm.users.name)
                         .modifier(InputModifier(padding: 0))
                 }
                 
                 HStack(spacing: 20) {
                     Text("이메일")
                         .foregroundColor(.secondary)
-                    TextField("New Email", text: $newEmail)
+                    TextField("New Email", text: $vm.users.userEmail)
                         .modifier(InputModifier(padding: 0))
                 }
                 
                 HStack(spacing: 20) {
                     Text("연락처")
                         .foregroundColor(.secondary)
-                    TextField("New PhoneNumber", text: $newPhoneNumber)
+                    TextField("New PhoneNumber", text: $vm.users.phoneNumber)
                         .modifier(InputModifier(padding: 0))
                     
                 }
                 HStack(spacing: 34.5) {
                     Text("주소")
                         .foregroundColor(.secondary)
-                    TextField("New Address", text: $newAddress)
+                    TextField("New Address", text: $vm.users.userAddress)
                         .modifier(InputModifier(padding: 0))
                 }
             }
@@ -112,33 +105,14 @@ struct MyPageInfoEditView: View {
             // 주소 변경 버튼
             Button {
                 // 입력한 텍스트가 띄어쓰기나, 엔터 버튼이 눌렸을 때 버튼이 작동되지 않는 조건
-                if newAddress.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
-                    // 새로 입력한 주소를 저장
-                    vm.users.userAddress = newAddress
-                }
+//                if newAddress.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
+//                    // 새로 입력한 주소를 저장
+//                    vm.users.userAddress = newAddress
+//                }
             } label: {
                 Text("수정하기")
                     .modifier(ConfirmModifier())
             }
-//            VStack {
-//
-//                TextField("New Address", text: $newAddress)
-//                    .modifier(InputModifier())
-//
-//                // 주소 변경 버튼
-//                Button {
-//                    // 입력한 텍스트가 띄어쓰기나, 엔터 버튼이 눌렸을 때 버튼이 작동되지 않는 조건
-//                    if newAddress.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
-//                        // 새로 입력한 주소를 저장
-//                        vm.users.userAddress = newAddress
-//                    }
-//                } label: {
-//                    Text("주소 변경")
-//                        .modifier(ConfirmModifier())
-//                }
-//
-//            }
-            
             Spacer()
         }
         .padding(.top, 10)
