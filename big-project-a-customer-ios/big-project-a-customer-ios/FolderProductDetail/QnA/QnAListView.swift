@@ -15,6 +15,8 @@ struct QnA: Identifiable {
 
 struct QnAListView: View {
     @ObservedObject var questionViewModel: QuestionViewModel = QuestionViewModel()
+    @ObservedObject var customerServiceStore: CustomerServiceStore = CustomerServiceStore()
+    let tempItemId: String = "watch1"
     
     var body: some View {
         if items.isEmpty {
@@ -46,7 +48,14 @@ struct QnAListView: View {
             }
             
             .navigationTitle("상품 문의")
+            .onAppear {
+                Task {
+                    
+                    await customerServiceStore.requestCustomerServiceList(itemId: tempItemId)
+                }
+            }
         }
+            
     }
 }
 
