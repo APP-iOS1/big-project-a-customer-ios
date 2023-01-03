@@ -93,11 +93,11 @@ struct PurchaseHistoryView: View {
                 }
             }
             .fullScreenCover(isPresented: $isShowingLoginSheet) {
-            LoginView()
+                LoginView()
+            }
         }
-    } 
+    }
 }
-
 // MARK: 재사용하기 위한 구매목록 cell
 struct PurchaseListCell: View {
     @ObservedObject var orderStore: OrderInfoViewModel
