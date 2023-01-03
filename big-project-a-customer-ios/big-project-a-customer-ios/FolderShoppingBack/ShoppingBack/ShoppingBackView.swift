@@ -118,38 +118,82 @@ struct ShoppingBackView: View {
                 
                 Spacer()
                 
-                // MARK: body
-                ScrollView(showsIndicators: false) {
-                    ForEach($vm.sCItems) { item in
-                        ShoppingBackDetailView(item: item, vm: vm)
-                            .padding(.vertical)
-                        
-                        Divider()
+                // FIXME: 민주님 확인 부탁들입니다!!
+                // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
+                if signUpViewModel.currentUser?.userEmail != nil {
+                    // MARK: body
+                    ScrollView(showsIndicators: false) {
+                        ForEach($vm.sCItems) { item in
+                            ShoppingBackDetailView(item: item, vm: vm)
+                                .padding(.vertical)
+                            
+                            Divider()
+                        }
                     }
-                }
-                .padding(.horizontal, 20)
-                
-                // MARK: tail
-                Section {
-                    VStack {
-                        HStack {
-                            Text("총 상품 금액")
-                            Spacer()
-                            Text("\(totalPrice)원")
+                    .padding(.horizontal, 20)
+                    
+                    // MARK: tail
+                    Section {
+                        VStack {
+                            HStack {
+                                Text("총 상품 금액")
+                                Spacer()
+                                Text("\(totalPrice)원")
+                            }
+                            HStack {
+                                Text("총 배송비")
+                                Spacer()
+                                Text("+ \(totalPrice == 0 ? 0 : shippingCost)원")
+                            }
+                            Divider()
+                            HStack {
+                                Text("결제 금액")
+                                Spacer()
+                                Text("\(totalPrice == 0 ? 0 : totalPrice+shippingCost)원")
+                            }
+                            .font(.title2.bold())
+                            
+                            HStack {
+                                    NavigationLink(destination: {
+                                        OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                    }, label: {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                            Text("구매하기 (\(totalCount))")
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.white)
+                                            
+                                        }
+                                        
+                                    }
+                                                   
+                                    )
+
+                                
+                                
+                            }
                         }
-                        HStack {
-                            Text("총 배송비")
-                            Spacer()
-                            Text("+ \(totalPrice == 0 ? 0 : shippingCost)원")
+                    }
+                    .padding()
+                    .background {
+                        Color.gray.brightness(0.4)
+                    }
+                    .sheet(isPresented: $isShowingLoginSheet) {
+                        LoginView()
+                    }
+                }else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
+                    Button {
+                        isShowingLoginSheet.toggle()
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(maxWidth: 200, maxHeight: 50)
+                            Text("바로구매")
+                                .foregroundColor(.white)
                         }
-                        Divider()
-                        HStack {
-                            Text("결제 금액")
-                            Spacer()
-                            Text("\(totalPrice == 0 ? 0 : totalPrice+shippingCost)원")
-                        }
-                        .font(.title2.bold())
                         
+
                         HStack {
                             
                             // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
@@ -185,6 +229,7 @@ struct ShoppingBackView: View {
                             } // if - else
                             
                         } // HStack
+
                     }
                     .padding()
                     .background {
@@ -192,11 +237,13 @@ struct ShoppingBackView: View {
                     }
                     
                 }
+
                 .navigationBarTitle("장바구니")
                 .navigationBarTitleDisplayMode(.automatic)
             }
             .fullScreenCover(isPresented: $isShowingLoginSheet) {
                 LoginView()
+
             }
         }
     }

@@ -57,7 +57,7 @@ struct NotebookView: View {
                     }
                 }//.onChange
             }//ScrollView
-            .navigationTitle("Mac")
+            .navigationTitle("노트북")
         }//NavigationStack
       
         .background(.white)

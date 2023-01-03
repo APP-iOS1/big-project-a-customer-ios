@@ -46,20 +46,30 @@ struct ProfileModifier : ViewModifier {
 struct ConfirmModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title3)
-            .frame(width:330, height: 100)
-            .background(.white)
-            .foregroundColor(.accentColor)
-            .shadow(radius: 3)
+            .foregroundColor(.white)
+            .padding(.vertical, 5)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .background {
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.accentColor)
+            }
+            .padding(.horizontal, 30)
     }
 }
 
 struct InputModifier : ViewModifier {
+    var padding: CGFloat = 30
+    
     func body(content: Content) -> some View {
         content
-            .frame(width: 300,height: 40)
-            .padding()
-            .border(.black)
+            .padding(.horizontal, 15)
+            .padding(.vertical, 10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(.gray)
+            )
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.horizontal, padding)
     }
 }
 
@@ -78,4 +88,30 @@ struct PasswordAlertModifier: ViewModifier {
                 Text("비밀번호를 다시 입력해주세요")
             }
     }
+}
+
+struct TmpButtonModifier: ViewModifier {
+    
+    var color: Color
+    
+    func body(content: Content) -> some View {
+        
+        content
+        
+            .frame(width:160 , height: 160)
+        
+            .background(color)
+        
+            .cornerRadius(20)
+        
+            .overlay{
+                
+                RoundedRectangle(cornerRadius: 6)
+                
+                    .stroke(Color("marble"), lineWidth: 2)
+                
+            }
+        
+    }
+    
 }

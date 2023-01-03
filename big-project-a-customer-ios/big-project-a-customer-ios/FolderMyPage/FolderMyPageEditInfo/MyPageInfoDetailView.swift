@@ -45,7 +45,7 @@ struct MyPageInfoDetailView: View {
                 Spacer()
                 
                 NavigationLink {
-                    MyPageInfoEditCheckingView()
+                    MyPageInfoEditCheckingView(vm: vm)
                 } label: {
                     Text("회원정보 수정")
                 }
@@ -57,15 +57,9 @@ struct MyPageInfoDetailView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 HStack(alignment: .top, spacing: 20) {
-                    
                     Text("고객명")
                         .foregroundColor(.secondary)
-                    
                     Text("홍길동")
-                    
-                    Spacer()
-                    
-                    
                 }
                 
                 HStack(alignment: .top, spacing: 20) {
@@ -83,7 +77,7 @@ struct MyPageInfoDetailView: View {
                 HStack(alignment: .top, spacing: 34.5) {
                     Text("주소")
                         .foregroundColor(.secondary)
-                    Text("서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지서울특별시 A대로 100번지")
+                    Text("서울특별시 A대로 100번지")
                 }
                 
             }
@@ -91,7 +85,7 @@ struct MyPageInfoDetailView: View {
             
             Divider()
             
-         
+
             
             
             Spacer()
