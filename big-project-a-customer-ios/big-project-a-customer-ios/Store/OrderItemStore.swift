@@ -94,7 +94,11 @@ class OrderItemStore: ObservableObject {
         
         itemRef.updateData([
             "amount": newAmount
-        ]) 
+        ])
+        // fetch 한번더
+        Task {
+            await requestShoppingList(uid: uid)
+        }
     }
     
     // MARK: - 장바구니의 담긴 아이템의 삭제하는 메소드
@@ -109,6 +113,10 @@ class OrderItemStore: ObservableObject {
                 print("ERROR SHOPPINGBAGS ITEMS REMOVE SUCCESS")
             }
         }
+        // fetch 한번더
+        Task {
+            await requestShoppingList(uid: uid)
+        }
     }
     
     // MARK: - 옵션의 형태를 변환하는 메소드
@@ -122,6 +130,7 @@ class OrderItemStore: ObservableObject {
             newOptions[dict.key] = (split.first ?? "null", Int(split.last ?? "0") ?? 0)
         }
         return newOptions
+        
     }
     
     // MARK: - 옵션의 형태를 변환하는 메소드

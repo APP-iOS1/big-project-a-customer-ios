@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/*
 // MARK: - 임시 장바구니 데이터 모델
 struct ShoppingCartItems: Identifiable {
     var id = UUID().uuidString
@@ -18,7 +19,9 @@ struct ShoppingCartItems: Identifiable {
     // [옵션 이름: (옵션 값, 추가 가격)]
     var options: [String: (String, Int)]
 }
+*/
 
+/*
 // MARK: - 임시 장바구니 뷰 모델
 /// 장바구니에 담긴 item들을 가지고 있음
 class ShoppingCartViewModel: ObservableObject {
@@ -48,7 +51,7 @@ class ShoppingCartViewModel: ObservableObject {
         sCItems.removeAll(where: { $0.isChecked})
     }
 }
-
+*/
 
 struct ShoppingBackView: View {
     // 전체 선택 체크박스 State 변수
@@ -56,9 +59,9 @@ struct ShoppingBackView: View {
     // 총 배송비
     @State private var shippingCost = 3000
     
-    @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
+//    @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
     
-    @ObservedObject var shoppingStores = OrderItemStore()
+    @EnvironmentObject var shoppingStores: OrderItemStore
     
     @State var totalPriceForBinding = 0
     
@@ -69,17 +72,24 @@ struct ShoppingBackView: View {
     
     // 결제할 총 금액
     var totalPrice: Int {
-        return vm.sCItems
-            .filter{ $0.isChecked }
-            .map{$0.price * ($0.amount + 1) + ($0.options).values.map{$0.1}.reduce(0,+) }
+//        return vm.sCItems
+//            .filter{ $0.isChecked }
+//            .map{$0.price * ($0.amount + 1) + ($0.options).values.map{$0.1}.reduce(0,+) }
+//            .reduce(0, +)
+        return shoppingStores.items
+            .map { ($0.price * $0.amount) + ($0.option).values.map { $0.1 }.reduce(0, +) }
             .reduce(0, +)
     }
     
     // 결제할 총 수량
     var totalCount: Int {
-        return vm.sCItems
-            .filter{ $0.isChecked }
-            .map{$0.amount + 1}
+//        return vm.sCItems
+//            .filter{ $0.isChecked }
+//            .map{$0.amount + 1}
+//            .reduce(0, +)
+        
+        return shoppingStores.items
+            .map { $0.amount }
             .reduce(0, +)
     }
     
@@ -101,13 +111,15 @@ struct ShoppingBackView: View {
                         Text("모두선택")
                             .font(.headline)
                         
-                        Text("\(totalCount)/\(vm.sCItems.count)")
+                        Text("\(totalCount)/\(shoppingStores.items.count)")
                         
                         Spacer()
                         
                         // 선택된 item들 한번에 삭제
                         Button {
-                            vm.sCItems.removeAll(where: { $0.isChecked})
+                             removeAll()
+                            
+//                            vm.sCItems.removeAll(where: { $0.isChecked})
                         } label: {
                             Text("선택삭제")
                                 .font(.headline)
@@ -128,8 +140,9 @@ struct ShoppingBackView: View {
                 if signUpViewModel.currentUser?.userEmail != nil {
                     // MARK: body
                     ScrollView(showsIndicators: false) {
-                        ForEach($vm.sCItems) { item in
-                            ShoppingBackDetailView(item: item, vm: vm)
+                        ForEach($shoppingStores.items, id: \.itemuid) { item in
+//                            ShoppingBackDetailView(item: item, vm: shoppingStores, checkDict: $checkDict)
+                            ShoppingBackDetailView(item: item, checkDict: $checkDict)
                                 .padding(.vertical)
                             
                             Divider()
@@ -272,6 +285,15 @@ struct ShoppingBackView: View {
         
         for item in shoppingStores.items {
             checkDict[item.itemuid] = false
+        }
+    }
+    
+    // 체크박스된 장바구니 모두 제거
+    func removeAll() {
+        for (key, value) in checkDict {
+            if value {
+                shoppingStores.deleteShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: key)
+            }
         }
     }
     

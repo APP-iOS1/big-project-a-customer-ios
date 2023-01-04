@@ -118,11 +118,9 @@ struct ProductDetailModalView: View {
                             
                             dismiss()
                             isShowingPutItemPopup.toggle()
-                            
-                           
-                            
+ 
                         }
-                        
+ 
                     } label: {
                         HStack {
                             Spacer()
