@@ -90,10 +90,10 @@ struct MyReview: View {
             
             NavigationView {
                 List {
-//                    ForEach($myReviewViewModel.myReviewItemDatas, id: \.self) { mRItem in
-//                        CardView(item: mRItem)
-//                        //                            Text("\(mRItem.itemName)")
-//                    }
+                    ForEach(myReviewViewModel.myReviewItemDatas ?? [] ) { mRItem in
+                        CardView(item: mRItem)
+                        //                            Text("\(mRItem.itemName)")
+                    }
                     
                     
                     //                NavigationView {

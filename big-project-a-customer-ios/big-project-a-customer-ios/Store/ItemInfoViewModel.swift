@@ -52,7 +52,7 @@ class ItemInfoViewModel: ObservableObject {
                         let price: Double = docData["price"] as? Double ?? 0
                         let itemId: String = docData["itemId"] as? String ?? ""
                         let storeId: String = docData["storeId"] as? String ?? ""
-                        let itemAllOption: ItemOptions = docData["itemAllOption"] as? ItemOptions ?? ItemOptions(itemOptions: ["" : [""]])
+                        let itemAllOption: ItemOptions = docData["itemAllOption"] as? ItemOptions ?? ItemOptions(itemOptions: ["옵션없음" : ["기본옵션_0"]])
 
                         
                         let product: ItemInfo = ItemInfo(itemId: itemId, storeId: storeId, itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 1, itemAllOption: itemAllOption, itemImage: itemImage, price: price)

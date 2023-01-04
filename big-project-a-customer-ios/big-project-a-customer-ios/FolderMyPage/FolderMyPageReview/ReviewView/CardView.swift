@@ -10,7 +10,7 @@ import SwiftUI
 struct CardView: View {
 
     // MARK: - 상위 뷰에서 리뷰 관련 데이터를 받아오는 프로퍼티
-    var item : MyReviewItems
+    var item : ItemInfo
     
     var body: some View {
         NavigationLink(destination: ProductDetailTotalReview()) {

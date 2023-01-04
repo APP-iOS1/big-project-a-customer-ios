@@ -93,6 +93,7 @@ struct CreateReviewView: View {
             Spacer()
             /// 리뷰 등록 버튼
             ///
+
             // TODO: 고치기
 //                .modifier(LoginButtonModifier(label: "리뷰 등록하기"))
             
@@ -110,6 +111,7 @@ struct CreateReviewView: View {
                 
             }
             .frame(width: UIScreen.main.bounds.width)
+
             .padding(.bottom, 20)
             Spacer()
             

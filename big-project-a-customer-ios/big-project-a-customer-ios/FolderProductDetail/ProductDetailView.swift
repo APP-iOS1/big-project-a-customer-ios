@@ -12,12 +12,13 @@ import PopupView
 struct ProductDetailView: View {
     @EnvironmentObject var myReviewViewModel: MyReviewViewModel
     @ObservedObject var tempVM: TempViewModel = TempViewModel()
-    let item: ItemInfoViewModel.FilteredItem
     
     @State private var isShowingPutItemPopup = false // 장바구니 담기 성공 팝업
     @State var isLike = false
     @State private var isShow = false
     @State private var isActive = false
+    
+    let item: ItemInfoViewModel.FilteredItem
     
     var body: some View {
         VStack {
@@ -98,11 +99,11 @@ struct ProductDetailView: View {
                 .cornerRadius(10.0)
         }
         .onAppear {
-            tempVM.basePrice = 50000
-            tempVM.fetchPostDetail(["색상":["스타라이트_2000","레드_1000","스페이스그레이_5000"]])
+            tempVM.basePrice = Int(item.price)
+            tempVM.fetchPostDetail(item.itemAllOption)
         }
         .sheet(isPresented: $isShow) {
-            ProductDetailModalView(tempVM: tempVM, isShowingPutItemPopup: $isShowingPutItemPopup, isActive: $isActive)
+            ProductDetailModalView(tempVM: tempVM, isShowingPutItemPopup: $isShowingPutItemPopup, isActive: $isActive, item: item)
                 .presentationDetents([.height(400), .large])
         }
         // navigationView
