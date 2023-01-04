@@ -15,6 +15,7 @@ struct ProductDetailModalView: View {
     @State var count: Int = 1 // 수량
     @Binding var isActive: Bool
     @State private var isShowingPopup = false
+    @State var isShowingLoginSheet = false
     
     @EnvironmentObject var orderItemStore: OrderItemStore
     @EnvironmentObject var signUpViewModel: SignUpViewModel
@@ -107,12 +108,17 @@ struct ProductDetailModalView: View {
                     }
 
                     Button {
-                        if (tempVM.selectedOptions.count != tempVM.options.count) {
-                            isShowingPopup.toggle()
+                        // 로그인이 되지 않은 상태라면 로그인 뷰를 띄운다.
+                        if signUpViewModel.currentUser?.userEmail == nil {
+                            isShowingLoginSheet = true
                         } else {
-                            dismiss()
-                            // 구매하기 뷰 (주소입력) 으로 이동
-                            isActive.toggle()
+                            if (tempVM.selectedOptions.count != tempVM.options.count) {
+                                isShowingPopup.toggle()
+                            } else {
+                                dismiss()
+                                // 구매하기 뷰 (주소입력) 으로 이동
+                                isActive.toggle()
+                            }
                         }
                     } label: {
                         HStack {
@@ -134,6 +140,9 @@ struct ProductDetailModalView: View {
                 .background(Color.secondary)
                 .foregroundColor(.white)
                 .cornerRadius(10.0)
+        }
+        .fullScreenCover(isPresented: $isShowingLoginSheet) {
+            LoginView()
         }
     }
 }
