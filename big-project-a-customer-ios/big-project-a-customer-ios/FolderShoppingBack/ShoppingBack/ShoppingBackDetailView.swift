@@ -12,7 +12,6 @@ struct ShoppingBackDetailView: View {
     
     @ObservedObject var vm: ShoppingCartViewModel
     
-    
     var body: some View {
         VStack(alignment: .trailing) {
             
