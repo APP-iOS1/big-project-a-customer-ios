@@ -4,6 +4,7 @@
 //  Created by 이원형 on 2022/12/27.
 import SwiftUI
 
+
 // MARK: Cell별 카테고리를 관리하기 위한 구조체
 struct Item: Identifiable{
     let id = UUID()
@@ -33,7 +34,7 @@ struct HomeMenuView: View {
     @State var searchItem = items
     @State private var searchText = ""
     
-    @EnvironmentObject var categoryFilteredItemViewModel:CategoryFilteredItemViewModel
+    
     let columns = [
         GridItem(.fixed(170)),
         GridItem(.fixed(170))
@@ -63,9 +64,7 @@ struct HomeMenuView: View {
             }//ScrollView
             .navigationTitle("쇼핑하기")
         }//NavigationStack
-        .task{
-            await categoryFilteredItemViewModel.requestItemDatas(category: "스피커")
-        }
+        
       
         .background(.white)
         .onAppear {

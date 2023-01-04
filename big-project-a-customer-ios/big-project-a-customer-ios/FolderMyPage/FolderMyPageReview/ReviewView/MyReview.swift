@@ -61,10 +61,7 @@ struct MyReviewItems: Identifiable {
 struct MyReview: View {
     @EnvironmentObject var myReviewViewModel : MyReviewViewModel
     @EnvironmentObject var signupViewModel: SignUpViewModel
-    @EnvironmentObject var
-signupViewModel:
-    SignUpViewModel
-
+    
     @State var isShowingDuration : Bool = false
     
     var tests = [1,2,3]
@@ -90,13 +87,13 @@ signupViewModel:
             //                    .opacity(isShowingDuration ? 1 : 0)
             //                    .zIndex(1)
             
-
+            
             NavigationView {
                 List {
-                    ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
-                        CardView(item: mRItem)
-                        //                            Text("\(mRItem.itemName)")
-                    }
+//                    ForEach($myReviewViewModel.myReviewItemDatas, id: \.self) { mRItem in
+//                        CardView(item: mRItem)
+//                        //                            Text("\(mRItem.itemName)")
+//                    }
                     
                     
                     //                NavigationView {
@@ -118,15 +115,15 @@ signupViewModel:
                 }
                 .listStyle(.inset)
             }.task{
-            await myReviewViewModel.requestMyReviews(uid: signupViewModel.currentUser?.id ?? "")
-            await myReviewViewModel.requestMyReviewDatas(reviewItemDatas: myReviewViewModel.myReviewInfos ?? [])
+                await myReviewViewModel.requestMyReviews(uid: signupViewModel.currentUser?.id ?? "")
+                await myReviewViewModel.requestMyReviewDatas(reviewItemDatas: myReviewViewModel.myReviewInfos ?? [])
             }
             .navigationTitle("작성한 리뷰")
             .navigationBarTitleDisplayMode(.large)
             
             
         }
-
+        
     }
     
 }
