@@ -24,16 +24,17 @@ class OrderItemStore: ObservableObject {
         let newOptions: [String: String] = changeOptionsLocalToServer(item.option)
         
         // Document의 id(name)는 상품의 id여야 한다.
-        firebasePath.document(uid).collection("MyCart").document(item.itemuid).setData([
-            "itemuid": item.itemuid,
-            "storeId": item.storeId,
-            "itemName": item.itemName,
-            "itemImage": item.itemImage,
-            "price": item.price,
-            "amount": item.amount,
-            "deliveryStatus": item.deliveryStatus.rawValue,
-            "option": newOptions
-        ])
+        firebasePath.collection("CustomerInfo")
+            .document(uid).collection("myCart").addDocument(data: [
+                "itemuid": item.itemuid,
+                "storeId": item.storeId,
+                "itemName": item.itemName,
+                "itemImage": item.itemImage,
+                "price": item.price,
+                "amount": item.amount,
+                "deliveryStatus": item.deliveryStatus.rawValue,
+                "option": newOptions
+            ])
     }
     
     // MARK: - Request ShoppingBag Items
