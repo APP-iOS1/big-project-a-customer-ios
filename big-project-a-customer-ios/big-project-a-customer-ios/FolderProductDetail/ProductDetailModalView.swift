@@ -23,7 +23,12 @@ struct ProductDetailModalView: View {
     @State private var isShowingPopup = false
     @State var isShowingLoginSheet = false
     
+//    @EnvironmentObject var orderItemStore: OrderItemStore
+//    @EnvironmentObject var signUpViewModel: SignUpViewModel
+
+
     let item: ItemInfoViewModel.FilteredItem
+
 
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
