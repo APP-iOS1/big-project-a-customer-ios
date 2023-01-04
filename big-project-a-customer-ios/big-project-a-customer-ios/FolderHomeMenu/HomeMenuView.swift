@@ -63,6 +63,7 @@ struct HomeMenuView: View {
                 }//.onChange
             }//ScrollView
             .navigationTitle("쇼핑하기")
+            .navigationBarBackButtonHidden(true)
         }//NavigationStack
         
       
