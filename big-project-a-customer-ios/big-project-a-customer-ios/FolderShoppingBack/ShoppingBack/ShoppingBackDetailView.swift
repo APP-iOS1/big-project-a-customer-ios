@@ -25,12 +25,12 @@ struct ShoppingBackDetailView: View {
                     checkDict[item.itemuid]?.toggle()
                 } label: {
                     
-//                    Image(systemName: checkDict[item.itemuid] ?? false ? "checkmark.square.fill" : "square"))
-//                        .modifier(CheckBoxModifier(isCheckedAll: checkDict[item.itemuid]))
+                    Image(systemName: checkDict[item.itemuid] ?? false ? "checkmark.square.fill" : "square")
+                        .modifier(CheckBoxModifier(isCheckedAll: checkDict[item.itemuid] ?? false))
 //                    Image(systemName: item1.isChecked ? "checkmark.square.fill" : "square")
 //                        .modifier(CheckBoxModifier(isCheckedAll: item1.isChecked))
-                    Image(systemName: "checkmark.square.fill")
-                        .modifier(CheckBoxModifier(isCheckedAll: true))
+//                    Image(systemName: "checkmark.square.fill")
+//                        .modifier(CheckBoxModifier(isCheckedAll: true))
                 }
                 
                 Image(item.itemImage)

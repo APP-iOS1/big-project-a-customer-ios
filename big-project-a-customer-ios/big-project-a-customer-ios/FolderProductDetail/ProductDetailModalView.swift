@@ -96,7 +96,7 @@ struct ProductDetailModalView: View {
 
                 HStack {
                     Button {
-                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: )
+//                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item:  )
                         dismiss()
                     } label: {
                         HStack {
