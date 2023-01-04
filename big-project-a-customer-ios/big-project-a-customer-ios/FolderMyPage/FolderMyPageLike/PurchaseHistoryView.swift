@@ -64,25 +64,47 @@ struct PurchaseHistoryView: View {
                 .modifier(PurchaseHistoryButtonModifier())
                 .padding(.horizontal, 10)
                 
-                ScrollView {
-                    ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
-                        VStack {
-                            HStack {
-                                Text(order.orderDate)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .bold()
-                                Button {
-                                    // 주문 상세보기
-                                } label: {
-                                    Text("주문 상세보기")
-                                    Image(systemName: "chevron.right")
+                if signUpViewModel.currentUser?.userEmail == nil {
+                    VStack {
+                        Spacer()
+                        Text("로그인이 필요한 서비스입니다.")
+                            .font(.subheadline)
+                        Button {
+                            isShowingLoginSheet = true
+                        } label: {
+                            Text("로그인")
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                                .bold()
+                                .background(Color.accentColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 100))
+                                .padding(.horizontal)
+                                
+                        }
+                        Spacer()
+                    }
+                } else {
+                    ScrollView {
+                        ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
+                            VStack {
+                                HStack {
+                                    Text(order.orderDate)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .bold()
+                                    Button {
+                                        // 주문 상세보기
+                                    } label: {
+                                        Text("주문 상세보기")
+                                        Image(systemName: "chevron.right")
+                                    }
+                                    
                                 }
                                 
+                                PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
                             }
-                            
-                            PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
+                            .padding(10)
                         }
-                        .padding(10)
                     }
                 }
                 
@@ -190,6 +212,6 @@ struct PurchaseListCell: View {
 
 struct PurchaseHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        PurchaseHistoryView()
+        PurchaseHistoryView().environmentObject(SignUpViewModel())
     }
 }
