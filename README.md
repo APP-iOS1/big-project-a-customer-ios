@@ -6,7 +6,7 @@
 
 ## 앱 로고
 
-![image](https://user-images.githubusercontent.com/73868968/210507415-2b815ef8-fd71-48ce-8729-c6747b1ab7eb.png)
+<img src="https://user-images.githubusercontent.com/73868968/210507415-2b815ef8-fd71-48ce-8729-c6747b1ab7eb.png" width="200" >
 
 ## 주요기능
 
