@@ -40,37 +40,37 @@ final class OrderStore: ObservableObject {
         }
         
     }
-    
-    public func createOrderedItemInfo(with currentUserUid: String?,
-                                      in currentStoreUserUid: String?,
-                                      withItem item: ItemInfo...) async -> Void {
-        guard let currentStoreUserUid, let currentUserUid else { return }
-        
-        // 주문한 아이템의 정보를 담는 배열
-        var orderedItemsArray: [OrderedItemInfo] = []
-        
-        for orderedItem in item {
-            let orderedItemsInfo = OrderedItemInfo(itemUid: orderedItem.itemUid, itemName: orderedItem.itemName, itemImage: orderedItem.itemImage, price: orderedItem.price, option: orderedItem.itemAllOption, deliveryStatus: "배송준비중")
-            orderedItemsArray.append(orderedItemsInfo)
-        }
-        
-        // 주문 정보 생성
-        let newOrderInfo = OrderInfo(orderId: UUID().uuidString, orderedUserInfo: currentUserUid, orderTime: Date.getKoreanNowTimeString(), orderedItems: orderedItemsArray, orderAddress: "배송주소", payment: "무통장입금")
-        
-        do {
-            for orderdItemInfo in orderedItemsArray {
-                let path = path.document(currentStoreUserUid)
-                    .collection("Items").document(orderdItemInfo.itemUid) // 서로 다른 아이템 id에 하나의 주문 건 아이디만 넣어주기
-                    .collection("OrderedInfo").document(newOrderInfo.orderId) // 주문 건 아이디는 유지
-                
-                // 안에 주문정보 채우기
-                try await path.setData([
-                    :
-                ])
-            }
-        } catch {
-            dump("\(#function) - DEBUG \(error.localizedDescription)")
-        }
-        
-    }
+    // 잠시 주석 처리
+//    public func createOrderedItemInfo(with currentUserUid: String?,
+//                                      in currentStoreUserUid: String?,
+//                                      withItem item: ItemInfo...) async -> Void {
+//        guard let currentStoreUserUid, let currentUserUid else { return }
+//
+//        // 주문한 아이템의 정보를 담는 배열
+//        var orderedItemsArray: [OrderedItemInfo] = []
+//
+//        for orderedItem in item {
+//            let orderedItemsInfo = OrderedItemInfo(itemUid: orderedItem.itemUid, itemName: orderedItem.itemName, itemImage: orderedItem.itemImage, price: orderedItem.price, option: orderedItem.itemAllOption, deliveryStatus: "배송준비중")
+//            orderedItemsArray.append(orderedItemsInfo)
+//        }
+//
+//        // 주문 정보 생성
+//        let newOrderInfo = OrderInfo(orderId: UUID().uuidString, orderedUserInfo: currentUserUid, orderTime: Date.getKoreanNowTimeString(), orderedItems: orderedItemsArray, orderAddress: "배송주소", payment: "무통장입금")
+//
+//        do {
+//            for orderdItemInfo in orderedItemsArray {
+//                let path = path.document(currentStoreUserUid)
+//                    .collection("Items").document(orderdItemInfo.itemUid) // 서로 다른 아이템 id에 하나의 주문 건 아이디만 넣어주기
+//                    .collection("OrderedInfo").document(newOrderInfo.orderId) // 주문 건 아이디는 유지
+//
+//                // 안에 주문정보 채우기
+//                try await path.setData([
+//                    :
+//                ])
+//            }
+//        } catch {
+//            dump("\(#function) - DEBUG \(error.localizedDescription)")
+//        }
+//
+//    }
 }
