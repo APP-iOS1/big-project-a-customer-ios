@@ -14,7 +14,9 @@ struct QnA: Identifiable {
 }
 
 struct QnAListView: View {
-    @ObservedObject var questionViewModel: QuestionViewModel = QuestionViewModel()
+    
+    @ObservedObject var customerServiceStore: CustomerServiceStore = CustomerServiceStore()
+    let tempItemId: String = "watch1"
     
     var body: some View {
         if items.isEmpty {
@@ -31,9 +33,10 @@ struct QnAListView: View {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView {
                     LazyVStack {
-                        ForEach($questionViewModel.questionItems) { item in
+                        ForEach($customerServiceStore.customerService) { item in
                             VStack {
-                                QuestionDetailView(item: item)
+                                
+                                QnARow(item: item)
                                 
                                 Divider()
                                     .padding(.horizontal, 8)
@@ -42,17 +45,25 @@ struct QnAListView: View {
                     }
                 }
                 
-                AddQnAButton()
+                AddQnAButton(csStore: customerServiceStore)
             }
             
             .navigationTitle("상품 문의")
+            .onAppear {
+                Task {
+                    await customerServiceStore.requestCustomerServiceList(itemId: tempItemId)
+                }
+            }
         }
+            
     }
 }
 
 struct AddQnAButton: View {
+    @ObservedObject var csStore: CustomerServiceStore
+
     var body: some View {
-        NavigationLink(destination: QnARegistView()) {
+        NavigationLink(destination: QnARegistView(customerServiceStore: csStore)) {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.accentColor)

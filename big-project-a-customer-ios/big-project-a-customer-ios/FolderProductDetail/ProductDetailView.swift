@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @EnvironmentObject var myReviewViewModel: MyReviewViewModel
+    @ObservedObject var tempVM: TempViewModel = TempViewModel()
     
     @State var isLike = false
     @State private var isShow = false
+    @State private var isActive = false
     
     var body: some View {
         VStack {
@@ -67,11 +69,16 @@ struct ProductDetailView: View {
                 }
             }//scroll vstack
             
-            FavoriteAndPurchaseButton(isLike: $isLike, isShow: $isShow)
+            // Modal에서 구매하기 버튼을 눌렀을때 productDetailView에서 OrderSheetAddress로 이동하기 위한 링크
+            NavigationLink(isActive:$isActive) {
+                // 임시 뷰모델의 totalPrice
+                OrderSheetAddress(totalPriceForBinding: $tempVM.totalPrice)
+            } label: { }
             
+            FavoriteAndPurchaseButton(isLike: $isLike, isShow: $isShow)
         }
         .sheet(isPresented: $isShow) {
-            ProductDetailModalView()
+            ProductDetailModalView(isActive: $isActive)
                 .presentationDetents([.height(400), .large])
         }
         // navigationView
@@ -82,6 +89,7 @@ struct ProductDetailView: View {
 struct QnAAndReviewNavigationButton: View {
     var body: some View {
         VStack {
+            // 문의 뷰로 가는 링크
             NavigationLink(destination: QnAListView()) {
                 HStack {
                     Text("상품 문의")
