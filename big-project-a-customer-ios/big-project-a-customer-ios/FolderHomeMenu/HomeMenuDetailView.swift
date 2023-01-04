@@ -80,7 +80,7 @@ struct HomeMenuDetailView: View {
                     .font(.system(.footnote , weight: .bold))
                     .foregroundColor(Color.blue.opacity(0.8))
             }
-            .modifier(ContentButtonModifier(color: .white))
+            .modifier(CategoryButtonModifier(color: .white))
         }
     }
 }
