@@ -8,7 +8,8 @@
 import Foundation
 
 struct ItemInfo: Codable {
-    var itemUid: String
+//    var itemUid: String
+    var itemId: String
     var storeId: String
     var itemName: String
     var itemCategory: String

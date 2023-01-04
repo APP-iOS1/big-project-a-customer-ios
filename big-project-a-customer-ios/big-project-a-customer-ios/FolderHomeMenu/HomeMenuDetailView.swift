@@ -8,11 +8,11 @@
 import SwiftUI
 
 
-struct FilteredItem: Hashable {
-//    let id = UUID()
-    var name: String
-    var price: Double
-}
+//struct FilteredItem: Hashable {
+////    let id = UUID()
+//    var name: String
+//    var price: Double
+//}
 
 struct HomeMenuDetailView: View {
     @EnvironmentObject private var itemInfoViewModel: ItemInfoViewModel
@@ -31,9 +31,9 @@ struct HomeMenuDetailView: View {
                 LazyVGrid(columns: columns, spacing: 16){
                     ForEach(itemInfoViewModel.filteredItem, id: \.self) { item in
                         NavigationLink {
-                            ProductDetailView()
+                            ProductDetailView(item: item)
                         } label:{
-                            ItemView(item: item, imageName: items.categoryImages)
+                            ItemView(item: item)
                         }
                     }//ForEach
                 }//LazyVGrid
@@ -57,8 +57,7 @@ struct HomeMenuDetailView: View {
     // MARK: 홈 메뉴에 그려질 Cell View
     struct ItemView: View{
         let item: ItemInfoViewModel.FilteredItem
-        let imageName: String
-        
+
         var body: some View{
             
             VStack(spacing: 0){
