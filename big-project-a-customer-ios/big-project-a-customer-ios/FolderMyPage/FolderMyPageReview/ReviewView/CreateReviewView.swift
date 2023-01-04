@@ -90,23 +90,14 @@ struct CreateReviewView: View {
             Spacer()
             /// 리뷰 등록 버튼
             ///
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: UIScreen.main.bounds.width - 40)
-            // TODO: 고치기
-//                .modifier(LoginButtonModifier(label: "리뷰 등록하기"))
-            
-            //                Button {
-            //                    print("button pressed")
-            //                } label: {
-            //                    Text("리뷰 등록하기")
-            //                        .modifier(LoginButtonModifier(label: "리뷰 등록하기"))
-            //
-            //                }
-            //                //.frame(width: UIScreen.main.bounds.width)
-            //                .frame(width: 310)
-            //                //.modifier(ColoredButtonModifier(cornerRadius: 5))
-            //                .padding(.bottom, 20)
-            //Spacer()
+            Button {
+                print("button pressed")
+            } label: {
+                Text("리뷰 등록하기")
+            }
+            .modifier(MaxWidthColoredButtonModifier(cornerRadius: 10))
+            .padding(.bottom, 20)
+            Spacer()
             
         }
         .navigationTitle("상품 품질 평가")

@@ -77,6 +77,29 @@ final class CustomerServiceStore: ObservableObject {
         }
     }
     
+    func createMyQuestionService(/*item: Item,*/ title: String, description: String, itemImage:[String], itemName:String, orderId : String, userId: String) async -> Void {
+        let id = UUID().uuidString
+        do {
+            try await database.collection(AppCategoryEnum.cs.rawValue)
+                .document(id)
+                .setData([
+                    "id": id,
+                    "title": title,
+                    "description": description,
+                    "itemId": "",
+                    "itemName": itemName,
+                    "itemImage": itemImage,
+                    "serviceDate": Timestamp(date: Date.now),
+                    "customerId": userId,
+                    "orderId": orderId,
+                    "itemAllOption": [],
+                    "isAnswered": false
+                ])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // MARK: - Delete CustomerService (QnA)
     func deleteCustomerService() {
         
