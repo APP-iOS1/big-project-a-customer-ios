@@ -16,6 +16,7 @@ import SwiftUI
 //    var itemName: String
 //    var itemImage: String
 //    var deliveryStatus: DeliveryStatusEnum = .pending
+//      itemID가 필요합니다...
 //}
 //
 //class OrderInfoViewModel: ObservableObject {
@@ -39,6 +40,13 @@ struct MyPageShoppingListView: View {
     
     @Binding var isShowingShoppinglist: Bool
     
+    @State var checked : Int?
+
+    @Binding var chooseItem : String
+    @Binding var itemImage: [String]
+    @Binding var itemName: String
+    
+    
     var body: some View {
         NavigationStack {
             
@@ -48,6 +56,10 @@ struct MyPageShoppingListView: View {
                     Spacer()
                     Button{
                         isShowingShoppinglist.toggle()
+                        chooseItem = orderStore.orders[checked ?? 0].id
+                        itemImage = [orderStore.orders[checked ?? 0].itemImage]
+                        itemName = orderStore.orders[checked ?? 0].itemName
+                        
                     } label: {
                         Text("확인")
                     }
@@ -58,11 +70,25 @@ struct MyPageShoppingListView: View {
                     
                     ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
                         VStack {
-                            // TODO: 고치기
-//                            MyShoppingListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked, isShowingShoppinglist: $isShowingShoppinglist) // 프로퍼티 추가해줌
+                            HStack{
+                                Button(action: {
+                                    self.checked = index
+                                    
+                                }) {
+                                    Image(systemName: self.checked == index ? "checkmark.square.fill" : "square")
+                                        .foregroundColor(self.checked == index ? Color(UIColor.systemBlue) : Color.secondary)
+                                }
+                                
+                                
+                                MyShoppingListCell(orderStore: orderStore, order: order, index: index, /*isDeliveryCompleted: order.deliveryStatus,*/ isShowingShoppinglist: $deliveryCompletedChecked) // 프로퍼티 추가해줌
+                                
+                                
+                                
+                            }
                         }
                         .padding(10)
                     }
+                    
                 }
                 
             } // VStack
@@ -74,54 +100,48 @@ struct MyPageShoppingListView: View {
 // MARK: 재사용하기 위한 구매목록 cell
 struct MyShoppingListCell: View {
     @ObservedObject var orderStore: OrderInfoViewModel
-    var order: OrderInfo
-    let index: Int
-    @Binding var isDeliveryCompleted: Bool
+    @State var order: DummyOrderInfo
+    var index: Int
+    //@Binding var isDeliveryCompleted: Bool
     
     @Binding var isShowingShoppinglist : Bool
     
-    @State var checked: Bool = false
+//    @State var checked: Bool = false
+
     
     var body: some View{
         VStack(alignment: .leading){
             HStack{
                 // TODO: 고치기
-//                Text("\(order.deliveryStatusText)")
-//                    .font(.headline)
+                Text("\(order.deliveryStatusText)")
+                    .font(.headline)
                 Spacer()
+                Text("\(order.orderDate)")
+                    .font(.caption)
                 
             }
             HStack(alignment: .center){
-                
-                Image(systemName: checked ? "checkmark.square.fill" : "square")
-                    .foregroundColor(checked ? Color(UIColor.systemBlue) : Color.secondary)
-                    .onTapGesture {
-                        self.checked.toggle()
-                        // 1안 - itemID 만 넘겨주기
-                        // 2안 - itemID 및 item 데이터도 같이 넘겨주기
-                        // 상위 뷰로 넘겨줄 때 사용할 방법...
-                        
-                    }
+
                 // TODO: 고치기
-//                Image(order.itemImage)
-//                    .ImageResizeModifier()
-//                VStack(spacing: 10){
-//                    Text("\(order.itemName)")
-//                        .fixedSize(horizontal: false, vertical: true)
-//                        .multilineTextAlignment(.leading)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .font(.callout)
-//                    HStack{
-//                        Text("\(order.price)원")
-//                            .font(.caption)
-//                        Text("\(order.itemAmount)개")
-//                            .font(.caption)
-//                        Spacer()
-//
-//                    }
-//                    .padding(.bottom, 10)
-//                }
-//                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(order.itemImage)
+                    .ImageResizeModifier()
+                VStack(spacing: 10){
+                    Text("\(order.itemName)")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.callout)
+                    HStack{
+                        Text("\(order.price)원")
+                            .font(.caption)
+                        Text("\(order.itemAmount)개")
+                            .font(.caption)
+                        Spacer()
+
+                    }
+                    .padding(.bottom, 10)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
             }
             
@@ -134,6 +154,6 @@ struct MyShoppingListCell: View {
 
 //struct MyPageShoppingListView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MyPageShoppingListView()
+//        MyPageShoppingListView(isShowingShoppinglist: .constant(false))
 //    }
 //}

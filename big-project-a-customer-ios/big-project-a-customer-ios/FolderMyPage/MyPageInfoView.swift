@@ -10,7 +10,8 @@ import FirebaseAuth
 // 마이페이지 탭을 누르면 보이는 -> 마이페이지가 시작되는 뷰
 
 struct MyPageInfoView: View {
-    
+    @ObservedObject var customerServiceStore: CustomerServiceStore = CustomerServiceStore()
+
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     //    var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
@@ -83,7 +84,8 @@ struct MyPageInfoView: View {
                                 case "작성한 리뷰":
                                     MyReview()
                                 case "고객센터":
-                                    MyPageCustomerServiceView()
+                                    MyPageCustomerServiceView(customerServiceStore: customerServiceStore, chooseItem: "", itemImage: [""], itemName: "")
+                                    
                                 case "최근 본 상품":
                                     MyRecentView()
                                 case "취소, 반품, 교환목록":
