@@ -65,6 +65,8 @@ struct ShoppingBackView: View {
     @State var isShowingLoginSheet = false
     @EnvironmentObject var signUpViewModel: SignUpViewModel
     
+    @State var checkDict: [String:Bool] = [:]
+    
     // 결제할 총 금액
     var totalPrice: Int {
         return vm.sCItems
@@ -244,8 +246,9 @@ struct ShoppingBackView: View {
                 LoginView()
                     .onDisappear {
                         Task {
-                            await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
-                            shoppingStores.updateShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: "7fEFIEBtfZxUGuskuLwg", newAmount: 2)
+                            await fetchData()
+                            
+//                            shoppingStores.updateShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: "7fEFIEBtfZxUGuskuLwg", newAmount: 2)
                         }
                     }
             }
@@ -258,20 +261,38 @@ struct ShoppingBackView: View {
                     return
                 }
                 Task {
-                    await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
+                    await fetchData()
                 }
             }
         }
     }
     
+    func fetchData() async {
+        await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
+        
+        for item in shoppingStores.items {
+            checkDict[item.itemuid] = false
+        }
+    }
+    
     func checkBoxAll() {
+//        if isCheckedAll {
+//            for index in vm.sCItems.indices {
+//                vm.sCItems[index].isChecked = true
+//            }
+//        } else {
+//            for index in vm.sCItems.indices {
+//                vm.sCItems[index].isChecked = false
+//            }
+//        }
+        
         if isCheckedAll {
-            for index in vm.sCItems.indices {
-                vm.sCItems[index].isChecked = true
+            for (key, _) in checkDict {
+                checkDict[key] = true
             }
         } else {
-            for index in vm.sCItems.indices {
-                vm.sCItems[index].isChecked = false
+            for (key, _) in checkDict {
+                checkDict[key] = false
             }
         }
     }

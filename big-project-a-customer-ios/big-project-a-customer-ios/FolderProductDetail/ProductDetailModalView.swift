@@ -15,6 +15,9 @@ struct ProductDetailModalView: View {
     @State var count: Int = 1 // 수량
     @Binding var isActive: Bool
     @State private var isShowingPopup = false
+    
+    @Environment var orderItemStore: OrderItemStore
+    @Environment var signUpViewModel: SignUpViewModel
 
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
@@ -91,7 +94,7 @@ struct ProductDetailModalView: View {
 
                 HStack {
                     Button {
-
+//                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: <#T##OrderItemInfo#>)
                         dismiss()
                     } label: {
                         HStack {
