@@ -58,21 +58,20 @@ struct HomeMenuDetailView: View {
     struct ItemView: View{
         let item: ItemInfoViewModel.FilteredItem
         let imageName: String
-        let formatter: NumberFormatter = {
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .decimal
-                return formatter
-            }()
         
         var body: some View{
             
             VStack(spacing: 0){
 
-                // TODO: 이미지 어떻게 할지?? 일단 같은 카테고리 에셋 이미지로 넣어둠
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width:85, height: 85)
+                AsyncImage(url: URL(string: item.image)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                
+                        } placeholder: {
+                            Color.gray
+                        }
+                        .frame(width: 100, height: 100)
                 
                 Text(item.name)
                     .font(.system(.body, weight: .thin))

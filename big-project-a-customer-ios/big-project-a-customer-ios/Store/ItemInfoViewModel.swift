@@ -37,7 +37,7 @@ class ItemInfoViewModel: ObservableObject {
         self.products.removeAll()
         
         for i in storeInfoId {
-            db.collection("StoreInfo").document(i).collection("Item").getDocuments{ (snapshot, error) in
+            db.collection("StoreInfo").document(i).collection("Items").getDocuments{ (snapshot, error) in
                 
                 if let snapshot {
                     for document in snapshot.documents {
@@ -51,9 +51,9 @@ class ItemInfoViewModel: ObservableObject {
                         let itemImage: [String] = docData["itemImage"] as? [String] ?? [""]
                         let price: Double = docData["price"] as? Double ?? 0
                         
-                        let product: ItemInfo = ItemInfo(itemUid: id, storeId: "", itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 0, itemAllOption: ItemOptions(itemOptions: ["":[""]]), itemImage: itemImage, price: Double(price) ?? 0)
+                        let product: ItemInfo = ItemInfo(itemUid: id, storeId: "", itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 0, itemAllOption: ItemOptions(itemOptions: ["":[""]]), itemImage: itemImage, price: Double(price) )
                         
-                        print("\(product.itemCategory)")
+                        print("\(product.itemImage)")
                         
                         self.products.append(product)
                     }
@@ -65,6 +65,7 @@ class ItemInfoViewModel: ObservableObject {
     struct FilteredItem: Hashable {
         var name: String
         var price: Double
+        var image: String
     }
     
     @Published var filteredItem: [FilteredItem] = []
@@ -76,7 +77,8 @@ class ItemInfoViewModel: ObservableObject {
             if ItemInfo.itemCategory == category {
                 let name: String = ItemInfo.itemName
                 let price: Double = ItemInfo.price
-                filteredItem.append(FilteredItem(name: name, price: price))
+                let image: String = ItemInfo.itemImage.first ?? "이미지 x"
+                filteredItem.append(FilteredItem(name: name, price: price, image: image))
             }
         }
     }
