@@ -24,11 +24,12 @@ var items = [
     Item(categoryTitles: "마우스", categoryImages: "Mouse"),
     Item(categoryTitles: "키보드", categoryImages: "Keyboard"),
     Item(categoryTitles: "카메라", categoryImages: "Camera"),
-    
 ]
 
 
 struct HomeMenuView: View {
+    @EnvironmentObject private var itemInfoViewModel: ItemInfoViewModel
+    
     @State var searchItem = items
     @State private var searchText = ""
     
@@ -44,8 +45,9 @@ struct HomeMenuView: View {
                 LazyVGrid(columns: columns, spacing: 16){
                     ForEach(searchItem) { item in
                         NavigationLink {
-                            NotebookView()
-                        } label:{
+                            HomeMenuDetailView(items: item)
+                        }
+                        label:{
                             ItemView(item: item)
                         }
                     }//ForEach
@@ -66,6 +68,9 @@ struct HomeMenuView: View {
         }
       
         .background(.white)
+        .onAppear {
+            itemInfoViewModel.fetchStoreInfo()
+        }
     }
     // MARK: 홈 메뉴에 그려질 Cell View
     struct ItemView: View{

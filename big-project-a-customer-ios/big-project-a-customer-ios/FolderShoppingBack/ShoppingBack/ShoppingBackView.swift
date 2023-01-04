@@ -57,10 +57,15 @@ struct ShoppingBackView: View {
     @State private var shippingCost = 3000
     
     @ObservedObject var vm: ShoppingCartViewModel = ShoppingCartViewModel()
+    
+    @ObservedObject var shoppingStores = OrderItemStore()
+    
     @State var totalPriceForBinding = 0
     
     @State var isShowingLoginSheet = false
     @EnvironmentObject var signUpViewModel: SignUpViewModel
+    
+    @State var checkDict: [String:Bool] = [:]
     
     // 결제할 총 금액
     var totalPrice: Int {
@@ -90,7 +95,7 @@ struct ShoppingBackView: View {
                             checkBoxAll()
                         } label: {
                             Image(systemName: isCheckedAll ? "checkmark.square.fill" : "square")
-                                .foregroundColor(isCheckedAll ? Color("AccentColor") : .gray)
+                                .modifier(CheckBoxModifier(isCheckedAll: isCheckedAll))
                         }
                         
                         Text("모두선택")
@@ -154,22 +159,22 @@ struct ShoppingBackView: View {
                             .font(.title2.bold())
                             
                             HStack {
-                                    NavigationLink(destination: {
-                                        OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
-                                    }, label: {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                                            Text("구매하기 (\(totalCount))")
-                                                .fontWeight(.bold)
-                                                .foregroundColor(.white)
-                                            
-                                        }
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
                                         
                                     }
-                                                   
-                                    )
-
+                                    
+                                }
+                                               
+                                )
+                                
                                 
                                 
                             }
@@ -193,26 +198,101 @@ struct ShoppingBackView: View {
                                 .foregroundColor(.white)
                         }
                         
+                        
+                        HStack {
+                            
+                            // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
+                            if signUpViewModel.currentUser?.userEmail != nil {
+                                NavigationLink(destination: {
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                }, label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                        
+                                    }
+                                })
+                                .disabled(totalCount == 0 ? true : false)
+                                .simultaneousGesture(TapGesture().onEnded{
+                                    totalPriceForBinding = totalPrice
+                                })
+                            } else { // userEmail이 nil이면 로그인을 하지 않은 상태이므로 LoginView를 띄운다.
+                                Button {
+                                    isShowingLoginSheet.toggle()
+                                    
+                                    
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: UIScreen.main.bounds.width - 40, height: 50)
+                                        Text("구매하기 (\(totalCount))")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                            } // if - else
+                            
+                        } // HStack
+                        
                     }
+                    .modifier(PurchaseSectionModifier())
                 }
                 
-               
-                
-                
+            }
+            .fullScreenCover(isPresented: $isShowingLoginSheet) {
+                LoginView()
+                    .onDisappear {
+                        Task {
+                            await fetchData()
+                            
+//                            shoppingStores.updateShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: "7fEFIEBtfZxUGuskuLwg", newAmount: 2)
+                        }
+                    }
             }
             .navigationBarTitle("장바구니")
             .navigationBarTitleDisplayMode(.automatic)
+            
+            .onAppear {
+                print("ShoppingBag Appear 호출")
+                guard signUpViewModel.currentUser != nil else {
+                    return
+                }
+                Task {
+                    await fetchData()
+                }
+            }
+        }
+    }
+    
+    func fetchData() async {
+        await shoppingStores.requestShoppingList(uid: signUpViewModel.currentUser?.id ?? "")
+        
+        for item in shoppingStores.items {
+            checkDict[item.itemuid] = false
         }
     }
     
     func checkBoxAll() {
+//        if isCheckedAll {
+//            for index in vm.sCItems.indices {
+//                vm.sCItems[index].isChecked = true
+//            }
+//        } else {
+//            for index in vm.sCItems.indices {
+//                vm.sCItems[index].isChecked = false
+//            }
+//        }
+        
         if isCheckedAll {
-            for index in vm.sCItems.indices {
-                vm.sCItems[index].isChecked = true
+            for (key, _) in checkDict {
+                checkDict[key] = true
             }
         } else {
-            for index in vm.sCItems.indices {
-                vm.sCItems[index].isChecked = false
+            for (key, _) in checkDict {
+                checkDict[key] = false
             }
         }
     }

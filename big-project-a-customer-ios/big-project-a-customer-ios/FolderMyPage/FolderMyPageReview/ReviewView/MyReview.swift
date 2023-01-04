@@ -39,6 +39,7 @@ struct MyReviewItems: Identifiable {
 
 // MARK: - 임시 리뷰 뷰 모델
 /// 내 리뷰 항목에 담긴 item들을 가지고 있음
+
 ///
 /* 
  class MyReviewViewModel: ObservableObject {
@@ -63,59 +64,72 @@ struct MyReview: View {
     @EnvironmentObject var
 signupViewModel:
     SignUpViewModel
+
     @State var isShowingDuration : Bool = false
     
+    var tests = [1,2,3]
+    
     var body: some View {
-        
         VStack{
-            HStack{
-                Text("전체")
-                Text("1개월")
-                
-                Spacer()
-                
-                Button{
-                    isShowingDuration.toggle()
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                }
-            }
-            .padding()
+            //            HStack{
+            //                Text("전체")
+            //                Text("1개월")
+            //
+            //                Spacer()
+            //
+            //                Button{
+            //                    isShowingDuration.toggle()
+            //                } label: {
+            //                    Image(systemName: "slider.horizontal.3")
+            //                }
+            //            }
+            //            .padding()
+            //
+            //            ZStack{
+            //                DurationSettingView(isShowingDuration : $isShowingDuration)
+            //                    .opacity(isShowingDuration ? 1 : 0)
+            //                    .zIndex(1)
             
-            ZStack{
-                
-                DurationSettingView(isShowingDuration : $isShowingDuration)
-                    .opacity(isShowingDuration ? 1 : 0)
-                    .zIndex(1)
-                /*
-                 ScrollView(showsIndicators: false, content: {
-                 ForEach(myReviewViewModel.mRItems) { mRItem in
-                 CardView(card: mRItem)
-                 
-                 Divider()
-                 }
-                 
-                 
-                 // 스크롤 아래 빈공간 네모
-                 Rectangle()
-                 .frame(height: 300)
-                 .foregroundColor(.clear)
-                 
-                 })
-                 .navigationTitle("작성한 리뷰")
-                 */
-                
-            }
-        }.task{
+
+            NavigationView {
+                List {
+                    ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
+                        CardView(item: mRItem)
+                        //                            Text("\(mRItem.itemName)")
+                    }
+                    
+                    
+                    //                NavigationView {
+                    //
+                    //                    ScrollView(showsIndicators: false, content: {
+                    //                        ForEach(myReviewViewModel.mRItems) { mRItem in
+                    //                            CardView(item: mRItem)
+                    //
+                    //                            Divider()
+                    //                        }
+                    //
+                    //
+                    //
+                    //                    })
+                    //                }
+                    
+                    
+                    
+                }
+                .listStyle(.inset)
+            }.task{
             await myReviewViewModel.requestMyReviews(uid: signupViewModel.currentUser?.id ?? "")
             await myReviewViewModel.requestMyReviewDatas(reviewItemDatas: myReviewViewModel.myReviewInfos ?? [])
+            }
+            .navigationTitle("작성한 리뷰")
+            .navigationBarTitleDisplayMode(.large)
+            
+            
         }
-       
-        .ignoresSafeArea(.all, edges: .bottom)
+
     }
     
 }
-
 
 struct MyReview_Previews: PreviewProvider {
     static var previews: some View {

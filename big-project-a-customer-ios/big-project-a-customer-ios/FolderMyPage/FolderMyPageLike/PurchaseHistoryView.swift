@@ -8,7 +8,7 @@
 import SwiftUI
 import PopupView
 
-enum DeliveryStatusEnum: String {
+enum DummyDeliveryStatusEnum: String {
     //    배송중
     //    배송완료
     //    배송준비중
@@ -19,7 +19,7 @@ enum DeliveryStatusEnum: String {
     case createReview
 }
 
-struct OrderInfo: Identifiable {
+struct DummyOrderInfo: Identifiable {
     var id = UUID().uuidString
     var orderDate: String
     var itemAmount: Int
@@ -27,23 +27,23 @@ struct OrderInfo: Identifiable {
     var deliveryStatusText: String
     var itemName: String
     var itemImage: String
-    var deliveryStatus: DeliveryStatusEnum = .pending
+    var deliveryStatus: DummyDeliveryStatusEnum = .pending
 }
 
 class OrderInfoViewModel: ObservableObject {
     // ShoppingCartItems 약자
-    @Published var orders: [OrderInfo] = [
-        OrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"),
-        OrderInfo(orderDate: "2022. 11. 30", itemAmount: 1, price: 24900, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 24W 듀얼 A타입 가정용 충전기 WCB002krWH, 화이트", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
-        OrderInfo(orderDate: "2022. 11. 28", itemAmount: 1, price: 66400, deliveryStatusText: "배송완료", itemName: "벨킨 7in1 USB C타입 멀티 허브 AVC009btSGY, 그레이", itemImage: "itemImage", deliveryStatus: .createReview),
-        OrderInfo(orderDate: "2022. 09. 30", itemAmount: 1, price: 34900, deliveryStatusText: "배송완료", itemName: "트리플블랙 RX 4in1 충전 스테이션, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
-        OrderInfo(orderDate: "2022. 09.30", itemAmount: 1, price: 20800, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 USB C to 라이트닝 아이폰 고속 충전케이블 CAA003bt1MBK, 1m, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted)
+    @Published var orders: [DummyOrderInfo] = [
+        DummyOrderInfo(orderDate: "2022. 12. 27", itemAmount: 1, price: 24900, deliveryStatusText: "배송중", itemName: "유그린 메탈쉘 외장하드 케이스 C to USB3.0", itemImage: "itemImage"),
+        DummyOrderInfo(orderDate: "2022. 11. 30", itemAmount: 1, price: 24900, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 24W 듀얼 A타입 가정용 충전기 WCB002krWH, 화이트", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
+        DummyOrderInfo(orderDate: "2022. 11. 28", itemAmount: 1, price: 66400, deliveryStatusText: "배송완료", itemName: "벨킨 7in1 USB C타입 멀티 허브 AVC009btSGY, 그레이", itemImage: "itemImage", deliveryStatus: .createReview),
+        DummyOrderInfo(orderDate: "2022. 09. 30", itemAmount: 1, price: 34900, deliveryStatusText: "배송완료", itemName: "트리플블랙 RX 4in1 충전 스테이션, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted),
+        DummyOrderInfo(orderDate: "2022. 09.30", itemAmount: 1, price: 20800, deliveryStatusText: "배송완료", itemName: "벨킨 부스트업 USB C to 라이트닝 아이폰 고속 충전케이블 CAA003bt1MBK, 1m, 블랙", itemImage: "itemImage", deliveryStatus: .deliveryCompleted)
     ]
 }
 
 // MARK: 전체 구매목록
 struct PurchaseHistoryView: View {
-    @ObservedObject var orderStore: OrderInfoViewModel = OrderInfoViewModel()
+    @ObservedObject var orderStore: OrderInfoViewModel =  OrderInfoViewModel()
     @State private var searchItem = ""
     @State private var deliveryCompletedChecked = false
     
@@ -51,56 +51,79 @@ struct PurchaseHistoryView: View {
     @EnvironmentObject var signUpViewModel: SignUpViewModel
     
     var body: some View {
-        VStack {
-            HStack {
-                Image(systemName: "magnifyingglass")
-                TextField(text: $searchItem) {
-                    Text("주문한 상품을 검색할 수 있어요!")
-                }
-            }
-            .padding(.horizontal, 10)
-            .modifier(PurchaseHistoryButtonModifier())
-            .padding(.horizontal, 10)
+        NavigationStack {
             
-            ScrollView {
-                ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
-                    VStack {
-                        HStack {
-                            Text(order.orderDate)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .bold()
-                            Button {
-                                // 주문 상세보기
-                            } label: {
-                                Text("주문 상세보기")
-                                Image(systemName: "chevron.right")
-                            }
-                            
-                        }
-                        
-                        PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
+            VStack {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField(text: $searchItem) {
+                        Text("주문한 상품을 검색할 수 있어요!")
                     }
-                    .padding(10)
+                }
+                .padding(.horizontal, 10)
+                .modifier(PurchaseHistoryButtonModifier())
+                .padding(.horizontal, 10)
+                
+                if signUpViewModel.currentUser?.userEmail == nil {
+                    VStack {
+                        Spacer()
+                        Text("로그인이 필요한 서비스입니다.")
+                            .font(.subheadline)
+                        Button {
+                            isShowingLoginSheet = true
+                        } label: {
+                            Text("로그인")
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+                                .bold()
+                                .background(Color.accentColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 100))
+                                .padding(.horizontal)
+                                
+                        }
+                        Spacer()
+                    }
+                } else {
+                    ScrollView {
+                        ForEach(Array(orderStore.orders.enumerated()), id: \.offset){ (index, order) in
+                            VStack {
+                                HStack {
+                                    Text(order.orderDate)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .bold()
+                                    Button {
+                                        // 주문 상세보기
+                                    } label: {
+                                        Text("주문 상세보기")
+                                        Image(systemName: "chevron.right")
+                                    }
+                                    
+                                }
+                                
+                                PurchaseListCell(orderStore: orderStore, order: order, index: index, isDeliveryCompleted: $deliveryCompletedChecked)
+                            }
+                            .padding(10)
+                        }
+                    }
+                }
+                
+            } // VStack
+            .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
+                if signUpViewModel.currentUser?.userEmail == nil {
+                    isShowingLoginSheet = true
                 }
             }
-
-        } // VStack
-        .onAppear { // 로그인이 되어있지 않다면 바로 로그인 뷰를 시트로 띄우기 위해 isShowingLoginSheet를 true로 고정
-            if signUpViewModel.currentUser?.userEmail == nil {
-                isShowingLoginSheet = true
+            .fullScreenCover(isPresented: $isShowingLoginSheet) {
+                LoginView()
             }
-        }
-        .sheet(isPresented: $isShowingLoginSheet) {
-            LoginView()
-
         }
     }
 }
-
 // MARK: 재사용하기 위한 구매목록 cell
 struct PurchaseListCell: View {
     @ObservedObject var orderStore: OrderInfoViewModel
-    var order: OrderInfo
+    var order: DummyOrderInfo
     let index: Int
     @Binding var isDeliveryCompleted: Bool
     
@@ -169,13 +192,13 @@ struct PurchaseListCell: View {
                     
                     
                 case .createReview:
-                    Button {
+                    NavigationLink {
                         // 리뷰 작성 view
+                        CreateReviewView()
                     } label: {
                         Text("리뷰작성")
                     }
-                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))
-                }
+                    .modifier(PurchaseHistoryButtonModifier(textColor: .accentColor, borderColor: .accentColor))                }
                 
             }
             .font(.callout)
@@ -189,6 +212,6 @@ struct PurchaseListCell: View {
 
 struct PurchaseHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        PurchaseHistoryView()
+        PurchaseHistoryView().environmentObject(SignUpViewModel())
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct QnARegistView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var signupViewModel: SignUpViewModel
+    @ObservedObject var customerServiceStore: CustomerServiceStore
     @State private var text: String = ""
     
     var body: some View {
@@ -25,6 +27,9 @@ struct QnARegistView: View {
                 .padding(.bottom, 16)
             
             Button(action: {
+                Task {
+                    await customerServiceStore.createCustomerService(title: "test title", description: text, userId: signupViewModel.currentUser?.id ?? "")
+                }
                 presentationMode.wrappedValue.dismiss()
             }) {
                 HStack {
@@ -48,7 +53,9 @@ struct QnARegistView: View {
 }
 
 struct QnARegistView_Previews: PreviewProvider {
+    @ObservedObject static var customerServiceStore: CustomerServiceStore = CustomerServiceStore.shared
+    
     static var previews: some View {
-        QnARegistView()
+        QnARegistView(customerServiceStore: customerServiceStore)
     }
 }
