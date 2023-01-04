@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+import PopupView
+
 struct ProductDetailView: View {
     @EnvironmentObject var myReviewViewModel: MyReviewViewModel
     @ObservedObject var tempVM: TempViewModel = TempViewModel()
     
+    @State private var isShowingPutItemPopup = false // 장바구니 담기 성공 팝업
     @State var isLike = false
     @State private var isShow = false
     @State private var isActive = false
@@ -67,7 +70,7 @@ struct ProductDetailView: View {
                         .resizable()
                         .scaledToFit()
                 }
-            }//scroll vstack
+            } // scroll vstack
             
             // Modal에서 구매하기 버튼을 눌렀을때 productDetailView에서 OrderSheetAddress로 이동하기 위한 링크
             NavigationLink(isActive:$isActive) {
@@ -77,8 +80,19 @@ struct ProductDetailView: View {
             
             FavoriteAndPurchaseButton(isLike: $isLike, isShow: $isShow)
         }
+        .popup(isPresented: $isShowingPutItemPopup, position: .bottom, autohideIn: 1) {
+            Text("장바구니에 상품을 담았습니다")
+                .frame(width: 250, height: 60)
+                .background(Color.green)
+                .foregroundColor(.white)
+                .cornerRadius(10.0)
+        }
+        .onAppear {
+            tempVM.basePrice = 50000
+            tempVM.fetchPostDetail(["색상":["스타라이트_2000","레드_1000","스페이스그레이_5000"]])
+        }
         .sheet(isPresented: $isShow) {
-            ProductDetailModalView(isActive: $isActive)
+            ProductDetailModalView(tempVM: tempVM, isShowingPutItemPopup: $isShowingPutItemPopup, isActive: $isActive)
                 .presentationDetents([.height(400), .large])
         }
         // navigationView
