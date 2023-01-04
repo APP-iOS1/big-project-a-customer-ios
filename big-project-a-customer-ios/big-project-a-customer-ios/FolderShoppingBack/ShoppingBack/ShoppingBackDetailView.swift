@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ShoppingBackDetailView: View {
     @Binding var item: ShoppingCartItems
-    @ObservedObject var vm: ShoppingCartViewModel
     
+    @ObservedObject var vm: ShoppingCartViewModel
     
     var body: some View {
         VStack(alignment: .trailing) {
