@@ -52,8 +52,10 @@ class ItemInfoViewModel: ObservableObject {
                         let price: Double = docData["price"] as? Double ?? 0
                         let itemId: String = docData["itemId"] as? String ?? ""
                         let storeId: String = docData["storeId"] as? String ?? ""
+                        let itemAllOption: ItemOptions = docData["itemAllOption"] as? ItemOptions ?? ItemOptions(itemOptions: ["" : [""]])
+
                         
-                        let product: ItemInfo = ItemInfo(itemId: itemId, storeId: storeId, itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 1, itemAllOption: ItemOptions(itemOptions: ["":[""]]), itemImage: itemImage, price: price)
+                        let product: ItemInfo = ItemInfo(itemId: itemId, storeId: storeId, itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 1, itemAllOption: itemAllOption, itemImage: itemImage, price: price)
                         
                         print("\(product.itemImage)")
                         
@@ -70,6 +72,7 @@ class ItemInfoViewModel: ObservableObject {
         var image: String
         var itemId: String
         var storeId: String
+        var itemAllOption: [String: [String]]
     }
     
     @Published var filteredItem: [FilteredItem] = []
@@ -84,8 +87,9 @@ class ItemInfoViewModel: ObservableObject {
                 let image: String = ItemInfo.itemImage.first ?? "이미지 x"
                 let itemId: String = ItemInfo.itemId
                 let storeId: String = ItemInfo.storeId
+                let itemAllOption: [String: [String]] = ItemInfo.itemAllOption.itemOptions
                 
-                filteredItem.append(FilteredItem(name: name, price: price, image: image, itemId: itemId, storeId: storeId))
+                filteredItem.append(FilteredItem(name: name, price: price, image: image, itemId: itemId, storeId: storeId, itemAllOption: itemAllOption))
             }
         }
     }
