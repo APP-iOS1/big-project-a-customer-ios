@@ -23,7 +23,7 @@ struct ProductDetailModalView: View {
     @State private var isShowingPopup = false
     @State var isShowingLoginSheet = false
     
-
+    let item: ItemInfoViewModel.FilteredItem
 
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
@@ -105,20 +105,22 @@ struct ProductDetailModalView: View {
                             // 옵션 선택 안한경우
                             isShowingSelectOptionPopup.toggle()
                         } else {
-                            orderItemStore.items.append(OrderItemInfo(itemuid: "", storeId: "", itemName: "", itemImage: "", price: 0, amount: 0, deliveryStatus: .beforePurchase, option: [:]))
-                            dismiss()
-                            isShowingPutItemPopup.toggle()
                             
                             // 받아온 아이템의 property 사용
                             // option, price만 tempViewModel의 값 사용
                             // amount는 count 변수 사용
                             
-    //                        let newShoppingItem = OrderItemInfo(itemuid: , storeId: <#T##String#>, itemName: <#T##String#>, itemImage: <#T##String#>, price: <#T##Int#>, amount: <#T##Int#>, deliveryStatus: <#T##DeliveryStatusEnum#>, option: <#T##[String : (String, Int)]#>)
+                            let newShoppingItem = OrderItemInfo(itemuid:item.itemId , storeId: item.storeId, itemName: item.name, itemImage: item.image, price: tempVM.totalPrice, amount: count, deliveryStatus: .beforePurchase, option: tempVM.selectedOptions)
                             
-    //                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: newShoppingItem)
+                            orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: newShoppingItem)
                             
+//                            orderItemStore.items.append(newShoppingItem)
+                            
+                            dismiss()
+                            isShowingPutItemPopup.toggle()
+ 
                         }
-                        
+ 
                     } label: {
                         HStack {
                             Spacer()
@@ -203,6 +205,6 @@ struct CustomStepper: View {
 
 struct ProductDetailModalView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductDetailModalView(tempVM: TempViewModel(), isShowingPutItemPopup: .constant(false), isActive: .constant(false))
+        ProductDetailModalView(tempVM: TempViewModel(), isShowingPutItemPopup: .constant(false), isActive: .constant(false), item: ItemInfoViewModel.FilteredItem(name: "", price: 0.0, image: "", itemId: "", storeId: "", itemAllOption: [:]))
     }
 }
