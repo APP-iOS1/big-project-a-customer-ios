@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    
 	var body: some View {
         TabView {
-            HomeMenuView().tabItem {
+            HomeMenuView().environmentObject(ItemInfoViewModel()).tabItem {
                 Image(systemName: "house")
                 Text("홈")
             }.tag(1)
@@ -33,6 +34,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environmentObject(SignUpViewModel())
+            .environmentObject(ItemInfoViewModel())
     }
 }
 

@@ -49,7 +49,7 @@ class ItemInfoViewModel: ObservableObject {
                         let itemCategory: String = docData["itemCategory"] as? String ?? "NoteBook"
                         let itemAmount: String = docData["itemAmount"] as? String ?? "0"
                         let itemImage: [String] = docData["itemImage"] as? [String] ?? [""]
-                        let price: String = docData["price"] as? String ?? "0"
+                        let price: Double = docData["price"] as? Double ?? 0
                         
                         let product: ItemInfo = ItemInfo(itemUid: id, storeId: "", itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 0, itemAllOption: ItemOptions(itemOptions: ["":[""]]), itemImage: itemImage, price: Double(price) ?? 0)
                         
@@ -58,6 +58,25 @@ class ItemInfoViewModel: ObservableObject {
                         self.products.append(product)
                     }
                 }
+            }
+        }
+    }
+    
+    struct FilteredItem: Hashable {
+        var name: String
+        var price: Double
+    }
+    
+    @Published var filteredItem: [FilteredItem] = []
+    
+    func fliteringCategoryItems(_ category: String) {
+        filteredItem.removeAll()
+        
+        products.forEach { ItemInfo in
+            if ItemInfo.itemCategory == category {
+                let name: String = ItemInfo.itemName
+                let price: Double = ItemInfo.price
+                filteredItem.append(FilteredItem(name: name, price: price))
             }
         }
     }

@@ -28,7 +28,7 @@ var items = [
 
 
 struct HomeMenuView: View {
-    @StateObject private var itemInfoViewModel: ItemInfoViewModel = ItemInfoViewModel()
+    @EnvironmentObject private var itemInfoViewModel: ItemInfoViewModel
     
     @State var searchItem = items
     @State private var searchText = ""

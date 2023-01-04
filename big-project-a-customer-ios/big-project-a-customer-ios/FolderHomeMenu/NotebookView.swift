@@ -8,77 +8,77 @@
 import SwiftUI
 
 
-struct NotebookItem: Identifiable{
-    let id = UUID()
-    let NotebookTitles: String
-    let NotebookImages: String
-    let NotebookPrices: String
+struct FilteredItem: Hashable {
+//    let id = UUID()
+    var name: String
+    var price: Double
 }
 
-var NotebookItems = [
-    NotebookItem(NotebookTitles: "MacBookPro 14", NotebookImages: "Notebook", NotebookPrices: "₩2,690,000"),
-    NotebookItem(NotebookTitles: "MacBookPro 13", NotebookImages: "Notebook", NotebookPrices: "₩2,490,000"),
-    NotebookItem(NotebookTitles: "MacBookPro 16", NotebookImages: "Notebook", NotebookPrices: "₩3,090,000"),
-    NotebookItem(NotebookTitles: "MacBookAir 13", NotebookImages: "Notebook", NotebookPrices: "₩1,690,000"),
-    NotebookItem(NotebookTitles: "MacBookAir 13", NotebookImages: "Notebook", NotebookPrices: "₩1,690,000"),
-    NotebookItem(NotebookTitles: "MacBookPro 14", NotebookImages: "Notebook", NotebookPrices: "₩2,690,000"),
-    NotebookItem(NotebookTitles: "MacBookPro 16", NotebookImages: "Notebook", NotebookPrices: "₩3,790,000"),
-    NotebookItem(NotebookTitles: "MacBookPro 16", NotebookImages: "Notebook", NotebookPrices: "₩3,090,000"),
-]
-
 struct NotebookView: View {
-    @State var searchNotebookItem = NotebookItems
+    @EnvironmentObject private var itemInfoViewModel: ItemInfoViewModel
+    
+//    @State var searchNotebookItem = NotebookItems
     @State private var searchText = ""
     var items: Item
     let columns = [
            GridItem(.fixed(170)),
            GridItem(.fixed(170))
        ]
-       
     
     var body: some View{
         NavigationStack {
             ScrollView(.vertical){
                 LazyVGrid(columns: columns, spacing: 16){
-                    ForEach(searchNotebookItem) { item in
+                    ForEach(itemInfoViewModel.filteredItem, id: \.self) { item in
                         NavigationLink {
                             ProductDetailView()
                         } label:{
-                            ItemView(item: item)
+                            ItemView(item: item, imageName: items.categoryImages)
                         }
                     }//ForEach
                 }//LazyVGrid
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-                .onChange(of: searchText) { index in
-                    if !index.isEmpty{
-                        searchNotebookItem = NotebookItems.filter { $0.NotebookTitles.localizedStandardContains(index) }
-                    } else {
-                        searchNotebookItem = NotebookItems
-                    }
-                }//.onChange
+//                .onChange(of: searchText) { index in
+//                    if !index.isEmpty{
+//                        searchNotebookItem = NotebookItems.filter { $0.NotebookTitles.localizedStandardContains(index) }
+//                    } else {
+//                        searchNotebookItem = NotebookItems
+//                    }
+//                }//.onChange
             }//ScrollView
             .navigationTitle("\(items.categoryTitles)")
         }//NavigationStack
       
         .background(.white)
+        .onAppear {
+            itemInfoViewModel.fliteringCategoryItems(items.categoryTitles)
+        }
     }
     // MARK: 홈 메뉴에 그려질 Cell View
     struct ItemView: View{
-        let item: NotebookItem
+        let item: ItemInfoViewModel.FilteredItem
+        let imageName: String
+        let formatter: NumberFormatter = {
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                return formatter
+            }()
+        
         var body: some View{
             
             VStack(spacing: 0){
 
-                Image(item.NotebookImages)
+                // TODO: 이미지 어떻게 할지?? 일단 같은 카테고리 에셋 이미지로 넣어둠
+                Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width:85, height: 85)
                 
-                Text(item.NotebookTitles)
+                Text(item.name)
                     .font(.system(.body, weight: .thin))
                     .foregroundColor(Color.black.opacity(0.8))
                 
-                Text(item.NotebookPrices)
+                Text("₩\(Int(item.price))")
                     .font(.system(.footnote , weight: .bold))
                     .foregroundColor(Color.blue.opacity(0.8))
             }
