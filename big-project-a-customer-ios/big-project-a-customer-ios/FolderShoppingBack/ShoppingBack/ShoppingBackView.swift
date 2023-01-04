@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/*
 // MARK: - 임시 장바구니 데이터 모델
 struct ShoppingCartItems: Identifiable {
     var id = UUID().uuidString
@@ -18,7 +19,9 @@ struct ShoppingCartItems: Identifiable {
     // [옵션 이름: (옵션 값, 추가 가격)]
     var options: [String: (String, Int)]
 }
+*/
 
+/*
 // MARK: - 임시 장바구니 뷰 모델
 /// 장바구니에 담긴 item들을 가지고 있음
 class ShoppingCartViewModel: ObservableObject {
@@ -48,7 +51,7 @@ class ShoppingCartViewModel: ObservableObject {
         sCItems.removeAll(where: { $0.isChecked})
     }
 }
-
+*/
 
 struct ShoppingBackView: View {
     // 전체 선택 체크박스 State 변수
