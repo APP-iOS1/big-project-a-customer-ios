@@ -16,8 +16,8 @@ struct ProductDetailModalView: View {
     @Binding var isActive: Bool
     @State private var isShowingPopup = false
     
-    @Environment var orderItemStore: OrderItemStore
-    @Environment var signUpViewModel: SignUpViewModel
+    @EnvironmentObject var orderItemStore: OrderItemStore
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
 
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
