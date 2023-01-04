@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @EnvironmentObject var orderItemStore: OrderItemStore
+    
 	var body: some View {
         TabView {
             HomeMenuView().environmentObject(ItemInfoViewModel()).tabItem {
@@ -23,6 +25,7 @@ struct ContentView: View {
                 Image(systemName: "cart.badge.plus")
                 Text("장바구니")
             }.tag(3)
+                .badge(orderItemStore.items.count)
             MyPageInfoView().tabItem {
                 Image(systemName: "person.circle")
                 Text("마이페이지")
