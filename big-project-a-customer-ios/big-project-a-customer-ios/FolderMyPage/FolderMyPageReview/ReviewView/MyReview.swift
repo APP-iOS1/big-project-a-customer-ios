@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import Foundation
+import UIKit
 // MARK: - 임시 리뷰 데이터 모델
 //struct MyReviewItems: Identifiable {
 //    var id = UUID().uuidString
@@ -38,24 +39,28 @@ struct MyReviewItems: Identifiable {
 
 // MARK: - 임시 리뷰 뷰 모델
 /// 내 리뷰 항목에 담긴 item들을 가지고 있음
-class MyReviewViewModel: ObservableObject {
-    // MyReviewItems 약자
-    @Published var mRItems: [MyReviewItems] = [
-        MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-12-07", itemName: "MacBook Air M1", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-11-30", itemReview: "가벼워서 카페에 들고다니기 좋아요!", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
-        MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-12-02", itemName: "MacBook Pro 16", itemOption: "Space Black", itemCategory: "노트북", purchaseDate: "2022-11-26", itemReview: "화면이 커서 시원시원합니다, 조금 무거운게 단점이에요", itemImgs: ["macbookpro1", "macbookpro2"], stars: 4),
-        MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-11-17", itemName: "iPhone14 Pro", itemOption: "256gb", itemCategory: "핸드폰", purchaseDate: "2022-10-29", itemReview: "카메라 성능이 너무 좋습니다, 다이나믹 아일랜드 영롱해요", itemImgs: ["iphone14pro1", "iphone14pro2"], stars: 5)
-    ]
-    
-    @Published var reviewItems: [MyReviewItems] = [
-        MyReviewItems(id: "둘리", profileImage: "person.fill", date: "2023-01-02", itemName: "MacBook Air 13", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-12-25", itemReview: "호이 호이", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
-        MyReviewItems(id: "침착맨", profileImage: "person.fill", date: "2023-01-01", itemName: "MacBook Air 13", itemOption: "SSD 512gb", itemCategory: "노트북", purchaseDate: "2022-12-24", itemReview: "맥북 에어를 샀는데 맥북 프로가 왔네요 오히려 좋아", itemImgs: ["macbookpro1", "macbookpro2"], stars: 5)
-        
-    ]
-}
 
+///
+/* 
+ class MyReviewViewModel: ObservableObject {
+ // MyReviewItems 약자
+ @Published var mRItems: [MyReviewItems] = [
+ MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-12-07", itemName: "MacBook Air M1", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-11-30", itemReview: "가벼워서 카페에 들고다니기 좋아요!", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
+ MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-12-02", itemName: "MacBook Pro 16", itemOption: "Space Black", itemCategory: "노트북", purchaseDate: "2022-11-26", itemReview: "화면이 커서 시원시원합니다, 조금 무거운게 단점이에요", itemImgs: ["macbookpro1", "macbookpro2"], stars: 4),
+ MyReviewItems(id: "홍길동", profileImage: "person.fill", date: "2022-11-17", itemName: "iPhone14 Pro", itemOption: "256gb", itemCategory: "핸드폰", purchaseDate: "2022-10-29", itemReview: "카메라 성능이 너무 좋습니다, 다이나믹 아일랜드 영롱해요", itemImgs: ["iphone14pro1", "iphone14pro2"], stars: 5)
+ ]
+ 
+ @Published var reviewItems: [MyReviewItems] = [
+ MyReviewItems(id: "둘리", profileImage: "person.fill", date: "2023-01-02", itemName: "MacBook Air 13", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-12-25", itemReview: "호이 호이", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
+ MyReviewItems(id: "침착맨", profileImage: "person.fill", date: "2023-01-01", itemName: "MacBook Air 13", itemOption: "SSD 512gb", itemCategory: "노트북", purchaseDate: "2022-12-24", itemReview: "맥북 에어를 샀는데 맥북 프로가 왔네요 오히려 좋아", itemImgs: ["macbookpro1", "macbookpro2"], stars: 5)
+ 
+ ]
+ }
+ */
 
 struct MyReview: View {
     @EnvironmentObject var myReviewViewModel : MyReviewViewModel
+    @EnvironmentObject var signupViewModel: SignUpViewModel
     
     @State var isShowingDuration : Bool = false
     
@@ -82,12 +87,13 @@ struct MyReview: View {
             //                    .opacity(isShowingDuration ? 1 : 0)
             //                    .zIndex(1)
             
+            
             NavigationView {
                 List {
-                    ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
-                        CardView(item: mRItem)
-                        //                            Text("\(mRItem.itemName)")
-                    }
+//                    ForEach($myReviewViewModel.myReviewItemDatas, id: \.self) { mRItem in
+//                        CardView(item: mRItem)
+//                        //                            Text("\(mRItem.itemName)")
+//                    }
                     
                     
                     //                NavigationView {
@@ -108,13 +114,18 @@ struct MyReview: View {
                     
                 }
                 .listStyle(.inset)
+            }.task{
+                await myReviewViewModel.requestMyReviews(uid: signupViewModel.currentUser?.id ?? "")
+                await myReviewViewModel.requestMyReviewDatas(reviewItemDatas: myReviewViewModel.myReviewInfos ?? [])
             }
             .navigationTitle("작성한 리뷰")
             .navigationBarTitleDisplayMode(.large)
             
             
         }
+        
     }
+    
 }
 
 struct MyReview_Previews: PreviewProvider {

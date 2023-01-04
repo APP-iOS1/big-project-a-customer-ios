@@ -198,10 +198,11 @@ struct ClearTextFieldModifier: ViewModifier {
 // MARK: - Modifier : TextField 아래 밑줄을 표현하기 위한 Rectangle 속성
 struct TextFieldUnderLineRectangleModifier: ViewModifier {
     let stateTyping: Bool
+    var padding: CGFloat = 20
     func body(content: Content) -> some View {
         content
             .frame(height: 1)
             .foregroundColor(stateTyping ? .accentColor : .gray)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, padding)
     }
 }

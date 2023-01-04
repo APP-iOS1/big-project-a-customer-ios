@@ -7,22 +7,36 @@
 
 import SwiftUI
 
+import PopupView
+
 struct ProductDetailView: View {
     @EnvironmentObject var myReviewViewModel: MyReviewViewModel
     @ObservedObject var tempVM: TempViewModel = TempViewModel()
     
+    @State private var isShowingPutItemPopup = false // 장바구니 담기 성공 팝업
     @State var isLike = false
     @State private var isShow = false
     @State private var isActive = false
+    
+    let item: ItemInfoViewModel.FilteredItem
     
     var body: some View {
         VStack {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     TabView {
-                        ForEach(1..<5) { i in
-                            Image("applewatch\(i)")
-                                .productImageModifier()
+                        ForEach(1..<2) { i in
+//                            Image("applewatch\(i)")
+                            
+                            AsyncImage(url: URL(string: item.image)) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            
+                                    } placeholder: {
+                                        Color.gray
+                                    }
+//                                .productImageModifier()
                         }
                     }
                     .tabViewStyle(.page)
@@ -31,7 +45,7 @@ struct ProductDetailView: View {
                     Divider()
                     
                     VStack(alignment: .leading) {
-                        Text("Apple 애플워치 시리즈 8")
+                        Text(item.name)
                             .modifier(ProductTitleModifier())
                         
                         HStack {
@@ -46,7 +60,7 @@ struct ProductDetailView: View {
                                 .foregroundColor(.gray)
                         }.padding(.bottom, 10)
                         
-                        Text("596,730원")
+                        Text("\(Int(item.price))원")
                             .font(.title2)
                             .fontWeight(.bold)
                     }
@@ -67,7 +81,7 @@ struct ProductDetailView: View {
                         .resizable()
                         .scaledToFit()
                 }
-            }//scroll vstack
+            } // scroll vstack
             
             // Modal에서 구매하기 버튼을 눌렀을때 productDetailView에서 OrderSheetAddress로 이동하기 위한 링크
             NavigationLink(isActive:$isActive) {
@@ -77,8 +91,19 @@ struct ProductDetailView: View {
             
             FavoriteAndPurchaseButton(isLike: $isLike, isShow: $isShow)
         }
+        .popup(isPresented: $isShowingPutItemPopup, position: .bottom, autohideIn: 1) {
+            Text("장바구니에 상품을 담았습니다")
+                .frame(width: 250, height: 60)
+                .background(Color.green)
+                .foregroundColor(.white)
+                .cornerRadius(10.0)
+        }
+        .onAppear {
+            tempVM.basePrice = Int(item.price)
+            tempVM.fetchPostDetail(item.itemAllOption)
+        }
         .sheet(isPresented: $isShow) {
-            ProductDetailModalView(isActive: $isActive)
+            ProductDetailModalView(tempVM: tempVM, isShowingPutItemPopup: $isShowingPutItemPopup, isActive: $isActive, item: item)
                 .presentationDetents([.height(400), .large])
         }
         // navigationView
@@ -155,11 +180,12 @@ struct FavoriteAndPurchaseButton: View {
     }
 }
 
-struct ProductDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductDetailView().environmentObject(MyReviewViewModel())
-    }
-}
+//struct ProductDetailView_Previews: PreviewProvider {
+//    let item: ItemInfoViewModel.FilteredItem
+//    static var previews: some View {
+//        ProductDetailView(item: item).environmentObject(MyReviewViewModel())
+//    }
+//}
 
 extension UIScreen {
     static let screenWidth = UIScreen.main.bounds.size.width

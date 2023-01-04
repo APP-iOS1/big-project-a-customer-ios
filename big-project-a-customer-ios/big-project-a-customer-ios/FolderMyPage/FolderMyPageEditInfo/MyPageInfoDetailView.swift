@@ -14,6 +14,7 @@ struct MyPageInfoDetailView: View {
     @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Environment(\.dismiss) private var dismiss
 
+    @Binding var navStack: NavigationPath
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,7 +49,7 @@ struct MyPageInfoDetailView: View {
                 Spacer()
                 
                 NavigationLink {
-                    MyPageInfoEditCheckingView()
+                    MyPageInfoEditCheckingView(navStack: $navStack)
                 } label: {
                     Text("회원정보 수정")
                 }
@@ -57,7 +58,7 @@ struct MyPageInfoDetailView: View {
             
             Divider()
             
-            
+            // 회원정보
             VStack(alignment: .leading, spacing: 10) {
                 HStack(alignment: .top, spacing: 20) {
                     Text("고객명")
@@ -82,17 +83,15 @@ struct MyPageInfoDetailView: View {
                         .foregroundColor(.secondary)
                     Text(signupViewModel.currentUser?.userAddress ?? "주소를 등록해주세요")
                 }
-                
+                                
             }
             .padding(30)
             
             Divider()
             
-
-            
-            
             Spacer()
         }
+
         .navigationTitle("내정보관리")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -102,7 +101,7 @@ struct MyPageInfoDetailView: View {
 struct MyPageInfoDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            MyPageInfoDetailView()
+            MyPageInfoDetailView(navStack: .constant(NavigationPath()))
                 .environmentObject(SignUpViewModel())
 
         }

@@ -45,13 +45,17 @@ class ItemInfoViewModel: ObservableObject {
                         let docData = document.data()
                         
                         let id: String = document.documentID
-                        let itemName: String = docData["itemName"] as? String ?? "Mac"
-                        let itemCategory: String = docData["itemCategory"] as? String ?? "NoteBook"
-                        let itemAmount: String = docData["itemAmount"] as? String ?? "0"
+                        let itemName: String = docData["itemName"] as? String ?? ""
+                        let itemCategory: String = docData["itemCategory"] as? String ?? ""
+                        let itemAmount: String = docData["itemAmount"] as? String ?? ""
                         let itemImage: [String] = docData["itemImage"] as? [String] ?? [""]
                         let price: Double = docData["price"] as? Double ?? 0
+                        let itemId: String = docData["itemId"] as? String ?? ""
+                        let storeId: String = docData["storeId"] as? String ?? ""
+                        let itemAllOption: ItemOptions = docData["itemAllOption"] as? ItemOptions ?? ItemOptions(itemOptions: ["옵션없음" : ["기본옵션_0"]])
+
                         
-                        let product: ItemInfo = ItemInfo(itemUid: id, storeId: "", itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 0, itemAllOption: ItemOptions(itemOptions: ["":[""]]), itemImage: itemImage, price: Double(price) )
+                        let product: ItemInfo = ItemInfo(itemId: itemId, storeId: storeId, itemName: itemName, itemCategory: itemCategory, itemAmount: Int(itemAmount) ?? 1, itemAllOption: itemAllOption, itemImage: itemImage, price: price)
                         
                         print("\(product.itemImage)")
                         
@@ -66,6 +70,9 @@ class ItemInfoViewModel: ObservableObject {
         var name: String
         var price: Double
         var image: String
+        var itemId: String
+        var storeId: String
+        var itemAllOption: [String: [String]]
     }
     
     @Published var filteredItem: [FilteredItem] = []
@@ -78,7 +85,11 @@ class ItemInfoViewModel: ObservableObject {
                 let name: String = ItemInfo.itemName
                 let price: Double = ItemInfo.price
                 let image: String = ItemInfo.itemImage.first ?? "이미지 x"
-                filteredItem.append(FilteredItem(name: name, price: price, image: image))
+                let itemId: String = ItemInfo.itemId
+                let storeId: String = ItemInfo.storeId
+                let itemAllOption: [String: [String]] = ItemInfo.itemAllOption.itemOptions
+                
+                filteredItem.append(FilteredItem(name: name, price: price, image: image, itemId: itemId, storeId: storeId, itemAllOption: itemAllOption))
             }
         }
     }

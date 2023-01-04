@@ -7,9 +7,6 @@
 
 import Foundation
 
-struct ItemOptions: Codable {
-    var itemOptions: [String: [String]]
-}
 
 struct OrderInfo: Codable {
     var orderId: String = UUID().uuidString

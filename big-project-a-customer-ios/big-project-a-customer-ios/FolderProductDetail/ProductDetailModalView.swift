@@ -11,15 +11,19 @@ import PopupView
 struct ProductDetailModalView: View {
     @Environment(\.dismiss) private var dismiss
 
-    @ObservedObject var tempVM: TempViewModel = TempViewModel()
-    @State var count: Int = 1 // 수량
-    @Binding var isActive: Bool
-    @State private var isShowingPopup = false
-    
     @EnvironmentObject var orderItemStore: OrderItemStore
     @EnvironmentObject var signUpViewModel: SignUpViewModel
+    @ObservedObject var tempVM: TempViewModel
     
-//    @State var item: OrderItemInfo =
+    @State private var count: Int = 1 // 수량
+    @State private var isShowingSelectOptionPopup = false // 옵션 미선택 팝업
+    @Binding var isShowingPutItemPopup: Bool // 장바구니 담기 성공 팝업
+    @Binding var isActive: Bool
+
+    @State private var isShowingPopup = false
+    @State var isShowingLoginSheet = false
+    
+    let item: ItemInfoViewModel.FilteredItem
 
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
@@ -96,8 +100,27 @@ struct ProductDetailModalView: View {
 
                 HStack {
                     Button {
-//                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item:  )
-                        dismiss()
+
+                        if (tempVM.selectedOptions.count != tempVM.options.count) {
+                            // 옵션 선택 안한경우
+                            isShowingSelectOptionPopup.toggle()
+                        } else {
+                            
+                            // 받아온 아이템의 property 사용
+                            // option, price만 tempViewModel의 값 사용
+                            // amount는 count 변수 사용
+                            
+                            let newShoppingItem = OrderItemInfo(itemuid:item.itemId , storeId: item.storeId, itemName: item.name, itemImage: item.image, price: tempVM.totalPrice, amount: count, deliveryStatus: .beforePurchase, option: tempVM.selectedOptions)
+                            
+                            orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: newShoppingItem)
+                            
+//                            orderItemStore.items.append(newShoppingItem)
+                            
+                            dismiss()
+                            isShowingPutItemPopup.toggle()
+ 
+                        }
+ 
                     } label: {
                         HStack {
                             Spacer()
@@ -107,14 +130,22 @@ struct ProductDetailModalView: View {
                         }
                             .modifier(ColoredButtonModifier(cornerRadius: 10))
                     }
+                    
 
                     Button {
-                        if (tempVM.selectedOptions.count != tempVM.options.count) {
-                            isShowingPopup.toggle()
+
+                        // 로그인이 되지 않은 상태라면 로그인 뷰를 띄운다.
+                        if signUpViewModel.currentUser?.userEmail == nil {
+                            isShowingLoginSheet = true
+
                         } else {
-                            dismiss()
-                            // 구매하기 뷰 (주소입력) 으로 이동
-                            isActive.toggle()
+                            if (tempVM.selectedOptions.count != tempVM.options.count) {
+                                 isShowingSelectOptionPopup.toggle()
+                            } else {
+                                dismiss()
+                                // 구매하기 뷰 (주소입력) 으로 이동
+                                isActive.toggle()
+                            }
                         }
                     } label: {
                         HStack {
@@ -130,12 +161,15 @@ struct ProductDetailModalView: View {
                 Spacer()
             }
         }
-        .popup(isPresented: $isShowingPopup, position: .bottom, autohideIn: 1) {
+        .popup(isPresented: $isShowingSelectOptionPopup, position: .bottom, autohideIn: 1) {
             Text("⚠️ 옵션을 모두 선택해 주세요.")
                 .frame(width: 250, height: 60)
                 .background(Color.secondary)
                 .foregroundColor(.white)
                 .cornerRadius(10.0)
+        }
+        .fullScreenCover(isPresented: $isShowingLoginSheet) {
+            LoginView()
         }
     }
 }
@@ -169,8 +203,8 @@ struct CustomStepper: View {
     }
 }
 
-//struct ProductDetailModalView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProductDetailModalView(isActive: .constant(false))
-//    }
-//}
+struct ProductDetailModalView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProductDetailModalView(tempVM: TempViewModel(), isShowingPutItemPopup: .constant(false), isActive: .constant(false), item: ItemInfoViewModel.FilteredItem(name: "", price: 0.0, image: "", itemId: "", storeId: "", itemAllOption: [:]))
+    }
+}
