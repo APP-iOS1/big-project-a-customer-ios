@@ -12,6 +12,8 @@ struct ShoppingBackDetailView: View {
     
     @ObservedObject var vm: ShoppingCartViewModel
     
+    @Binding var checkDict: [String: Bool]
+    
     var body: some View {
         VStack(alignment: .trailing) {
             
@@ -19,6 +21,9 @@ struct ShoppingBackDetailView: View {
                 Button {
                     item.isChecked.toggle()
                 } label: {
+                    
+//                    Image(systemName: checkDict[item.itemuid] ? "checkmark.square.fill" : "square"))
+//                        .modifier(CheckBoxModifier(isCheckedAll: checkDict[item.itemuid]))
                     Image(systemName: item.isChecked ? "checkmark.square.fill" : "square")
                         .modifier(CheckBoxModifier(isCheckedAll: item.isChecked))
                 }
@@ -40,6 +45,7 @@ struct ShoppingBackDetailView: View {
                         Spacer()
                         
                         Button {
+                            // stores.deleteShoppingItem(uid: authViewmodel.currentuser.uid, itemUID: item.itemUID)
                             vm.deleteItem(item)
                         } label: {
                             Image(systemName: "x.circle.fill")

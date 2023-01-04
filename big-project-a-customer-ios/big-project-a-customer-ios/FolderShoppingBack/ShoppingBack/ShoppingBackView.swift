@@ -107,6 +107,8 @@ struct ShoppingBackView: View {
                         
                         // 선택된 item들 한번에 삭제
                         Button {
+                            // removeAll()
+                            
                             vm.sCItems.removeAll(where: { $0.isChecked})
                         } label: {
                             Text("선택삭제")
@@ -129,7 +131,7 @@ struct ShoppingBackView: View {
                     // MARK: body
                     ScrollView(showsIndicators: false) {
                         ForEach($vm.sCItems) { item in
-                            ShoppingBackDetailView(item: item, vm: vm)
+                            ShoppingBackDetailView(item: item, vm: vm, checkDict: $checkDict)
                                 .padding(.vertical)
                             
                             Divider()
@@ -274,6 +276,14 @@ struct ShoppingBackView: View {
             checkDict[item.itemuid] = false
         }
     }
+    // 체크박스된 장바구니 모두 제거
+//    func removeAll() {
+//        for (key, value) in checkDict {
+//            if value {
+//                shoppingStores.deleteShoppingItem(uid: uid, itemUID: key)
+//            }
+//        }
+//    }
     
     func checkBoxAll() {
 //        if isCheckedAll {
