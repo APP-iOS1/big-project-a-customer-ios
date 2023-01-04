@@ -39,6 +39,9 @@ struct OrderSheetAddress: View {
 	// PurchseInfo 소비자 정보 선언
 	@State private var purchaseInfo: PurchaseInfo = PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")
 	
+    /// 주문하기로 결정한 아이템들
+    let selectedOrderItems: [OrderItemInfo]
+    
     var body: some View {
         VStack {
             Spacer().frame(height:30)
@@ -88,7 +91,7 @@ struct OrderSheetAddress: View {
             
             NavigationLink {
 //                PaymentView(purchaseInfo: $purchaseInfo)
-                PaymentView(purchaseInfo: $purchaseInfo, shippingAddress: Address.addresses[0]) // 임시로 박아둔 첫번째 주소값
+                PaymentView(purchaseInfo: $purchaseInfo, shippingAddress: Address.addresses[0], selectedOrderItems: selectedOrderItems) // 임시로 박아둔 첫번째 주소값
             } label: {
                 Text("무통장 입금으로 결제하기")
             }
@@ -133,6 +136,6 @@ struct OrderSheetAddressCell: View {
 
 struct OrderSheetAddress_Previews: PreviewProvider {
 	static var previews: some View {
-		OrderSheetAddress(totalPriceForBinding: .constant(12345))
+        OrderSheetAddress(totalPriceForBinding: .constant(12345), selectedOrderItems: [])
 	}
 }

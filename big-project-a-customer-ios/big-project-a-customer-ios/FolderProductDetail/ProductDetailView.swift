@@ -86,7 +86,7 @@ struct ProductDetailView: View {
             // Modal에서 구매하기 버튼을 눌렀을때 productDetailView에서 OrderSheetAddress로 이동하기 위한 링크
             NavigationLink(isActive:$isActive) {
                 // 임시 뷰모델의 totalPrice
-                OrderSheetAddress(totalPriceForBinding: $tempVM.totalPrice)
+                OrderSheetAddress(totalPriceForBinding: $tempVM.totalPrice, selectedOrderItems: []) // 빈배열은 임시값
             } label: { }
             
             FavoriteAndPurchaseButton(isLike: $isLike, isShow: $isShow)

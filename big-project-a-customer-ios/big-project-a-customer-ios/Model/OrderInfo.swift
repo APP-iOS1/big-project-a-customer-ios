@@ -6,12 +6,12 @@
 //
 
 import Foundation
-
+import Firebase
 
 struct OrderInfo: Codable {
     var orderId: String = UUID().uuidString
     var orderedUserInfo: String
-    var orderTime: Double
+    var orderTime: Timestamp
     var orderedItems: [OrderedItemInfo]
     var orderAddress: String
     var orderMessage: String?

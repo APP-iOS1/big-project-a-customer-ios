@@ -173,7 +173,7 @@ struct ShoppingBackView: View {
                             
                             HStack {
                                 NavigationLink(destination: {
-                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding, selectedOrderItems: shoppingStores.items)
                                 }, label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
@@ -217,7 +217,7 @@ struct ShoppingBackView: View {
                             // 로그인에 성공하면 userEmail이 nil이 아니므로 OrderSheetAddress뷰로 이동한다.
                             if signUpViewModel.currentUser?.userEmail != nil {
                                 NavigationLink(destination: {
-                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding)
+                                    OrderSheetAddress(totalPriceForBinding: $totalPriceForBinding, selectedOrderItems: shoppingStores.items)
                                 }, label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)

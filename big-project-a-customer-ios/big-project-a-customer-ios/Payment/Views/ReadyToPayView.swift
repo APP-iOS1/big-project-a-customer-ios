@@ -25,7 +25,7 @@ struct ReadyToPayView: View {
             NavigationLink {
                 
                 // purchaseInfo 구매 정보 전달
-                PaymentView(purchaseInfo: $purchaseInfo, shippingAddress: Address.addresses[0])
+                PaymentView(purchaseInfo: $purchaseInfo, shippingAddress: Address.addresses[0], selectedOrderItems: []) // 임시 빈배열
             } label: {
                 Text("결제하기")
             }//modifier 받기

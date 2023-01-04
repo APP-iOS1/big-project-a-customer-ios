@@ -85,6 +85,9 @@ struct PaymentView: View {
     /// 전달받은 배송지 주소
     let shippingAddress: Address
     
+    /// 주문하기로 결정한 아이템들
+    let selectedOrderItems: [OrderItemInfo]
+    
     var body: some View {
         NavigationStack {
             
@@ -203,7 +206,7 @@ struct PaymentView: View {
             /// 누르면 결제완료 뷰로 이동하는 NavigationLink 생성
             NavigationLink(destination: {
 //                PaymentCompleteView(purchaseInfo: $purchaseInfo, isCashCheck: isCashCheck)
-                PaymentCompleteView(purchaseInfo: $purchaseInfo, isCashCheck: isCashCheck, shippingAddress: shippingAddress)
+                PaymentCompleteView(purchaseInfo: $purchaseInfo, isCashCheck: isCashCheck, shippingAddress: shippingAddress, orderedItems: selectedOrderItems)
             }){
                 //FIXME: - 무통장 입금 결제하기 버튼 modifier 적용 필요
                 /// NavigationLink이 보여지는 문구를 "결제하기"로 설정
@@ -243,6 +246,6 @@ struct PaymentView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        PaymentView(purchaseInfo: Binding.constant(PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")), shippingAddress: Address.addresses[0]) 
+        PaymentView(purchaseInfo: Binding.constant(PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")), shippingAddress: Address.addresses[0], selectedOrderItems: [])
     }
 }
