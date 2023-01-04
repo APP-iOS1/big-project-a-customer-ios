@@ -13,9 +13,11 @@ struct ProductDetailTotalReview: View {
     
     var body: some View {
         ScrollView {
+            /*
             ForEach(myReviewViewModel.reviewItems) { review in
                 ReviewDetail(review: review)
             }
+             */
         }
         .padding()
     }
