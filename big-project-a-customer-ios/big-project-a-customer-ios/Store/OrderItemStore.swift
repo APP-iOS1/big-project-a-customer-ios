@@ -95,6 +95,9 @@ class OrderItemStore: ObservableObject {
             "amount": newAmount
         ])
         // fetch 한번더
+        Task {
+            await requestShoppingList(uid: uid)
+        }
     }
     
     // MARK: - 장바구니의 담긴 아이템의 삭제하는 메소드
@@ -110,6 +113,9 @@ class OrderItemStore: ObservableObject {
             }
         }
         // fetch 한번더
+        Task {
+            await requestShoppingList(uid: uid)
+        }
     }
     
     // MARK: - 옵션의 형태를 변환하는 메소드

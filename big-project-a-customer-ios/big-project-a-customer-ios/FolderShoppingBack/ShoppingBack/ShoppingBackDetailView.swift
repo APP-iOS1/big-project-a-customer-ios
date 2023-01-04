@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ShoppingBackDetailView: View {
-    @Binding var item: ShoppingCartItems
+//    @Binding var item1: ShoppingCartItems
+    @Binding var item: OrderItemInfo
     
-    @ObservedObject var vm: ShoppingCartViewModel
+//    @ObservedObject var vm: ShoppingCartViewModel
+    @EnvironmentObject var shoppingStores: OrderItemStore
+    @EnvironmentObject var signUpViewModel: SignUpViewModel
     
     @Binding var checkDict: [String: Bool]
     
@@ -19,16 +22,18 @@ struct ShoppingBackDetailView: View {
             
             HStack(alignment: .top) {
                 Button {
-                    item.isChecked.toggle()
+                    checkDict[item.itemuid]?.toggle()
                 } label: {
                     
-//                    Image(systemName: checkDict[item.itemuid] ? "checkmark.square.fill" : "square"))
+//                    Image(systemName: checkDict[item.itemuid] ?? false ? "checkmark.square.fill" : "square"))
 //                        .modifier(CheckBoxModifier(isCheckedAll: checkDict[item.itemuid]))
-                    Image(systemName: item.isChecked ? "checkmark.square.fill" : "square")
-                        .modifier(CheckBoxModifier(isCheckedAll: item.isChecked))
+//                    Image(systemName: item1.isChecked ? "checkmark.square.fill" : "square")
+//                        .modifier(CheckBoxModifier(isCheckedAll: item1.isChecked))
+                    Image(systemName: "checkmark.square.fill")
+                        .modifier(CheckBoxModifier(isCheckedAll: true))
                 }
                 
-                Image(item.image)
+                Image(item.itemImage)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
@@ -36,7 +41,7 @@ struct ShoppingBackDetailView: View {
                 VStack(alignment: .trailing) {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(item.name)
+                            Text(item.itemName)
                                 .font(.title3)
                             Text("(\(item.price)원)")
                                 .font(.subheadline)
@@ -45,8 +50,8 @@ struct ShoppingBackDetailView: View {
                         Spacer()
                         
                         Button {
-                            // stores.deleteShoppingItem(uid: authViewmodel.currentuser.uid, itemUID: item.itemUID)
-                            vm.deleteItem(item)
+                            shoppingStores.deleteShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: item.itemuid)
+//                            vm.deleteItem(item)
                         } label: {
                             Image(systemName: "x.circle.fill")
                                 .modifier(XButtonModifier())
@@ -55,7 +60,7 @@ struct ShoppingBackDetailView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        ForEach(item.options.sorted(by: { lhs, rhs in lhs.key > rhs.key }), id: \.key) { key, value in
+                        ForEach(item.option.sorted(by: { lhs, rhs in lhs.key > rhs.key }), id: \.key) { key, value in
                             HStack {
                                 Text("\(key) : \(value.0)")
                                     .font(.subheadline)
@@ -72,7 +77,7 @@ struct ShoppingBackDetailView: View {
                     
                     
                     VStack(alignment: .leading) {
-                        Text("옵션 포함 가격 : \(item.price + (item.options).values.map{$0.1}.reduce(0,+))원")
+//                        Text("옵션 포함 가격 : \(item.price + (item.options).values.map{$0.1}.reduce(0,+))원")
                         
                         HStack {
                             Spacer()
@@ -83,8 +88,10 @@ struct ShoppingBackDetailView: View {
                                 }
                             }
                             .modifier(PickerModifier())
+                            .onChange(of: item.amount) { newValue in
+                                shoppingStores.updateShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", itemUID: item.itemuid, newAmount: newValue)
+                            }
                         }
-                        
                     }
                     .padding(.top, 5)
                 }
@@ -95,11 +102,11 @@ struct ShoppingBackDetailView: View {
     }
 }
 
-struct ShoppingBackDetailView_Previews: PreviewProvider {
-    @State static var items = ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0,isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)])
-    @StateObject static var vm = ShoppingCartViewModel()
-    
-    static var previews: some View {
-        ShoppingBackDetailView(item: $items, vm: vm)
-    }
-}
+//struct ShoppingBackDetailView_Previews: PreviewProvider {
+//    @State static var items = ShoppingCartItems(name: "MacBook Pro", price: 2060000,image: "macbookpro", amount: 0,isChecked: true, options: ["색상" : ("스페이스 그레이", 0), "저장용량" : ("512GB", 0), "RAM" : ("8GB", 0)])
+//    @StateObject static var vm = ShoppingCartViewModel()
+//    
+//    static var previews: some View {
+//        ShoppingBackDetailView(item: $items, vm: vm)
+//    }
+//}

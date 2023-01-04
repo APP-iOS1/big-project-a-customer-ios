@@ -18,6 +18,8 @@ struct ProductDetailModalView: View {
     
     @EnvironmentObject var orderItemStore: OrderItemStore
     @EnvironmentObject var signUpViewModel: SignUpViewModel
+    
+//    @State var item: OrderItemInfo =
 
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
@@ -94,7 +96,7 @@ struct ProductDetailModalView: View {
 
                 HStack {
                     Button {
-//                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: <#T##OrderItemInfo#>)
+                        orderItemStore.createShoppingItem(uid: signUpViewModel.currentUser?.id ?? "", item: )
                         dismiss()
                     } label: {
                         HStack {
@@ -167,8 +169,8 @@ struct CustomStepper: View {
     }
 }
 
-struct ProductDetailModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductDetailModalView(isActive: .constant(false))
-    }
-}
+//struct ProductDetailModalView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProductDetailModalView(isActive: .constant(false))
+//    }
+//}
