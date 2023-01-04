@@ -32,6 +32,7 @@ struct HomeMenuView: View {
     @State var searchItem = items
     @State private var searchText = ""
     
+    @EnvironmentObject var categoryFilteredItemViewModel:CategoryFilteredItemViewModel
     let columns = [
         GridItem(.fixed(170)),
         GridItem(.fixed(170))
@@ -60,6 +61,9 @@ struct HomeMenuView: View {
             }//ScrollView
             .navigationTitle("쇼핑하기")
         }//NavigationStack
+        .task{
+            await categoryFilteredItemViewModel.requestItemDatas(category: "스피커")
+        }
       
         .background(.white)
     }
