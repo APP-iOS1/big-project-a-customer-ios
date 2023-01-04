@@ -37,3 +37,6 @@
 - 신현준
 - 이민경
 - 지정훈
+
+## 노션링크
+[https://bird-spice-1a2.notion.site/a6b1a8a9cd6842b99b21ec4823129c2b](https://www.notion.so/a6b1a8a9cd6842b99b21ec4823129c2b)
