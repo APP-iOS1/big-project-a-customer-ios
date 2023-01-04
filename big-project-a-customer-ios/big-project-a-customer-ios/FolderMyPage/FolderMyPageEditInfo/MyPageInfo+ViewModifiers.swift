@@ -79,13 +79,11 @@ struct PasswordAlertModifier: ViewModifier {
     @Binding var password_2: String
     func body(content: Content) -> some View {
         content
-            .alert("비밀번호 불일치", isPresented: $showingAlert) {
+            .alert("비밀번호를 다시 입력해주세요", isPresented: $showingAlert) {
                 Button("Ok") {
                     password = ""
                     password_2 = ""
                 }
-            } message: {
-                Text("비밀번호를 다시 입력해주세요")
             }
     }
 }
