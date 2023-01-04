@@ -38,10 +38,10 @@ struct MyPageInfoView: View {
                         Text("반갑습니다")
                             .modifier(SayHelloModifier())
                         Spacer()
-                        NavigationLink(value: "") {
+                        NavigationLink(value: 0) {
                             Image(systemName: "gearshape.fill")
                         }
-                        .navigationDestination(for: String.self) { value in
+                        .navigationDestination(for: Int.self) { value in
                             MyPageInfoDetailView(navStack: $navStack)
                         }
                     }
@@ -71,10 +71,7 @@ struct MyPageInfoView: View {
                                 MyPageCell(imageName: sampleIcons[idx], text: action)
                             }
                         } else {
-                            NavigationLink(value: action) {
-                                MyPageCell(imageName: sampleIcons[idx], text: action)
-                            }
-                            .navigationDestination(for: String.self) { action in
+                            NavigationLink {
                                 switch action {
                                 case "좋아요":
                                     LikedProductsView()
@@ -89,6 +86,8 @@ struct MyPageInfoView: View {
                                 default :
                                     Text("default")
                                 }
+                            } label: {
+                                MyPageCell(imageName: sampleIcons[idx], text: action)
                             }
                         }
                     }
