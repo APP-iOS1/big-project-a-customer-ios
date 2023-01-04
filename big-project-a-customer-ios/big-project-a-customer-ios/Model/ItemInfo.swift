@@ -17,7 +17,3 @@ struct ItemInfo: Codable {
     var itemImage: [String]
     var price: Double
 }
-
-struct ItemOptions: Codable {
-    var itemOptions: [String: [String]]
-}
