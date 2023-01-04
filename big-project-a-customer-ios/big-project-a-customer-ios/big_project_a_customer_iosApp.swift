@@ -26,6 +26,7 @@ struct big_project_a_customer_iosApp: App {
             ContentView()
                 .environmentObject(MyReviewViewModel())
                 .environmentObject(SignUpViewModel())
+                .environmentObject(TestViewModel())
         }
     }
 }

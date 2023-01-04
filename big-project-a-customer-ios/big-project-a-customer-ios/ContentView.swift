@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var vm : TestViewModel
 	var body: some View {
         TabView {
+            TestPage().tabItem {
+                Image(systemName: "person.circle")
+                Text("테스트")
+            }.tag(5)
             HomeMenuView().tabItem {
                 Image(systemName: "house")
                 Text("홈")
@@ -32,7 +37,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(SignUpViewModel())
+        ContentView().environmentObject(SignUpViewModel()).environmentObject(TestViewModel())
     }
 }
 

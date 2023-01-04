@@ -65,6 +65,9 @@
 		A78DA21C295C4F9C0047C5AE /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DA216295C4F9C0047C5AE /* PaymentView.swift */; };
 		A78DA21D295C4F9C0047C5AE /* PaymentCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DA217295C4F9C0047C5AE /* PaymentCompleteView.swift */; };
 		A78DA21E295C4F9C0047C5AE /* ReadyToPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DA218295C4F9C0047C5AE /* ReadyToPayView.swift */; };
+		A7934BB829648619001578FB /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7934BB529648619001578FB /* TestModel.swift */; };
+		A7934BB929648619001578FB /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7934BB629648619001578FB /* TestViewModel.swift */; };
+		A7934BBA29648619001578FB /* TestPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7934BB729648619001578FB /* TestPage.swift */; };
 		A7A0BBE62963E3AE00C4CB00 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A0BBE52963E3AE00C4CB00 /* Modifiers.swift */; };
 		C08D494F296262660035A01D /* QnAListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D494E296262660035A01D /* QnAListView.swift */; };
 		C08D4953296275C00035A01D /* QnARegistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08D4952296275C00035A01D /* QnARegistView.swift */; };
@@ -137,6 +140,9 @@
 		A78DA216295C4F9C0047C5AE /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		A78DA217295C4F9C0047C5AE /* PaymentCompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentCompleteView.swift; sourceTree = "<group>"; };
 		A78DA218295C4F9C0047C5AE /* ReadyToPayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyToPayView.swift; sourceTree = "<group>"; };
+		A7934BB529648619001578FB /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
+		A7934BB629648619001578FB /* TestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
+		A7934BB729648619001578FB /* TestPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPage.swift; sourceTree = "<group>"; };
 		A7A0BBE52963E3AE00C4CB00 /* Modifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		C08D494E296262660035A01D /* QnAListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAListView.swift; sourceTree = "<group>"; };
 		C08D4952296275C00035A01D /* QnARegistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnARegistView.swift; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 		A77EE65F295A9A5100B6AA64 /* big-project-a-customer-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A7934BB429648619001578FB /* TestJJH */,
 				68127C642963F33E003948B4 /* Extension */,
 				68C75ADE295C1DDF00ABC20A /* GoogleService-Info.plist */,
 				A7A0BBE42963E39F00C4CB00 /* Modifiers */,
@@ -373,6 +380,16 @@
 				A78DA218295C4F9C0047C5AE /* ReadyToPayView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A7934BB429648619001578FB /* TestJJH */ = {
+			isa = PBXGroup;
+			children = (
+				A7934BB529648619001578FB /* TestModel.swift */,
+				A7934BB629648619001578FB /* TestViewModel.swift */,
+				A7934BB729648619001578FB /* TestPage.swift */,
+			);
+			path = TestJJH;
 			sourceTree = "<group>";
 		};
 		A7A0BBE42963E39F00C4CB00 /* Modifiers */ = {
@@ -535,6 +552,7 @@
 				6713F70F295B2386009ABA8C /* SignUpViewModel.swift in Sources */,
 				22CC75F2296272C000899147 /* ProductDetailTotalReview.swift in Sources */,
 				A78DA21C295C4F9C0047C5AE /* PaymentView.swift in Sources */,
+				A7934BB829648619001578FB /* TestModel.swift in Sources */,
 				68127C612963E0FE003948B4 /* CustomerServiceInfo.swift in Sources */,
 				A78DA18C295C1E590047C5AE /* QuestionDetailView.swift in Sources */,
 				A7A0BBE62963E3AE00C4CB00 /* Modifiers.swift in Sources */,
@@ -589,10 +607,12 @@
 				A78DA206295C4CAE0047C5AE /* TempViewModel.swift in Sources */,
 				A742106E295B40A0005AEC9C /* TermType.swift in Sources */,
 				22CC75F62962ADBC00899147 /* Product.swift in Sources */,
+				A7934BBA29648619001578FB /* TestPage.swift in Sources */,
 				68C75AE3295C2DB500ABC20A /* CustomerInfo.swift in Sources */,
 				04E6F06429626BEF00AD8A44 /* Fundamentals.swift in Sources */,
 				67C798B7295C0F8000E13A16 /* SafariView.swift in Sources */,
 				22CC75F4296274D600899147 /* ReviewDetail.swift in Sources */,
+				A7934BB929648619001578FB /* TestViewModel.swift in Sources */,
 				22CC75F82962AE4A00899147 /* Review.swift in Sources */,
 				A77EE661295A9A5100B6AA64 /* big_project_a_customer_iosApp.swift in Sources */,
 				0456F63A295AD7EE002389F6 /* HomeMenuView.swift in Sources */,
