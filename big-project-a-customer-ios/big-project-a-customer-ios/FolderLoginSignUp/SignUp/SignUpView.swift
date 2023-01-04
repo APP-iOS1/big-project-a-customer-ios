@@ -59,8 +59,8 @@ struct SignUpView: View {
             NavigationLink {
                 SignUpStep1View(navStack: $navStack)
             } label: {
-                RoundedRectangle(cornerRadius: 15)
-                    .modifier(LoginButtonModifier(label: "다음"))
+                Text("다음")
+                    .modifier(MaxWidthColoredButtonModifier(cornerRadius: 15))
             } // NavigationLink - 다음
             .disabled(!(isTermsClick[1] && isTermsClick[2]) ? true : false)
         } // VStack

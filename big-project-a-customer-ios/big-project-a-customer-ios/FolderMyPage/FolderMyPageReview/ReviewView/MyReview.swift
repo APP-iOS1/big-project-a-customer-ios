@@ -49,7 +49,7 @@ class MyReviewViewModel: ObservableObject {
     @Published var reviewItems: [MyReviewItems] = [
         MyReviewItems(id: "둘리", profileImage: "person.fill", date: "2023-01-02", itemName: "MacBook Air 13", itemOption: "SSD 256gb", itemCategory: "노트북", purchaseDate: "2022-12-25", itemReview: "호이 호이", itemImgs: ["macbookair1", "macbookair2", "macbookair3"], stars: 4),
         MyReviewItems(id: "침착맨", profileImage: "person.fill", date: "2023-01-01", itemName: "MacBook Air 13", itemOption: "SSD 512gb", itemCategory: "노트북", purchaseDate: "2022-12-24", itemReview: "맥북 에어를 샀는데 맥북 프로가 왔네요 오히려 좋아", itemImgs: ["macbookpro1", "macbookpro2"], stars: 5)
-
+        
     ]
 }
 
@@ -63,31 +63,30 @@ struct MyReview: View {
     
     var body: some View {
         VStack{
-            HStack{
-                Text("전체")
-                Text("1개월")
-                
-                Spacer()
-                
-                Button{
-                    isShowingDuration.toggle()
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                }
-            }
-            .padding()
+            //            HStack{
+            //                Text("전체")
+            //                Text("1개월")
+            //
+            //                Spacer()
+            //
+            //                Button{
+            //                    isShowingDuration.toggle()
+            //                } label: {
+            //                    Image(systemName: "slider.horizontal.3")
+            //                }
+            //            }
+            //            .padding()
+            //
+            //            ZStack{
+            //                DurationSettingView(isShowingDuration : $isShowingDuration)
+            //                    .opacity(isShowingDuration ? 1 : 0)
+            //                    .zIndex(1)
             
-            ZStack{
-                DurationSettingView(isShowingDuration : $isShowingDuration)
-                    .opacity(isShowingDuration ? 1 : 0)
-                    .zIndex(1)
-                
-                NavigationView {
-                    List {
-                        ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
-                            CardView(item: mRItem)
-//                            Text("\(mRItem.itemName)")
-                        }
+            NavigationView {
+                List {
+                    ForEach(myReviewViewModel.mRItems, id: \.itemName) { mRItem in
+                        CardView(item: mRItem)
+                        //                            Text("\(mRItem.itemName)")
                     }
                     
                     
@@ -108,10 +107,11 @@ struct MyReview: View {
                     
                     
                 }
-                
+                .listStyle(.inset)
             }
-            .ignoresSafeArea(.all, edges: .bottom)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("작성한 리뷰")
+            .navigationBarTitleDisplayMode(.large)
+            
             
         }
     }

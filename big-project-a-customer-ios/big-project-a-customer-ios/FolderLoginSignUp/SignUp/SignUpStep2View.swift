@@ -72,7 +72,7 @@ struct SignUpStep2View: View {
                 HStack {
                     TextField("닉네임 (20자리 이내)", text: $nickName)
                         .focused($isInFocusNickName)
-                        .modifier(LoginTextFieldModifier())
+                        .modifier(ClearTextFieldModifier())
                         .onChange(of: nickName) { newValue in
                             signUpViewModel.nickNameDuplicationState = .duplicated
                         }
@@ -112,7 +112,7 @@ struct SignUpStep2View: View {
                 .padding(.trailing, 20)
                 
                 Rectangle()
-                    .modifier(LoginTextFieldRectangleModifier(stateTyping: isInFocusNickName))
+                    .modifier(TextFieldUnderLineRectangleModifier(stateTyping: isInFocusNickName))
             } // VStack TextField 닉네임
             
             Spacer()
@@ -137,8 +137,8 @@ struct SignUpStep2View: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .black))
                         .frame(height: 40)
                 } else { // 계정 생성 전이나 후에는 버튼을 띄운다.
-                    RoundedRectangle(cornerRadius: 15)
-                        .modifier(LoginButtonModifier(label: "회원가입"))
+                    Text("회원가입")
+                        .modifier(MaxWidthColoredButtonModifier(cornerRadius: 15))
                 }
             }
             // TextField가 비어있으면 "회원가입" 버튼 비활성화
@@ -183,7 +183,7 @@ struct SignUpStep2View: View {
         }) // Toast - 닉네임 중복 팝업
         .popup(isPresented: $isNotDuplicated, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
             HStack {
-                Image(systemName: "exclamationmark.circle")
+                Image(systemName: "checkmark.circle")
                     .foregroundColor(.white)
                 
                 Text("사용 가능한 닉네임이에요.")

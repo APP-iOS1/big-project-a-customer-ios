@@ -6,154 +6,131 @@
 //
 
 import SwiftUI
+import PopupView
 
 struct ProductDetailModalView: View {
-    @ObservedObject var tempVM: TempViewModel = TempViewModel()
-    
     @Environment(\.dismiss) private var dismiss
-    
-//    @Binding var options: [String: [String]] // 서버에서 가져온 옵션들
-    
+
+    @ObservedObject var tempVM: TempViewModel = TempViewModel()
     @State var count: Int = 1 // 수량
-    
-    @State private var selection: [String] = ["", ""]
-    // FIXME: - 유저가 중복선택할 경우를 생각해서 Set을 적용할지 생각해보기.
-    
-//    @State private var selectedOptions: [String: (String, Int)] = [:]
-    
-    // 기본 가격(옵션 제외)
-    var basePrice: Int = 50000
-    // 옵션 추가 금액
-    @State var optionPrice: Int = 0
-    
+    @Binding var isActive: Bool
+    @State private var isShowingPopup = false
+
     var optionsArray: [String] {
         Array(tempVM.options.keys).sorted()
     }
-    
+
     var body: some View {
-        
-        VStack {
-            // 옵션 마다 picker를 만들어준다.
-            ForEach(Array(optionsArray.enumerated()), id: \.offset) { (index, key) in
-                // key: 옵션명(컬러, 사이즈 등)
+        NavigationStack {
+
+            VStack {
+                // 옵션 마다 picker를 만들어준다.
+                ForEach(Array(optionsArray.enumerated()), id: \.offset) { (index, key) in
+                    // key: 옵션명(컬러, 사이즈 등)
+                    HStack {
+                        Text(key)
+
+                        Spacer()
+
+                        Picker(key, selection: $tempVM.selectedPicker[index]) {
+                            Text("선택없음").tag(Optional<String>(nil))
+
+                            ForEach(tempVM.options[key]!, id: \.0) { (option, price) in
+                                Text("\(option) +\(price)원").tag("\(option)_\(price)")
+                            }
+                        }
+                            .pickerStyle(.menu)
+                            .modifier(PickerModifier())
+
+                        // 피커를 선택하면 selection[index] 값이 바뀌고
+                        .onChange(of: tempVM.selectedPicker[index], perform: { value in
+                                let newValue = value.split(separator: "_").map { String($0) }
+
+                                if !newValue.isEmpty {
+                                    tempVM.selectedOptions[key] = (tempVM.options[key]!.filter { $0.0 == newValue[0] }.first!.0, Int(newValue[1])!)
+
+                                    tempVM.calcTotalPrice()
+                                }
+                            })
+                    }
+                }.padding()
+
                 HStack {
-                    Text(key)
-                    
+                    Text("옵션")
+
                     Spacer()
-                    
-                    // FIXME: - Picker Error
-                    Picker(key, selection: $tempVM.selectedPicker[index]) {
-                        Text("선택없음").tag(Optional<String>(nil))
-                        
-                        ForEach(tempVM.options[key]!, id: \.0) { (option, price) in
-                            Text("\(option) +\(price)원").tag("\(option)_\(price)")
+
+                    VStack {
+                        ForEach(Array(tempVM.selectedOptions.sorted(by: { $0.1 < $1.1 })), id: \.key) { tuple in
+                            HStack {
+                                Spacer()
+                                Text("\(tuple.value.0)(+\(tuple.value.1)원)")
+                            }
                         }
                     }
-                    .pickerStyle(.menu)
-                    .background(.white)
-                    .cornerRadius(15)
-                    // 피커를 선택하면 selection[index] 값이 바뀌고 
-                    .onChange(of: tempVM.selectedPicker[index], perform: { value in
-                        
-                        let newValue = value.split(separator: "_").map { String($0) }
-                        if !newValue.isEmpty {
-                            tempVM.selectedOptions[key] = (tempVM.options[key]!.filter { $0.1 == Int(newValue[1]) }.first!.0, Int(newValue[1])!)
-                            
-                            print("\(tempVM.selectedOptions)")
-                            tempVM.calcTotalPrice()
-                            
-                        }
-                    })
                 }
-            }.padding()
-            
-            HStack {
-                Text("옵션")
-                
-                Spacer()
-                
-                VStack {
-                    ForEach(Array(tempVM.selectedOptions.sorted(by: { $0.1 < $1.1 })), id: \.key) { tuple in
+                    .padding()
+
+                HStack {
+                    Text("수량")
+
+                    Spacer()
+
+                    CustomStepper(value: $count, textColor: .black)
+                }
+                    .padding()
+
+                HStack {
+                    Text("가격")
+
+                    Spacer()
+
+                    Text("\(count * tempVM.totalPrice)원")
+                }
+                    .padding()
+
+                HStack {
+                    Button {
+
+                        dismiss()
+                    } label: {
                         HStack {
                             Spacer()
-                            
-                            Text("\(tuple.value.0)(+\(tuple.value.1)원)")
+                            Text("장바구니 담기")
+                                .fontWeight(.bold)
+                            Spacer()
                         }
+                            .modifier(ColoredButtonModifier(cornerRadius: 10))
+                    }
+
+                    Button {
+                        if (tempVM.selectedOptions.count != tempVM.options.count) {
+                            isShowingPopup.toggle()
+                        } else {
+                            dismiss()
+                            // 구매하기 뷰 (주소입력) 으로 이동
+                            isActive.toggle()
+                        }
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text("구매하기")
+                                .fontWeight(.bold)
+                            Spacer()
+                        }
+                            .modifier(ColoredButtonModifier(cornerRadius: 10))
                     }
                 }
-            }
-            .padding()
-            
-            HStack {
-                Text("수량")
-                
+
                 Spacer()
-                
-                CustomStepper(value: $count, textColor: .black)
-            }
-            .padding()
-            
-            HStack {
-                Text("가격")
-                
-                Spacer()
-                
-                Text("\(count * tempVM.totalPrice)원")
-            }
-            .padding()
-            
-            HStack {
-                //                Button {
-                //                    // FIXME: - 장바구니 ViewModel에 아이템 추가하는 로직 추가
-                //                } label: {
-                //                    HStack {
-                //                        Spacer()
-                ////                        NavigationLink {
-                ////                            ShoppingBackView()
-                ////                        } label: {
-                ////                            Text("장바구니 담기")
-                ////                                .onTapGesture{
-                ////                                    dismiss()
-                ////                                }
-                ////                                .fontWeight(.bold)
-                ////                                .tint(.white)
-                ////                        }
-                //
-                //                        Spacer()
-                //                    }.modifier(ProductButtonModifier(color: .pink))
-                //                }
-                Button {
-                    // FIXME: - 장바구니 ViewModel에 아이템 추가하는 로직 추가
-                    dismiss()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("장바구니 담기")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    .modifier(ProductButtonModifier(color: .pink))
-                }
-                .tint(.white)
-                Button {
-                    // FIXME: - 페이지 이동
-                    dismiss()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("구매하기")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    .modifier(ProductButtonModifier(color: .pink))
-                }
-                .tint(.white)
             }
         }
-        .onAppear {
-            // tempVM.fetchPostDetail()
-            
-            print(tempVM.options)
+        .popup(isPresented: $isShowingPopup, position: .bottom, autohideIn: 1) {
+            Text("⚠️ 옵션을 모두 선택해 주세요.")
+                .frame(width: 250, height: 60)
+                .background(Color.secondary)
+                .foregroundColor(.white)
+                .cornerRadius(10.0)
         }
     }
 }
@@ -162,44 +139,33 @@ struct CustomStepper: View {
     @Binding var value: Int
     var textColor: Color
     var step = 1
-    
+
     var body: some View {
         HStack {
             Button(action: {
                 if self.value > 1 {
                     self.value -= self.step
-                    self.feedback()
                 }
             }, label: {
-                Image(systemName: "minus.square")
-                    .foregroundColor(value == 1 ? .gray : .black)
-            })
-            
+                    Image(systemName: "minus.square")
+                        .foregroundColor(value == 1 ? .gray : .black)
+                })
+
             Text("\(value)").font(.system(.caption, design: .rounded))
                 .foregroundColor(textColor)
-            
+
             Button(action: {
                 self.value += self.step
-                self.feedback()
-                
             }, label: {
-                Image(systemName: "plus.square")
-                    .foregroundColor(.black)
-            })
+                    Image(systemName: "plus.square")
+                        .foregroundColor(.black)
+                })
         }
-    }
-    
-    func feedback() {
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
     }
 }
 
-//struct ProductDetailModalView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProductDetailModalView(options: .constant([
-//            "사이즈": ["S", "M", "L"],
-//            "컬러": ["레드", "블루", "블랙"]
-//        ]))
-//    }
-//}
+struct ProductDetailModalView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProductDetailModalView(isActive: .constant(false))
+    }
+}
