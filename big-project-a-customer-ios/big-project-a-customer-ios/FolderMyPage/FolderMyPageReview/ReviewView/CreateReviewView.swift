@@ -7,8 +7,11 @@
 
 import SwiftUI
 import PhotosUI
+import PopupView
 
 struct CreateReviewView: View {
+    @State private var isShowingPopup: Bool = false
+    @Environment(\.dismiss) var dismiss
     // MARK: 별점 위치를 정할 때 사용되는 변수
     @State var selected = -1
     
@@ -90,12 +93,25 @@ struct CreateReviewView: View {
             Spacer()
             /// 리뷰 등록 버튼
             ///
+
+            // TODO: 고치기
+//                .modifier(LoginButtonModifier(label: "리뷰 등록하기"))
+            
             Button {
                 print("button pressed")
+                isShowingPopup = true
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+                  // 1초 후 실행될 부분
+                    dismiss()
+                }
+                
             } label: {
                 Text("리뷰 등록하기")
+                    .modifier(MaxWidthColoredButtonModifier(cornerRadius: 15))
+                
             }
-            .modifier(MaxWidthColoredButtonModifier(cornerRadius: 10))
+            .frame(width: UIScreen.main.bounds.width)
+
             .padding(.bottom, 20)
             Spacer()
             
@@ -103,8 +119,23 @@ struct CreateReviewView: View {
         .navigationTitle("상품 품질 평가")
         .navigationBarTitleDisplayMode(.large)
         .padding(10)
-        
+        .popup(isPresented: $isShowingPopup, type: .floater(useSafeAreaInset: true), position: .top, animation: .default, autohideIn: 2, dragToDismiss: true, closeOnTap: true, closeOnTapOutside: true, view: {
+            HStack {
+                Image(systemName: "checkmark.circle")
+                    .foregroundColor(.white)
+                
+                Text("소중한 리뷰 감사합니다!")
+                    .foregroundColor(.white)
+                    .font(.footnote)
+                    .bold()
+            }
+            
+            .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+            .background(Color.accentColor)
+            .cornerRadius(100)
+        })
     }
+        
     
     // MARK: -imagePickerView의 버튼 모양
     var selectionImageButton: some View {
