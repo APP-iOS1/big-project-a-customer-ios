@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct PaymentCompleteView: View {
-    
+    @ObservedObject private var orderStore: OrderStore = OrderStore()
+    @EnvironmentObject private var signupViewModel: SignUpViewModel
     @Binding var purchaseInfo: PurchaseInfo
     var isCashCheck: Bool
+    
+    /// 전달받은 배송지 주소
+    let shippingAddress: Address
     
     var body: some View {
         VStack {
@@ -68,6 +72,16 @@ struct PaymentCompleteView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                await orderStore.createOrderItems(
+                    currentUserUid: signupViewModel.currentUser?.id ?? "",
+                    address: shippingAddress.recipientAddress,
+                    payment: .byAccount,
+                    orderItems: []
+                )
+            }
+        }
     }
 }
 
@@ -114,6 +128,6 @@ let endTime = startTime.adding(hours: 3)
 
 struct PaymentCompleteView_Previews: PreviewProvider {
     static var previews: some View {
-        PaymentCompleteView(purchaseInfo: Binding.constant(PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")), isCashCheck: true)
+        PaymentCompleteView(purchaseInfo: Binding.constant(PurchaseInfo(id: UUID().uuidString, userName: "박성민_1", userPhoneNumber: "010-XXXX-XXXX", depositorName: "박성민", recipient: Recipient(name: "박성민", phoneNumber: "010-XXXX-XXXX", adress: "서울시 중랑구 묵동 xxx-xxx", requestedTerm: "집 문앞에 놔주세요"), marketBasket: MarketBasket(id: UUID().uuidString, basketProducts: ["매직마우스", "애플워치", "에어팟맥스"]), payment: "150,000원", cashReceipt: CashReceipt(id: UUID().uuidString, incomDeduction: "소득공제정보", cashReceiptNumber: "현금영수증번호"), bankName: "신한은행")), isCashCheck: true, shippingAddress: Address.addresses[0])
     }
 }

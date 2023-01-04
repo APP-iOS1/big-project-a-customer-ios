@@ -87,7 +87,8 @@ struct OrderSheetAddress: View {
             Spacer()
             
             NavigationLink {
-                PaymentView(purchaseInfo: $purchaseInfo)
+//                PaymentView(purchaseInfo: $purchaseInfo)
+                PaymentView(purchaseInfo: $purchaseInfo, shippingAddress: Address.addresses[0]) // 임시로 박아둔 첫번째 주소값
             } label: {
                 Text("무통장 입금으로 결제하기")
             }
