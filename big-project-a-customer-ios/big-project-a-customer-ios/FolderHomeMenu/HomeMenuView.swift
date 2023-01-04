@@ -44,37 +44,8 @@ struct HomeMenuView: View {
                 LazyVGrid(columns: columns, spacing: 16){
                     ForEach(searchItem) { item in
                         NavigationLink {
-                            NotebookView(items: item)
+                            HomeMenuDetailView(items: item)
                         }
-//                        NavigationLink {
-//                            switch item {
-//                            case item.categoryTitles == "노트북":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "휴대폰":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "PC":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "모니터":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "태블릿":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "스마트워치":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "마이크":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "스피커":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "휴대용 게임기":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "마우스":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "키보드":
-//                                NotebookView(items: item)
-//                            case item.categoryTitles == "카메라":
-//                                NotebookView(items: item)
-//                            default :
-//                                Text("default")
-//                            }
                         label:{
                             ItemView(item: item)
                         }

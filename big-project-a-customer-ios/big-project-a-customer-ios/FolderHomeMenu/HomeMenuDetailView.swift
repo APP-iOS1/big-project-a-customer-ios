@@ -1,5 +1,5 @@
 //
-//  NotebookView.swift
+//  HomeMenuDetailView.swift
 //  big-project-a-customer-ios
 //
 //  Created by 이원형 on 2022/12/27.
@@ -14,7 +14,7 @@ struct FilteredItem: Hashable {
     var price: Double
 }
 
-struct NotebookView: View {
+struct HomeMenuDetailView: View {
     @EnvironmentObject private var itemInfoViewModel: ItemInfoViewModel
     
 //    @State var searchNotebookItem = NotebookItems
