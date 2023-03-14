@@ -291,3 +291,5 @@
 이학진 - [@LEEHAKJIN-VV](https://github.com/LEEHAKJIN-VV)<br/>
 전근섭 - [@JKSeub](https://github.com/JKSeub)<br/>
 
+# Libraries
+- [Firebase](https://github.com/firebase/firebase-ios-sdk/blob/master/LICENSE)
